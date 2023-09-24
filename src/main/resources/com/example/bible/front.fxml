@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.FrontController">
+    <children>
+        <ComboBox fx:id="language" layoutX="35.0" layoutY="14.0" prefHeight="25.0" prefWidth="87.0" promptText="GEO" visibleRowCount="3" />
+        <ComboBox fx:id="versions" layoutX="139.0" layoutY="14.0" prefHeight="25.0" prefWidth="287.0" />
+        <ComboBox fx:id="book" layoutX="441.0" layoutY="14.0" prefHeight="25.0" prefWidth="253.0" />
+        <ComboBox fx:id="chapter" layoutX="711.0" layoutY="14.0" prefWidth="150.0" />
+        <ComboBox fx:id="verse" layoutX="877.0" layoutY="14.0" prefWidth="150.0" />
+        <ComboBox fx:id="till" layoutX="1044.0" layoutY="14.0" prefWidth="150.0" />
+        <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" />
+      <RadioButton fx:id="darkMode" layoutX="1783.0" layoutY="901.0" mnemonicParsing="false" onAction="#onDarkModeAction" prefHeight="55.0" prefWidth="117.0" text="Dark Mode">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </RadioButton>
+    </children>
+</AnchorPane>
