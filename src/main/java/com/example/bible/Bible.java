@@ -15,9 +15,9 @@ public class Bible extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         LinkInfo linkInfo = new LinkInfo();
-        linkInfo.setLinkInfo("geo",1,1,1,1);
+        linkInfo.setLinkInfo("geo",4,1,1,5);
         FXMLLoader fxmlLoader = new FXMLLoader(Bible.class.getResource("front.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 1600, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

@@ -25,7 +25,7 @@ public class FrontController {
     @FXML
     private ComboBox<String> books;
     @FXML
-    private ComboBox<String> chapter;
+    private ComboBox<Integer> chapter;
     @FXML
     private ComboBox<Integer> verse;
     @FXML
@@ -34,11 +34,16 @@ public class FrontController {
     private TextField search;
     @FXML
     private RadioButton darkMode;
+    @FXML
+    private Label verseLabel;
 
     private final String whiteColor = "0xf4f4f4ff";
     private final String blackColor = "#000000";
     private List<String> versionsList = new ArrayList<>();
     private List<String> booksList = new ArrayList<>();
+    private String chosenBook;
+    private InputtedData inputtedData = new InputtedData();
+    private LinkInfo linkInfo = new LinkInfo();
 
 
     @FXML
@@ -49,6 +54,56 @@ public class FrontController {
     @FXML
     private void onVersionsMouseClicked() {
         getVersionsAndBooksInfo();
+    }
+
+    @FXML
+    private void onLanguageAction() {
+        inputtedData.setLanguage(language.getValue().toLowerCase());
+    }
+
+    @FXML
+    private void onVersionsAction() {
+        inputtedData.setVersion(versions.getValue());
+    }
+
+    @FXML
+    private void onBooksAction() {
+        inputtedData.setBook(books.getValue());
+    }
+
+    @FXML
+    private void onChapterAction() {
+        inputtedData.setChapter(Integer.parseInt(chapter.getEditor().getText()));
+    }
+
+    @FXML
+    private void onVerseAction() {
+        verseLabel.setText("");
+        System.out.println("Error1");
+        inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
+        System.out.println("Error2");
+        linkInfo.setLinkInfo(inputtedData.getLanguage(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+        String str = "";
+        for (int i = 0; i < linkInfo.verses.size(); i++) {
+            str += linkInfo.verses.get(i);
+        }
+        verseLabel.setText(str);
+        System.out.println("tt: " + str);
+    }
+
+    @FXML
+    private void onTillAction() {
+        verseLabel.setText("");
+        System.out.println("Error1");
+        inputtedData.setTill(Integer.parseInt(till.getEditor().getText()));
+        System.out.println("Error2");
+        linkInfo.setLinkInfo(inputtedData.getLanguage(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+        String str = "";
+        for (int i = 0; i < linkInfo.verses.size(); i++) {
+            str += linkInfo.verses.get(i);
+        }
+        verseLabel.setText(str);
+        System.out.println(str);
     }
 
     private void darkModeColorsChanger(String color) {
@@ -80,16 +135,19 @@ public class FrontController {
             FileReader fileReader = new FileReader("src/main/resources/com/example/bible/txtFiles/versions.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String str = bufferedReader.readLine();
-
+            versionsList.clear();
             versionsList.addAll(Arrays.asList(str.split(",")));
 
             fileReader = new FileReader("src/main/resources/com/example/bible/txtFiles/bibleNames.txt");
             bufferedReader = new BufferedReader(fileReader);
             str = bufferedReader.readLine();
+            booksList.clear();
             booksList.addAll(Arrays.asList(str.split(",")));
 
             bufferedReader.close();
             fileReader.close();
+            versions.getItems().clear();
+            books.getItems().clear();
             versions.getItems().addAll(versionsList);
             books.getItems().addAll(booksList);
         } catch (Exception e) {

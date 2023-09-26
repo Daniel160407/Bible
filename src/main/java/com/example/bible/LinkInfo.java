@@ -18,8 +18,8 @@ public class LinkInfo {
     public int chapter;
     public int verse;
     public int till;
-    public List<String> translations = new ArrayList<>();
-    public List<String> books = new ArrayList<>();
+    public List<String> verses = new ArrayList<>();
+    public List<String> versePath = new ArrayList<>();
 
     public void setLinkInfo(String language, int book, int chapter, int verse, int till) {
         try {
@@ -42,6 +42,19 @@ public class LinkInfo {
                 String linkData = response.toString();
                 System.out.println(linkData);
                 JSONObject jsonObject = new JSONObject(linkData);
+                if (till == 0) {
+                    till = verse;
+                    System.out.println("Error3");
+                }
+                System.out.println("Till: " + till);
+                System.out.println("Verse: " + verse);
+                for (int i = verse-1; i < till; i++) {
+                    System.out.println(i + " ::::::::: " + jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
+                    verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv") + "\n");
+                    versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
+                    versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
+                }
+
             } else {
                 System.err.println("API request failed with response code: " + responseCode);
             }

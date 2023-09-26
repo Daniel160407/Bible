@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,7 +11,7 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.FrontController">
     <children>
-        <ComboBox fx:id="language" layoutX="35.0" layoutY="14.0" prefHeight="25.0" prefWidth="87.0" promptText="GEO" visibleRowCount="3">
+        <ComboBox fx:id="language" layoutX="35.0" layoutY="14.0" onAction="#onLanguageAction" prefHeight="25.0" prefWidth="87.0" promptText="GEO" visibleRowCount="3">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="ENG" />
@@ -18,16 +19,21 @@
                 </FXCollections>
             </items>
         </ComboBox>
-        <ComboBox fx:id="versions" layoutX="139.0" layoutY="14.0" onMouseClicked="#onVersionsMouseClicked" prefHeight="25.0" prefWidth="287.0" />
-        <ComboBox fx:id="books" layoutX="441.0" layoutY="14.0" prefHeight="25.0" prefWidth="253.0" />
-        <ComboBox fx:id="chapter" layoutX="711.0" layoutY="14.0" prefWidth="150.0" />
-        <ComboBox fx:id="verse" layoutX="877.0" layoutY="14.0" prefWidth="150.0" />
-        <ComboBox fx:id="till" layoutX="1044.0" layoutY="14.0" prefWidth="150.0" />
+        <ComboBox fx:id="versions" layoutX="139.0" layoutY="14.0" onAction="#onVersionsAction" onMouseClicked="#onVersionsMouseClicked" prefHeight="25.0" prefWidth="287.0" />
+        <ComboBox fx:id="books" layoutX="441.0" layoutY="14.0" onAction="#onBooksAction" prefHeight="25.0" prefWidth="253.0" />
+        <ComboBox fx:id="chapter" editable="true" layoutX="711.0" layoutY="14.0" onAction="#onChapterAction" prefWidth="150.0" />
+        <ComboBox fx:id="verse" editable="true" layoutX="877.0" layoutY="14.0" onAction="#onVerseAction" prefWidth="150.0" />
+        <ComboBox fx:id="till" editable="true" layoutX="1044.0" layoutY="14.0" onAction="#onTillAction" prefWidth="150.0" />
         <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" />
       <RadioButton fx:id="darkMode" layoutX="1783.0" layoutY="901.0" mnemonicParsing="false" onAction="#onDarkModeAction" prefHeight="55.0" prefWidth="117.0" text="Dark Mode">
          <font>
             <Font size="15.0" />
          </font>
       </RadioButton>
+      <Label fx:id="verseLabel" alignment="TOP_CENTER" layoutX="127.0" layoutY="69.0" prefHeight="374.0" prefWidth="1179.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
