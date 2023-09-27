@@ -1,11 +1,13 @@
 package com.example.bible;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -35,15 +37,15 @@ public class FrontController {
     @FXML
     private RadioButton darkMode;
     @FXML
-    private Label verseLabel;
+    private AnchorPane mainAnchorPane;
 
     private final String whiteColor = "0xf4f4f4ff";
     private final String blackColor = "#000000";
     private List<String> versionsList = new ArrayList<>();
     private List<String> booksList = new ArrayList<>();
-    private String chosenBook;
     private InputtedData inputtedData = new InputtedData();
     private LinkInfo linkInfo = new LinkInfo();
+    private int previousLayoutYPath = -27;
 
 
     @FXML
@@ -78,37 +80,67 @@ public class FrontController {
 
     @FXML
     private void onVerseAction() {
-        verseLabel.setText("");
-        System.out.println("Error1");
+        mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
-        System.out.println("Error2");
         linkInfo.setLinkInfo(inputtedData.getLanguage(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
         String str = "";
         for (int i = 0; i < linkInfo.verses.size(); i++) {
-            str += linkInfo.verses.get(i);
+            str += linkInfo.verses.get(i) + " ";
         }
-        verseLabel.setText(str);
+        linkInfo.verses.clear();
+        Label newLabel = new Label();
+        newLabel.prefHeight(70);
+        newLabel.setStyle("-fx-text-fill: white; -fx-font-size: 15px;");
+        StackPane stackPane = new StackPane();
+        Rectangle rec = new Rectangle(1067, 83, Color.DARKBLUE);
+        stackPane.getChildren().add(rec);
+        stackPane.getChildren().add(newLabel);
+        stackPane.setLayoutX(335);
+        stackPane.setLayoutY(73);
+        mainAnchorPane.getChildren().add(stackPane);
+        newLabel.setText(str);
         System.out.println("tt: " + str);
     }
 
     @FXML
     private void onTillAction() {
-        verseLabel.setText("");
-        System.out.println("Error1");
+        mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+        previousLayoutYPath = -27;
         inputtedData.setTill(Integer.parseInt(till.getEditor().getText()));
-        System.out.println("Error2");
         linkInfo.setLinkInfo(inputtedData.getLanguage(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
         String str = "";
         for (int i = 0; i < linkInfo.verses.size(); i++) {
-            str += linkInfo.verses.get(i);
+            Label newLabel = new Label();
+            newLabel.setStyle("-fx-text-fill: white; -fx-font-size: 15px;");
+            StackPane stackPane = new StackPane();
+            Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
+            stackPane.getChildren().add(rec);
+            stackPane.getChildren().add(newLabel);
+            stackPane.setLayoutX(335);
+            stackPane.setLayoutY(previousLayoutYPath + 100);
+            mainAnchorPane.getChildren().add(stackPane);
+            previousLayoutYPath = (int) stackPane.getLayoutY();
+            newLabel.setText(linkInfo.verses.get(i));
+            if (linkInfo.verses.size() > 5) {
+                int prefHeight = (int) mainAnchorPane.getPrefHeight();
+                mainAnchorPane.setPrefHeight(prefHeight + 60);
+            }
         }
-        verseLabel.setText(str);
+        previousLayoutYPath = 73;
+        linkInfo.verses.clear();
         System.out.println(str);
+    }
+
+    @FXML
+    private void onClearButtonAction() {
+        mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+        mainAnchorPane.setPrefHeight(478);
     }
 
     private void darkModeColorsChanger(String color) {
         if (color.equals(whiteColor)) {
             anchorPane.setStyle("-fx-background-color:" + blackColor);
+            mainAnchorPane.setStyle("-fx-background-color:" + blackColor);
             language.setStyle("-fx-text-fill:" + "white");
             versions.setStyle("-fx-text-fill:" + "white");
             books.setStyle("-fx-text-fill:" + "white");
@@ -119,6 +151,7 @@ public class FrontController {
             darkMode.setStyle("-fx-text-fill:" + "white");
         } else {
             anchorPane.setStyle("-fx-background-color:" + whiteColor);
+            mainAnchorPane.setStyle("-fx-background-color:" + whiteColor);
             language.setStyle("-fx-text-fill:" + blackColor);
             versions.setStyle("-fx-text-fill:" + blackColor);
             books.setStyle("-fx-text-fill:" + blackColor);

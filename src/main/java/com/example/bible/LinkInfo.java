@@ -50,7 +50,7 @@ public class LinkInfo {
                 System.out.println("Verse: " + verse);
                 for (int i = verse-1; i < till; i++) {
                     System.out.println(i + " ::::::::: " + jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
-                    verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv") + "\n");
+                    verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
                     versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
                     versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
                 }
