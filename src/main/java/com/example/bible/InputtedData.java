@@ -2,6 +2,7 @@ package com.example.bible;
 
 public class InputtedData {
     private String language = "geo";
+    private int versionIndex;
     private String version;
     private String book;
     private int chapter;
@@ -10,6 +11,10 @@ public class InputtedData {
 
     public String getLanguage() {
         return language;
+    }
+
+    public int getVersionIndex() {
+        return versionIndex;
     }
 
     public String getVersion() {
@@ -34,6 +39,10 @@ public class InputtedData {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public void setVersionIndex(int version) {
+        this.versionIndex = version;
     }
 
     public void setVersion(String version) {

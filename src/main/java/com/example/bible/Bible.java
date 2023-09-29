@@ -15,8 +15,10 @@ import java.util.Objects;
 public class Bible extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        BibleVersions bibleVersions = new BibleVersions();
         LinkInfo linkInfo = new LinkInfo();
-        linkInfo.setLinkInfo("geo",4,1,1,5);
+        linkInfo.setLinkInfo("geo", bibleVersions.newRedactedEdition2015, 4, 1, 1, 5);
+
         FXMLLoader fxmlLoader = new FXMLLoader(Bible.class.getResource("front.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1600, 240);
         stage.setTitle("Hello!");

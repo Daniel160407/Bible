@@ -47,6 +47,7 @@ public class FrontController {
     private List<String> versionsList = new ArrayList<>();
     private List<String> booksList = new ArrayList<>();
     private InputtedData inputtedData = new InputtedData();
+    private BibleVersions bibleVersions = new BibleVersions();
     private LinkInfo linkInfo = new LinkInfo();
     private int previousLayoutYPath = -27;
 
@@ -59,6 +60,7 @@ public class FrontController {
     @FXML
     private void onVersionsMouseClicked() {
         getVersionsAndBooksInfo();
+
     }
 
     @FXML
@@ -68,7 +70,7 @@ public class FrontController {
 
     @FXML
     private void onVersionsAction() {
-        inputtedData.setVersion(versions.getValue());
+        inputtedData.setVersionIndex(versions.getSelectionModel().getSelectedIndex());
     }
 
     @FXML
@@ -85,7 +87,36 @@ public class FrontController {
     private void onVerseAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
-        linkInfo.setLinkInfo(inputtedData.getLanguage(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+        switch (inputtedData.getVersionIndex()) {
+            case 0:
+                inputtedData.setVersion(bibleVersions.newRedactedEdition2015);
+                break;
+            case 1:
+                inputtedData.setVersion(bibleVersions.sbs2013);
+                break;
+            case 2:
+                inputtedData.setVersion(bibleVersions.sbsStockholm2001);
+                break;
+            case 3:
+                inputtedData.setVersion(bibleVersions.patriarchate);
+                break;
+            case 4:
+                inputtedData.setVersion(bibleVersions.mtskhetaManuscript);
+                break;
+            case 5:
+                inputtedData.setVersion(bibleVersions.theFourChaptersOfAddish);
+                break;
+            case 6:
+                inputtedData.setVersion(bibleVersions.newWorldTranslation);
+                break;
+            case 7:
+                inputtedData.setVersion(bibleVersions.newTestamentStockholm1985);
+                break;
+            default:
+                inputtedData.setVersion(bibleVersions.newRedactedEdition2015);
+                break;
+        }
+        linkInfo.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
         String str = "";
         for (int i = 0; i < linkInfo.verses.size(); i++) {
             str += linkInfo.verses.get(i) + " ";
@@ -110,7 +141,7 @@ public class FrontController {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         previousLayoutYPath = -27;
         inputtedData.setTill(Integer.parseInt(till.getEditor().getText()));
-        linkInfo.setLinkInfo(inputtedData.getLanguage(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+        linkInfo.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
         String str = "";
         for (int i = 0; i < linkInfo.verses.size(); i++) {
             Text newLabel = new Text();

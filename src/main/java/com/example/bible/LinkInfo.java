@@ -21,9 +21,9 @@ public class LinkInfo {
     public List<String> verses = new ArrayList<>();
     public List<String> versePath = new ArrayList<>();
 
-    public void setLinkInfo(String language, int book, int chapter, int verse, int till) {
+    public void setLinkInfo(String language, String bibleVersion, int book, int chapter, int verse, int till) {
         try {
-            LinkConstructor link = new LinkConstructor(language, book, chapter, verse);
+            LinkConstructor link = new LinkConstructor(language, bibleVersion, book, chapter, verse);
             String apiUrl = link.getLink();
             System.out.println(apiUrl);
             System.out.println("________");
