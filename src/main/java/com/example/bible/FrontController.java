@@ -8,6 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -15,7 +16,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class FrontController {
     @FXML
@@ -110,8 +113,8 @@ public class FrontController {
         linkInfo.setLinkInfo(inputtedData.getLanguage(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
         String str = "";
         for (int i = 0; i < linkInfo.verses.size(); i++) {
-            Label newLabel = new Label();
-            newLabel.setStyle("-fx-text-fill: white; -fx-font-size: 15px;");
+            Text newLabel = new Text();
+            newLabel.setStyle("-fx-fill: white; -fx-font-size: 15px;");
             StackPane stackPane = new StackPane();
             Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
             stackPane.getChildren().add(rec);
@@ -121,6 +124,10 @@ public class FrontController {
             mainAnchorPane.getChildren().add(stackPane);
             previousLayoutYPath = (int) stackPane.getLayoutY();
             newLabel.setText(linkInfo.verses.get(i));
+
+            newLabel.setTextAlignment(TextAlignment.CENTER);
+            newLabel.setWrappingWidth(rec.getWidth());
+
             if (linkInfo.verses.size() > 5) {
                 int prefHeight = (int) mainAnchorPane.getPrefHeight();
                 mainAnchorPane.setPrefHeight(prefHeight + 60);
