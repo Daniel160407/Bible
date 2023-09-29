@@ -185,6 +185,11 @@ public class FrontController {
                 versionsList.addAll(Arrays.asList(bibleVersions.englishVersions.split(",")));
                 booksList.clear();
                 booksList.addAll(Arrays.asList(bibleVersions.englishBooks.split(",")));
+            }else if(inputtedData.getLanguage().equals("rus")){
+                versionsList.clear();
+                versionsList.addAll(Arrays.asList(bibleVersions.russianVersions.split(",")));
+                booksList.clear();
+                booksList.addAll(Arrays.asList(bibleVersions.russianBooks.split(",")));
             }
 
             versions.getItems().clear();
@@ -264,6 +269,36 @@ public class FrontController {
                     break;
                 default:
                     inputtedData.setVersion(bibleVersions.NASBNewAmericanStandardBible);
+                    break;
+            }
+        } else if (inputtedData.getLanguage().equals("rus")) {
+            switch (inputtedData.getVersionIndex()) {
+                case 1:
+                    inputtedData.setVersion(bibleVersions.modernTranslation);
+                    break;
+                case 2:
+                    inputtedData.setVersion(bibleVersions.newRussianTranslationIBS);
+                    break;
+                case 3:
+                    inputtedData.setVersion(bibleVersions.bibleByHermannMenge);
+                    break;
+                case 4:
+                    inputtedData.setVersion(bibleVersions.holyBibleMeaningfulTranslation);
+                    break;
+                case 5:
+                    inputtedData.setVersion(bibleVersions.churchSlavonicBibleOfCyrilAndMethodius);
+                    break;
+                case 6:
+                    inputtedData.setVersion(bibleVersions.newTestamentRestorationTranslation1998);
+                    break;
+                case 7:
+                    inputtedData.setVersion(bibleVersions.wordOfLifeNewTestament1991);
+                    break;
+                case 8:
+                    inputtedData.setVersion(bibleVersions.newTestamentBishopsTranslationCassianaBezobrazova);
+                    break;
+                default:
+                    inputtedData.setVersion(bibleVersions.synodalTranslation);
                     break;
             }
         }

@@ -27,6 +27,9 @@ public class LinkConstructor {
     }
 
     public String getLink() {
+        if (language.equals("rus")) {
+            language = "russian";
+        }
         if (till == 0) {
             return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language=" + language + "&page=1&verse=" + verse;
         }
