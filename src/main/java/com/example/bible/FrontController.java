@@ -87,35 +87,7 @@ public class FrontController {
     private void onVerseAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
-        switch (inputtedData.getVersionIndex()) {
-            case 0:
-                inputtedData.setVersion(bibleVersions.newRedactedEdition2015);
-                break;
-            case 1:
-                inputtedData.setVersion(bibleVersions.sbs2013);
-                break;
-            case 2:
-                inputtedData.setVersion(bibleVersions.sbsStockholm2001);
-                break;
-            case 3:
-                inputtedData.setVersion(bibleVersions.patriarchate);
-                break;
-            case 4:
-                inputtedData.setVersion(bibleVersions.mtskhetaManuscript);
-                break;
-            case 5:
-                inputtedData.setVersion(bibleVersions.theFourChaptersOfAddish);
-                break;
-            case 6:
-                inputtedData.setVersion(bibleVersions.newWorldTranslation);
-                break;
-            case 7:
-                inputtedData.setVersion(bibleVersions.newTestamentStockholm1985);
-                break;
-            default:
-                inputtedData.setVersion(bibleVersions.newRedactedEdition2015);
-                break;
-        }
+        versionDefinition();
         linkInfo.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
         String str = "";
         for (int i = 0; i < linkInfo.verses.size(); i++) {
@@ -203,20 +175,18 @@ public class FrontController {
 
     private void getVersionsAndBooksInfo() {
         try {
-            FileReader fileReader = new FileReader("src/main/resources/com/example/bible/txtFiles/versions.txt");
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String str = bufferedReader.readLine();
-            versionsList.clear();
-            versionsList.addAll(Arrays.asList(str.split(",")));
+            if (inputtedData.getLanguage().equals("geo")) {
+                versionsList.clear();
+                versionsList.addAll(Arrays.asList(bibleVersions.georgianVersions.split(",")));
+                booksList.clear();
+                booksList.addAll(Arrays.asList(bibleVersions.georgianBooks.split(",")));
+            } else if (inputtedData.getLanguage().equals("eng")) {
+                versionsList.clear();
+                versionsList.addAll(Arrays.asList(bibleVersions.englishVersions.split(",")));
+                booksList.clear();
+                booksList.addAll(Arrays.asList(bibleVersions.englishBooks.split(",")));
+            }
 
-            fileReader = new FileReader("src/main/resources/com/example/bible/txtFiles/bibleNames.txt");
-            bufferedReader = new BufferedReader(fileReader);
-            str = bufferedReader.readLine();
-            booksList.clear();
-            booksList.addAll(Arrays.asList(str.split(",")));
-
-            bufferedReader.close();
-            fileReader.close();
             versions.getItems().clear();
             books.getItems().clear();
             versions.getItems().addAll(versionsList);
@@ -224,5 +194,79 @@ public class FrontController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void versionDefinition() {
+        if (inputtedData.getLanguage().equals("geo")) {
+            switch (inputtedData.getVersionIndex()) {
+                case 1:
+                    inputtedData.setVersion(bibleVersions.sbs2013);
+                    break;
+                case 2:
+                    inputtedData.setVersion(bibleVersions.sbsStockholm2001);
+                    break;
+                case 3:
+                    inputtedData.setVersion(bibleVersions.patriarchate);
+                    break;
+                case 4:
+                    inputtedData.setVersion(bibleVersions.mtskhetaManuscript);
+                    break;
+                case 5:
+                    inputtedData.setVersion(bibleVersions.theFourChaptersOfAddish);
+                    break;
+                case 6:
+                    inputtedData.setVersion(bibleVersions.newWorldTranslation);
+                    break;
+                case 7:
+                    inputtedData.setVersion(bibleVersions.newTestamentStockholm1985);
+                    break;
+                default:
+                    inputtedData.setVersion(bibleVersions.newRedactedEdition2015);
+                    break;
+            }
+        } else if (inputtedData.getLanguage().equals("eng")) {
+            switch (inputtedData.getVersionIndex()) {
+                case 1:
+                    inputtedData.setVersion(bibleVersions.NIVNewInternationalVersion);
+                    break;
+                case 2:
+                    inputtedData.setVersion(bibleVersions.KJVKingJamesVersion);
+                    break;
+                case 3:
+                    inputtedData.setVersion(bibleVersions.genevaBible1599);
+                    break;
+                case 4:
+                    inputtedData.setVersion(bibleVersions.NRSVNewRevisedStandardBible);
+                    break;
+                case 5:
+                    inputtedData.setVersion(bibleVersions.darbysNewTranslation);
+                    break;
+                case 6:
+                    inputtedData.setVersion(bibleVersions.ESVEnglishStandardVersion2001);
+                    break;
+                case 7:
+                    inputtedData.setVersion(bibleVersions.douayRheimsBible);
+                    break;
+                case 8:
+                    inputtedData.setVersion(bibleVersions.WEBWorldEnglishBible);
+                    break;
+                case 9:
+                    inputtedData.setVersion(bibleVersions.modernKJV);
+                    break;
+                case 10:
+                    inputtedData.setVersion(bibleVersions.ASVAmericanStandardVersion1901);
+                    break;
+                case 11:
+                    inputtedData.setVersion(bibleVersions.basicEnglishBible);
+                    break;
+                case 12:
+                    inputtedData.setVersion(bibleVersions.catholicPublicDomainVersion2009);
+                    break;
+                default:
+                    inputtedData.setVersion(bibleVersions.NASBNewAmericanStandardBible);
+                    break;
+            }
+        }
+
     }
 }

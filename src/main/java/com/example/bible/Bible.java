@@ -17,7 +17,7 @@ public class Bible extends Application {
     public void start(Stage stage) throws IOException {
         BibleVersions bibleVersions = new BibleVersions();
         LinkInfo linkInfo = new LinkInfo();
-        linkInfo.setLinkInfo("geo", bibleVersions.newRedactedEdition2015, 4, 1, 1, 5);
+        linkInfo.setLinkInfo("eng", bibleVersions.NASBNewAmericanStandardBible, 4, 1, 1, 5);
 
         FXMLLoader fxmlLoader = new FXMLLoader(Bible.class.getResource("front.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1600, 240);
