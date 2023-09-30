@@ -1,6 +1,6 @@
-package com.example.bible;
+package com.example.bible.requests;
 
-import org.json.JSONArray;
+import com.example.bible.requests.LinkConstructor;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -10,9 +10,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
-
-public class LinkInfo {
+public class LinkData {
     public String language;
     public int book;
     public int chapter;

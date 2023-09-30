@@ -1,7 +1,13 @@
-package com.example.bible;
+package com.example.bible.controllers;
 
+import com.example.bible.Bible;
+import com.example.bible.runtimeData.BibleVersions;
+import com.example.bible.runtimeData.InputtedData;
+import com.example.bible.requests.LinkData;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -9,18 +15,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
-public class FrontController {
+public class FrontController extends ProjectorController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -42,13 +44,14 @@ public class FrontController {
     @FXML
     private AnchorPane mainAnchorPane;
 
+
     private final String whiteColor = "0xf4f4f4ff";
     private final String blackColor = "#000000";
     private List<String> versionsList = new ArrayList<>();
     private List<String> booksList = new ArrayList<>();
     private InputtedData inputtedData = new InputtedData();
     private BibleVersions bibleVersions = new BibleVersions();
-    private LinkInfo linkInfo = new LinkInfo();
+    private LinkData linkData = new LinkData();
     private int previousLayoutYPath = -27;
 
 
@@ -86,58 +89,59 @@ public class FrontController {
     @FXML
     private void onVerseAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+        linkData.verses.clear();
         inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
         versionDefinition();
-        linkInfo.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
         String str = "";
-        for (int i = 0; i < linkInfo.verses.size(); i++) {
-            str += linkInfo.verses.get(i) + " ";
+        for (int i = 0; i < linkData.verses.size(); i++) {
+            str += linkData.verses.get(i) + " ";
         }
-        linkInfo.verses.clear();
-        Label newLabel = new Label();
-        newLabel.prefHeight(70);
-        newLabel.setStyle("-fx-text-fill: white; -fx-font-size: 15px;");
+        linkData.verses.clear();
+        Text newVerseBox = new Text();
+        newVerseBox.prefHeight(70);
+        newVerseBox.setStyle("-fx-fill: white; -fx-font-size: 15px;");
         StackPane stackPane = new StackPane();
         Rectangle rec = new Rectangle(1067, 83, Color.DARKBLUE);
         stackPane.getChildren().add(rec);
-        stackPane.getChildren().add(newLabel);
-        stackPane.setLayoutX(335);
+        stackPane.getChildren().add(newVerseBox);
+        stackPane.setLayoutX(400);
         stackPane.setLayoutY(73);
         mainAnchorPane.getChildren().add(stackPane);
-        newLabel.setText(str);
+        newVerseBox.setText(str);
         System.out.println("tt: " + str);
     }
 
     @FXML
     private void onTillAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+        linkData.verses.clear();
         previousLayoutYPath = -27;
         inputtedData.setTill(Integer.parseInt(till.getEditor().getText()));
-        linkInfo.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
         String str = "";
-        for (int i = 0; i < linkInfo.verses.size(); i++) {
-            Text newLabel = new Text();
-            newLabel.setStyle("-fx-fill: white; -fx-font-size: 15px;");
+        for (int i = 0; i < linkData.verses.size(); i++) {
+            Text newVerseBox = new Text();
+            newVerseBox.setStyle("-fx-fill: white; -fx-font-size: 15px;");
             StackPane stackPane = new StackPane();
             Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
             stackPane.getChildren().add(rec);
-            stackPane.getChildren().add(newLabel);
-            stackPane.setLayoutX(335);
+            stackPane.getChildren().add(newVerseBox);
+            stackPane.setLayoutX(400);
             stackPane.setLayoutY(previousLayoutYPath + 100);
             mainAnchorPane.getChildren().add(stackPane);
             previousLayoutYPath = (int) stackPane.getLayoutY();
-            newLabel.setText(linkInfo.verses.get(i));
+            newVerseBox.setText(linkData.verses.get(i));
 
-            newLabel.setTextAlignment(TextAlignment.CENTER);
-            newLabel.setWrappingWidth(rec.getWidth());
+            newVerseBox.setTextAlignment(TextAlignment.CENTER);
+            newVerseBox.setWrappingWidth(rec.getWidth());
 
-            if (linkInfo.verses.size() > 5) {
+            if (linkData.verses.size() > 5) {
                 int prefHeight = (int) mainAnchorPane.getPrefHeight();
                 mainAnchorPane.setPrefHeight(prefHeight + 60);
             }
         }
         previousLayoutYPath = 73;
-        linkInfo.verses.clear();
         System.out.println(str);
     }
 
@@ -145,6 +149,43 @@ public class FrontController {
     private void onClearButtonAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         mainAnchorPane.setPrefHeight(478);
+    }
+
+    @FXML
+    private void onOpenPresentViewAction() throws IOException {
+        FXMLLoader loader = new FXMLLoader(Bible.class.getResource("projector.fxml"));
+        Parent root = loader.load();
+        Stage newStage = new Stage();
+        newStage.setTitle("Present View");
+        newStage.setScene(new Scene(root, 1600, 400));
+        newStage.show();
+    }
+
+    @FXML
+    private void onShowButtonAction() {
+        previousLayoutYPath = -27;
+        String str = "";
+        for (int i = 0; i < linkData.verses.size(); i++) {
+            Text newVerseBox = new Text();
+            StackPane stackPane = new StackPane();
+            newVerseBox.setStyle("-fx-fill: white; -fx-font-size: 15px;");
+            newVerseBox.setLayoutX(400);
+            newVerseBox.setLayoutY(previousLayoutYPath + 100);
+            stackPane.getChildren().add(newVerseBox);
+
+
+            projectorAnchorPane.getChildren().add(stackPane);
+            newVerseBox.setText(linkData.verses.get(i));
+            previousLayoutYPath = (int) newVerseBox.getLayoutY();
+            System.out.println("text: " + newVerseBox.getText());
+
+            newVerseBox.setTextAlignment(TextAlignment.CENTER);
+            newVerseBox.setWrappingWidth(1000);
+
+
+        }
+        previousLayoutYPath = 73;
+        System.out.println(str);
     }
 
     private void darkModeColorsChanger(String color) {
@@ -185,7 +226,7 @@ public class FrontController {
                 versionsList.addAll(Arrays.asList(bibleVersions.englishVersions.split(",")));
                 booksList.clear();
                 booksList.addAll(Arrays.asList(bibleVersions.englishBooks.split(",")));
-            }else if(inputtedData.getLanguage().equals("rus")){
+            } else if (inputtedData.getLanguage().equals("rus")) {
                 versionsList.clear();
                 versionsList.addAll(Arrays.asList(bibleVersions.russianVersions.split(",")));
                 booksList.clear();

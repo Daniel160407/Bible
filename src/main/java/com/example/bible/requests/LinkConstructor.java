@@ -1,4 +1,4 @@
-package com.example.bible;
+package com.example.bible.requests;
 
 public class LinkConstructor {
     private String language;

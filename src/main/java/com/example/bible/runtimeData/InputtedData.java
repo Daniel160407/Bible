@@ -1,4 +1,4 @@
-package com.example.bible;
+package com.example.bible.runtimeData;
 
 public class InputtedData {
     private String language = "geo";

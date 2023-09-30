@@ -1,4 +1,4 @@
-package com.example.bible;
+package com.example.bible.runtimeData;
 
 public class BibleVersions {
     //Georgian Bible versions

@@ -8,4 +8,10 @@ module com.example.bible {
 
     opens com.example.bible to javafx.fxml;
     exports com.example.bible;
+    exports com.example.bible.controllers;
+    opens com.example.bible.controllers to javafx.fxml;
+    exports com.example.bible.requests;
+    opens com.example.bible.requests to javafx.fxml;
+    exports com.example.bible.runtimeData;
+    opens com.example.bible.runtimeData to javafx.fxml;
 }
