@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -17,12 +18,14 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FrontController extends ProjectorController {
+public class FrontController extends Ff{
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -43,6 +46,8 @@ public class FrontController extends ProjectorController {
     private RadioButton darkMode;
     @FXML
     private AnchorPane mainAnchorPane;
+    @FXML
+    private AnchorPane projectorAnchorPane;
 
 
     private final String whiteColor = "0xf4f4f4ff";
@@ -168,13 +173,14 @@ public class FrontController extends ProjectorController {
         for (int i = 0; i < linkData.verses.size(); i++) {
             Text newVerseBox = new Text();
             StackPane stackPane = new StackPane();
-            newVerseBox.setStyle("-fx-fill: white; -fx-font-size: 15px;");
+            newVerseBox.setStyle("-fx-fill: black; -fx-font-size: 15px;");
             newVerseBox.setLayoutX(400);
             newVerseBox.setLayoutY(previousLayoutYPath + 100);
             stackPane.getChildren().add(newVerseBox);
 
 
-            projectorAnchorPane.getChildren().add(stackPane);
+            setMyVariable(1);
+
             newVerseBox.setText(linkData.verses.get(i));
             previousLayoutYPath = (int) newVerseBox.getLayoutY();
             System.out.println("text: " + newVerseBox.getText());

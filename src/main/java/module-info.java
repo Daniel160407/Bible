@@ -4,6 +4,7 @@ module com.example.bible {
     requires java.sql;
     requires org.json;
     requires com.google.gson;
+    requires java.desktop;
 
 
     opens com.example.bible to javafx.fxml;
