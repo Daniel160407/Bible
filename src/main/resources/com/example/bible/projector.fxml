@@ -7,7 +7,7 @@
    <children>
       <ScrollPane prefHeight="1080.0" prefWidth="1978.0">
         <content>
-          <AnchorPane fx:id="projectorAnchorPane" minHeight="0.0" minWidth="0.0" onMouseClicked="#on" prefHeight="1080.0" prefWidth="1977.0" />
+          <AnchorPane fx:id="projectorAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="1080.0" prefWidth="1977.0" />
         </content>
       </ScrollPane>
    </children>

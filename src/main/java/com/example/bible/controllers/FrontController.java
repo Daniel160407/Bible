@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FrontController extends Ff{
+public class FrontController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -177,10 +177,17 @@ public class FrontController extends Ff{
             newVerseBox.setLayoutX(400);
             newVerseBox.setLayoutY(previousLayoutYPath + 100);
             stackPane.getChildren().add(newVerseBox);
+            Ff ff = new Ff();
 
-
-            setMyVariable(1);
-
+            ff.addPropertyChangeListener(new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if ("myVariable".equals(evt.getPropertyName())) {
+                        ff.on(stackPane);
+                    }
+                }
+            });
+            ff.setMyVariable(123);
             newVerseBox.setText(linkData.verses.get(i));
             previousLayoutYPath = (int) newVerseBox.getLayoutY();
             System.out.println("text: " + newVerseBox.getText());
