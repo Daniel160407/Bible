@@ -9,6 +9,19 @@ public class InputtedData {
     private int verse;
     private int till;
 
+    public InputtedData() {
+    }
+
+    public InputtedData(String language, int versionIndex, String version, String book, int chapter, int verse, int till) {
+        this.language = language;
+        this.versionIndex = versionIndex;
+        this.version = version;
+        this.book = book;
+        this.chapter = chapter;
+        this.verse = verse;
+        this.till = till;
+    }
+
     public String getLanguage() {
         return language;
     }
