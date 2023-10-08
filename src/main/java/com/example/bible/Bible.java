@@ -26,4 +26,4 @@ public class Bible extends Application {
     public static void main(String[] args) {
         launch();
     }
-}
+}ju
