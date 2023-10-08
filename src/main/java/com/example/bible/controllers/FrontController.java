@@ -6,6 +6,7 @@ import com.example.bible.runtimeData.InputtedData;
 import com.example.bible.requests.LinkData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.beans.PropertyChangeEvent;
@@ -43,6 +45,8 @@ public class FrontController extends ProjectorController {
     private RadioButton darkMode;
     @FXML
     private AnchorPane mainAnchorPane;
+    @FXML
+    private ComboBox<String> fontSize;
 
 
     private final String whiteColor = "0xf4f4f4ff";
@@ -53,7 +57,7 @@ public class FrontController extends ProjectorController {
     private static BibleVersions bibleVersions = new BibleVersions();
     private LinkData linkData = new LinkData();
     private int previousLayoutYPath = -27;
-    private static final Map<String, Map<Integer, String>> languageToVersionsMap = new HashMap<>();
+    private ProjectorController projectorController;
 
 
     @FXML
@@ -96,7 +100,7 @@ public class FrontController extends ProjectorController {
             linkData.verses.clear();
             inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
             versionDefinition();
-            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(),inputtedData.getVerse());
+            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
             String str = "";
             for (int i = 0; i < linkData.verses.size(); i++) {
                 str += linkData.verses.get(i) + " ";
@@ -148,7 +152,7 @@ public class FrontController extends ProjectorController {
                     mainAnchorPane.setPrefHeight(prefHeight + 60);
                 }
             }
-            linkData.verses.clear();
+
             previousLayoutYPath = 73;
             System.out.println(str);
         }
@@ -157,55 +161,53 @@ public class FrontController extends ProjectorController {
 
     @FXML
     private void onClearButtonAction() {
-        mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         mainAnchorPane.setPrefHeight(478);
 
 
-        chapter.getItems().clear();
-        chapter.setValue(null);
-        verse.getItems().clear();
-        verse.setValue(null);
-        till.getItems().clear();
-        till.setValue(null);
-
+        projectorController.projectorAnchorPane.getChildren().clear();
     }
 
     @FXML
     private void onOpenPresentViewAction() throws IOException {
         FXMLLoader loader = new FXMLLoader(Bible.class.getResource("projector.fxml"));
         Parent root = loader.load();
+        projectorController = loader.getController();
         Stage newStage = new Stage();
         newStage.setTitle("Present View");
         newStage.setScene(new Scene(root, 1600, 400));
         newStage.show();
+        projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnZBArIP3hsZS-ZYC6tUnSDs4nQpUc6wP0scLln1jTn1Cxm0Z4ihhoiApLthXYZBAdT54&usqp=CAU')");
     }
 
     @FXML
     private void onShowButtonAction() {
-        previousLayoutYPath = -27;
-        String str = "";
-        for (int i = 0; i < linkData.verses.size(); i++) {
-            Text newVerseBox = new Text();
-            StackPane stackPane = new StackPane();
-            newVerseBox.setStyle("-fx-fill: black; -fx-font-size: 15px;");
-            newVerseBox.setLayoutX(400);
-            newVerseBox.setLayoutY(previousLayoutYPath + 100);
-            stackPane.getChildren().add(newVerseBox);
-
-            projectorAnchorPane.getChildren().add(stackPane);
-
-
-            newVerseBox.setText(linkData.verses.get(i));
-            previousLayoutYPath = (int) newVerseBox.getLayoutY();
-            System.out.println("text: " + newVerseBox.getText());
-
-            newVerseBox.setTextAlignment(TextAlignment.CENTER);
-            newVerseBox.setWrappingWidth(1000);
-
-
+        if (projectorController.projectorAnchorPane.getChildren() != null) {
+            projectorController.projectorAnchorPane.getChildren().clear();
         }
-        previousLayoutYPath = 73;
-        System.out.println(str);
+        String allVersesInOne = "";
+        for (int i = 0; i < linkData.verses.size(); i++) {
+            allVersesInOne += linkData.verses.get(i) + " ";
+        }
+
+        projectorController.projectorTextBox.setStyle("-fx-fill: white; -fx-font-weight: bold; -fx-font-size: " + Integer.parseInt(fontSize.getValue()) + 2 + "px;");
+
+
+        projectorController.projectorAnchorPane.getChildren().add(projectorController.projectorTextBox);
+
+
+
+
+
+        projectorController.projectorTextBox.setText(allVersesInOne);
+
+
+        projectorController.projectorTextBox.setTextAlignment(TextAlignment.CENTER);
+
+    }
+
+    @FXML
+    private void onFontSizeAction() {
+
     }
 
     private void darkModeColorsChanger(String color) {

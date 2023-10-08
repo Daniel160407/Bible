@@ -2,14 +2,16 @@ package com.example.bible.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import java.awt.*;
 
 public class ProjectorController {
+
     @FXML
     protected AnchorPane projectorAnchorPane;
 
-
+    @FXML
+    protected Text projectorTextBox;
 }
