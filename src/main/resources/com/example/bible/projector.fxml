@@ -2,6 +2,5 @@
 
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="projectorAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-            prefHeight="1080.0" prefWidth="1972.0" xmlns="http://javafx.com/javafx/20.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.ProjectorController"/>
+
+<AnchorPane fx:id="projectorAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1972.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.ProjectorController" />

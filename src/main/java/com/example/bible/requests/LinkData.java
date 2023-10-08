@@ -11,17 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LinkData {
-    public String language;
-    public int book;
-    public int chapter;
-    public int verse;
-    public int till;
+    public int chaptersCount;
+    public int versesCount;
     public List<String> verses = new ArrayList<>();
     public List<String> versePath = new ArrayList<>();
+    public String searchText;
 
     public void setLinkInfo(String language, String bibleVersion, int book, int chapter, int verse, int till) {
         try {
             LinkConstructor link = new LinkConstructor(language, bibleVersion, book, chapter, verse);
+            link.setSearchText(searchText);
             String apiUrl = link.getLink();
             System.out.println(apiUrl);
             System.out.println("________");
@@ -46,13 +45,19 @@ public class LinkData {
                 }
                 System.out.println("Till: " + till);
                 System.out.println("Verse: " + verse);
-                for (int i = verse-1; i < till; i++) {
+                if (verse == 0) {
+                    verse++;
+                    till++;
+                }
+                for (int i = verse - 1; i < till; i++) {
                     System.out.println(i + " ::::::::: " + jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
                     verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
                     versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
                     versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
                 }
-
+                System.out.println("Chapter: " + Integer.parseInt(jsonObject.getJSONArray("tavi").getJSONObject(0).getString("cc")));
+                chaptersCount = Integer.parseInt(jsonObject.getJSONArray("tavi").getJSONObject(0).getString("cc"));
+                versesCount = Integer.parseInt(jsonObject.getJSONArray("muxli").getJSONObject(0).getString("cc"));
             } else {
                 System.err.println("API request failed with response code: " + responseCode);
             }

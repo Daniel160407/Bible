@@ -7,6 +7,7 @@ public class LinkConstructor {
     private int chapter;
     private int verse;
     private int till;
+    private String searchText;
 
     public LinkConstructor(String language, String bibleVersion, int book, int chapter, int verse) {
         this.language = language;
@@ -26,15 +27,29 @@ public class LinkConstructor {
         this.till = till;
     }
 
+    public String getSearchText() {
+        return searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
+    }
+
     public String getLink() {
         if (language.equals("rus")) {
             language = "russian";
         }
-        if (till == 0) {
-            return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language=" + language + "&page=1&verse=" + verse;
-        }
-        return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language="
-                + language + "&page=1&verse" + verse + "&versemde=" + till;
+        if (searchText != null && !searchText.equals("")) {
+            return "https://holybible.ge/service.php?w=&t=&m=&s=" + searchText + "&mv=" + bibleVersion + "&language=" + language + "&page=1";
 
+        } else if (till == 0) {
+            return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language=" + language + "&page=1&verse=" + verse;
+
+        } else if (till != 0) {
+            return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language="
+                    + language + "&page=1&verse" + verse + "&versemde=" + till;
+        }
+
+        return "";
     }
 }

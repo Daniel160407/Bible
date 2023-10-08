@@ -53,7 +53,6 @@ public class FrontController extends ProjectorController {
     private static BibleVersions bibleVersions = new BibleVersions();
     private LinkData linkData = new LinkData();
     private int previousLayoutYPath = -27;
-    private static final Map<String, Map<Integer, String>> languageToVersionsMap = new HashMap<>();
 
 
     @FXML
@@ -64,7 +63,6 @@ public class FrontController extends ProjectorController {
     @FXML
     private void onVersionsMouseClicked() {
         getVersionsAndBooksInfo();
-
     }
 
     @FXML
@@ -80,14 +78,23 @@ public class FrontController extends ProjectorController {
     @FXML
     private void onBooksAction() {
         inputtedData.setBook(books.getValue());
+        chapter.getItems().clear();
+        //there must be a link request
+        System.out.println(linkData.chaptersCount);
+        for (int i = 1; i <= linkData.chaptersCount; i++) {
+            chapter.getItems().add(i);
+        }
+        System.out.println("FFFFFFFFFFFFFFF");
     }
 
     @FXML
     private void onChapterAction() {
         if (chapter.getEditor().getText() != null && !chapter.getEditor().getText().equals("")) {
             inputtedData.setChapter(Integer.parseInt(chapter.getEditor().getText()));
+
         }
     }
+
 
     @FXML
     private void onVerseAction() {
@@ -96,7 +103,7 @@ public class FrontController extends ProjectorController {
             linkData.verses.clear();
             inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
             versionDefinition();
-            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(),inputtedData.getVerse());
+            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
             String str = "";
             for (int i = 0; i < linkData.verses.size(); i++) {
                 str += linkData.verses.get(i) + " ";
@@ -206,6 +213,32 @@ public class FrontController extends ProjectorController {
         }
         previousLayoutYPath = 73;
         System.out.println(str);
+    }
+
+    @FXML
+    private void onSearchAction() {
+        mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+        linkData.verses.clear();
+        versionDefinition();
+        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+        linkData.searchText = search.getText();
+        for (int i = 0; i < linkData.verses.size(); i++) {
+            Text newVerseBox = new Text();
+            newVerseBox.setStyle("-fx-fill: white; -fx-font-size: 15px;");
+            StackPane stackPane = new StackPane();
+            Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
+            stackPane.getChildren().add(rec);
+            stackPane.getChildren().add(newVerseBox);
+            stackPane.setLayoutX(400);
+            stackPane.setLayoutY(previousLayoutYPath + 100);
+            mainAnchorPane.getChildren().add(stackPane);
+            previousLayoutYPath = (int) stackPane.getLayoutY();
+            newVerseBox.setText(linkData.verses.get(i));
+
+            newVerseBox.setTextAlignment(TextAlignment.CENTER);
+            newVerseBox.setWrappingWidth(rec.getWidth());
+
+        }
     }
 
     private void darkModeColorsChanger(String color) {
