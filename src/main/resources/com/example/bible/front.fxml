@@ -37,7 +37,7 @@
         <ComboBox fx:id="chapter" editable="true" layoutX="711.0" layoutY="14.0" onAction="#onChapterAction" prefWidth="150.0" />
         <ComboBox fx:id="verse" editable="true" layoutX="877.0" layoutY="14.0" onAction="#onVerseAction" prefWidth="150.0" />
         <ComboBox fx:id="till" editable="true" layoutX="1044.0" layoutY="14.0" onAction="#onTillAction" prefWidth="150.0" />
-        <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" />
+        <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" onAction="#onSearchAction" />
         <ScrollPane fx:id="scrollPane" layoutY="56.0" prefHeight="491.0" prefWidth="1920.0">
             <content>
                 <AnchorPane fx:id="mainAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="476.0" prefWidth="1919.0" />

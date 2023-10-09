@@ -7,6 +7,7 @@ public class LinkConstructor {
     private int chapter;
     private int verse;
     private int till;
+    private String search;
 
     public LinkConstructor(String language, String bibleVersion, int book, int chapter, int verse) {
         this.language = language;
@@ -26,15 +27,29 @@ public class LinkConstructor {
         this.till = till;
     }
 
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
     public String getLink() {
         if (language.equals("rus")) {
             language = "russian";
         }
-        if (till == 0) {
+        System.out.println("Link: " + till);
+        System.out.println("Link: " + search);
+        if (search != null && !search.equals("")) {
+            return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=" + search + "&mv=" + bibleVersion + "&language="
+                    + language + "&page=1";
+        }else if (till == 0) {
             return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language=" + language + "&page=1&verse=" + verse;
+        } else if (till != 0) {
+            return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language="
+                    + language + "&page=1&verse" + verse + "&versemde=" + till;
         }
-        return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language="
-                + language + "&page=1&verse" + verse + "&versemde=" + till;
-
+        return "";
     }
 }

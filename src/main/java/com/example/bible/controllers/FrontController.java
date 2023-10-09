@@ -68,7 +68,6 @@ public class FrontController extends ProjectorController {
     @FXML
     private void onVersionsMouseClicked() {
         getVersionsAndBooksInfo();
-
     }
 
     @FXML
@@ -84,12 +83,25 @@ public class FrontController extends ProjectorController {
     @FXML
     private void onBooksAction() {
         inputtedData.setBook(books.getValue());
+
+        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, 1, 1, 1);
+        chapter.getItems().clear();
+        for (int i = 0; i < linkData.chapterCount; i++) {
+            chapter.getItems().add(i + 1);
+        }
     }
 
     @FXML
     private void onChapterAction() {
         if (chapter.getEditor().getText() != null && !chapter.getEditor().getText().equals("")) {
             inputtedData.setChapter(Integer.parseInt(chapter.getEditor().getText()));
+        }
+        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1);
+        verse.getItems().clear();
+        till.getItems().clear();
+        for (int i = 0; i < linkData.verseCount; i++) {
+            verse.getItems().add(i + 1);
+            till.getItems().add(i + 1);
         }
     }
 
@@ -117,6 +129,8 @@ public class FrontController extends ProjectorController {
             stackPane.setLayoutY(73);
             mainAnchorPane.getChildren().add(stackPane);
             newVerseBox.setText(str);
+            newVerseBox.setTextAlignment(TextAlignment.CENTER);
+            newVerseBox.setWrappingWidth(rec.getWidth());
             System.out.println("tt: " + str);
         }
 
@@ -188,27 +202,40 @@ public class FrontController extends ProjectorController {
         for (int i = 0; i < linkData.verses.size(); i++) {
             allVersesInOne += linkData.verses.get(i) + " ";
         }
-
         projectorController.projectorTextBox.setStyle("-fx-fill: white; -fx-font-weight: bold; -fx-font-size: " + Integer.parseInt(fontSize.getValue()) + 2 + "px;");
-
-
         projectorController.projectorAnchorPane.getChildren().add(projectorController.projectorTextBox);
-
-
-
-
-
         projectorController.projectorTextBox.setText(allVersesInOne);
-
-
         projectorController.projectorTextBox.setTextAlignment(TextAlignment.CENTER);
-
     }
 
+    //in developing
     @FXML
-    private void onFontSizeAction() {
+    private void onSearchAction() {
+        mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+        linkData.verses.clear();
+        versionDefinition();
+        linkData.search = search.getText();
+        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1);
 
+        for (int i = 0; i < linkData.verses.size(); i++) {
+            Text newVerseBox = new Text();
+            newVerseBox.setStyle("-fx-fill: white; -fx-font-size: 15px;");
+            StackPane stackPane = new StackPane();
+            Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
+            stackPane.getChildren().add(rec);
+            stackPane.getChildren().add(newVerseBox);
+            stackPane.setLayoutX(400);
+            stackPane.setLayoutY(previousLayoutYPath + 100);
+            mainAnchorPane.getChildren().add(stackPane);
+            previousLayoutYPath = (int) stackPane.getLayoutY();
+            newVerseBox.setText(linkData.verses.get(i));
+
+            newVerseBox.setTextAlignment(TextAlignment.CENTER);
+            newVerseBox.setWrappingWidth(rec.getWidth());
+
+        }
     }
+
 
     private void darkModeColorsChanger(String color) {
         if (color.equals(whiteColor)) {

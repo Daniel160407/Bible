@@ -8,6 +8,7 @@ public class InputtedData {
     private int chapter;
     private int verse;
     private int till;
+    private String search;
 
     public InputtedData() {
     }
@@ -50,6 +51,10 @@ public class InputtedData {
         return till;
     }
 
+    public String getSearch() {
+        return search;
+    }
+
     public void setLanguage(String language) {
         this.language = language;
     }
@@ -76,5 +81,9 @@ public class InputtedData {
 
     public void setTill(int till) {
         this.till = till;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 }
