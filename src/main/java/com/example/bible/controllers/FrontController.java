@@ -10,6 +10,11 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -19,10 +24,12 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 public class FrontController extends ProjectorController {
     @FXML
@@ -44,9 +51,51 @@ public class FrontController extends ProjectorController {
     @FXML
     private RadioButton darkMode;
     @FXML
+    private ScrollPane scrollPane;
+    @FXML
     private AnchorPane mainAnchorPane;
     @FXML
     private ComboBox<String> fontSize;
+    @FXML
+    private RadioButton img1;
+    @FXML
+    private RadioButton img2;
+    @FXML
+    private RadioButton img3;
+    @FXML
+    private RadioButton img4;
+    @FXML
+    private RadioButton img5;
+    @FXML
+    private RadioButton img6;
+    @FXML
+    private RadioButton img7;
+    @FXML
+    private RadioButton img8;
+    @FXML
+    private RadioButton img9;
+    @FXML
+    private RadioButton img10;
+    @FXML
+    private RadioButton img11;
+    @FXML
+    private RadioButton img12;
+    @FXML
+    private RadioButton img13;
+    @FXML
+    private RadioButton img14;
+    @FXML
+    private RadioButton img15;
+    @FXML
+    private RadioButton img16;
+    @FXML
+    private RadioButton img17;
+    @FXML
+    private RadioButton img18;
+    @FXML
+    private RadioButton img19;
+    @FXML
+    private RadioButton img20;
 
 
     private final String whiteColor = "0xf4f4f4ff";
@@ -58,6 +107,7 @@ public class FrontController extends ProjectorController {
     private LinkData linkData = new LinkData();
     private int previousLayoutYPath = -27;
     private ProjectorController projectorController;
+    private String backgroundImage;
 
 
     @FXML
@@ -110,6 +160,7 @@ public class FrontController extends ProjectorController {
         if (verse.getEditor().getText() != null && !verse.getEditor().getText().equals("")) {
             mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
             linkData.verses.clear();
+            mainAnchorPane.setPrefHeight(scrollPane.getHeight());
             inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
             versionDefinition();
             linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
@@ -120,7 +171,7 @@ public class FrontController extends ProjectorController {
 
             Text newVerseBox = new Text();
             newVerseBox.prefHeight(70);
-            newVerseBox.setStyle("-fx-fill: white; -fx-font-size: 15px;");
+            newVerseBox.getStyleClass().add("newVerseBox");
             StackPane stackPane = new StackPane();
             Rectangle rec = new Rectangle(1067, 83, Color.DARKBLUE);
             stackPane.getChildren().add(rec);
@@ -141,13 +192,14 @@ public class FrontController extends ProjectorController {
         if (till.getEditor().getText() != null && !till.getEditor().getText().equals("")) {
             mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
             linkData.verses.clear();
+            mainAnchorPane.setPrefHeight(scrollPane.getHeight());
             previousLayoutYPath = -27;
             inputtedData.setTill(Integer.parseInt(till.getEditor().getText()));
             linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
             String str = "";
             for (int i = 0; i < linkData.verses.size(); i++) {
                 Text newVerseBox = new Text();
-                newVerseBox.setStyle("-fx-fill: white; -fx-font-size: 15px;");
+                newVerseBox.getStyleClass().add("newVerseBox");
                 StackPane stackPane = new StackPane();
                 Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
                 stackPane.getChildren().add(rec);
@@ -163,7 +215,7 @@ public class FrontController extends ProjectorController {
 
                 if (linkData.verses.size() > 5) {
                     int prefHeight = (int) mainAnchorPane.getPrefHeight();
-                    mainAnchorPane.setPrefHeight(prefHeight + 60);
+                    mainAnchorPane.setPrefHeight(prefHeight + 87);
                 }
             }
 
@@ -183,14 +235,16 @@ public class FrontController extends ProjectorController {
 
     @FXML
     private void onOpenPresentViewAction() throws IOException {
-        FXMLLoader loader = new FXMLLoader(Bible.class.getResource("projector.fxml"));
+        FXMLLoader loader = new FXMLLoader(Bible.class.getResource("fxml files/projector.fxml"));
         Parent root = loader.load();
         projectorController = loader.getController();
         Stage newStage = new Stage();
         newStage.setTitle("Present View");
-        newStage.setScene(new Scene(root, 1600, 400));
+        Scene scene = new Scene(root, 1600, 400);
+        scene.getStylesheets().add(Objects.requireNonNull(Bible.class.getResource("styles/style.css")).toExternalForm());
+        newStage.setScene(scene);
         newStage.show();
-        projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnZBArIP3hsZS-ZYC6tUnSDs4nQpUc6wP0scLln1jTn1Cxm0Z4ihhoiApLthXYZBAdT54&usqp=CAU')");
+        projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('" + backgroundImage + "');");
     }
 
     @FXML
@@ -202,44 +256,195 @@ public class FrontController extends ProjectorController {
         for (int i = 0; i < linkData.verses.size(); i++) {
             allVersesInOne += linkData.verses.get(i) + " ";
         }
-        projectorController.projectorTextBox.setStyle("-fx-fill: white; -fx-font-weight: bold; -fx-font-size: " + Integer.parseInt(fontSize.getValue()) + 2 + "px;");
+        projectorController.projectorTextBox.getStyleClass().add("projectorTextBox");
+        projectorController.projectorTextBox.setStyle("-fx-font-size: " + Integer.parseInt(fontSize.getValue()) + 2 + "px;");
         projectorController.projectorAnchorPane.getChildren().add(projectorController.projectorTextBox);
         projectorController.projectorTextBox.setText(allVersesInOne);
         projectorController.projectorTextBox.setTextAlignment(TextAlignment.CENTER);
     }
 
-    //in developing
     @FXML
     private void onSearchAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         linkData.verses.clear();
+        mainAnchorPane.setPrefHeight(scrollPane.getPrefHeight());
         versionDefinition();
         linkData.search = search.getText();
         linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1);
 
         for (int i = 0; i < linkData.verses.size(); i++) {
             Text newVerseBox = new Text();
-            newVerseBox.setStyle("-fx-fill: white; -fx-font-size: 15px;");
+            newVerseBox.getStyleClass().add("newVerseBox");
             StackPane stackPane = new StackPane();
             Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
-            stackPane.getChildren().add(rec);
-            stackPane.getChildren().add(newVerseBox);
+            Button separateButton = new Button();
+            stackPane.getChildren().addAll(rec, newVerseBox, separateButton);
+
             stackPane.setLayoutX(400);
             stackPane.setLayoutY(previousLayoutYPath + 100);
             mainAnchorPane.getChildren().add(stackPane);
             previousLayoutYPath = (int) stackPane.getLayoutY();
             newVerseBox.setText(linkData.verses.get(i));
 
+            separateButton.getStyleClass().add("separate-button");
+            separateButton.setLayoutY(100);
+            separateButton.setText("Separate");
+
             newVerseBox.setTextAlignment(TextAlignment.CENTER);
             newVerseBox.setWrappingWidth(rec.getWidth());
+            if (linkData.verses.size() > 5) {
+                int prefHeight = (int) mainAnchorPane.getPrefHeight();
+                mainAnchorPane.setPrefHeight(prefHeight + rec.getHeight() + 9);
+            }
 
         }
+        previousLayoutYPath = -73;
+    }
+
+    @FXML
+    private void onImg1Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/1.jpeg";
+        radioButtonSwitch();
+        img1.setSelected(true);
+    }
+
+    @FXML
+    private void onImg2Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/2.jpeg";
+        radioButtonSwitch();
+        img2.setSelected(true);
+    }
+
+    @FXML
+    private void onImg3Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/3.jpeg";
+        radioButtonSwitch();
+        img3.setSelected(true);
+    }
+
+    @FXML
+    private void onImg4Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/4.jpeg";
+        radioButtonSwitch();
+        img4.setSelected(true);
+    }
+
+    @FXML
+    private void onImg5Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/5.jpeg";
+        radioButtonSwitch();
+        img5.setSelected(true);
+    }
+
+    @FXML
+    private void onImg6Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/6.jpeg";
+        radioButtonSwitch();
+        img6.setSelected(true);
+    }
+
+    @FXML
+    private void onImg7Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/7.jpeg";
+        radioButtonSwitch();
+        img7.setSelected(true);
+    }
+
+    @FXML
+    private void onImg8Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/8.jpeg";
+        radioButtonSwitch();
+        img8.setSelected(true);
+    }
+
+    @FXML
+    private void onImg9Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/9.jpeg";
+        radioButtonSwitch();
+        img9.setSelected(true);
+    }
+
+    @FXML
+    private void onImg10Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/10.jpeg";
+        radioButtonSwitch();
+        img10.setSelected(true);
+    }
+
+    @FXML
+    private void onImg11Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/11.jpeg";
+        radioButtonSwitch();
+        img11.setSelected(true);
+    }
+
+    @FXML
+    private void onImg12Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/12.jpeg";
+        radioButtonSwitch();
+        img12.setSelected(true);
+    }
+
+    @FXML
+    private void onImg13Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/13.jpeg";
+        radioButtonSwitch();
+        img13.setSelected(true);
+    }
+
+    @FXML
+    private void onImg14Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/14.jpeg";
+        radioButtonSwitch();
+        img14.setSelected(true);
+    }
+
+    @FXML
+    private void onImg15Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/15.jpeg";
+        radioButtonSwitch();
+        img15.setSelected(true);
+    }
+
+    @FXML
+    private void onImg16Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/16.jpeg";
+        radioButtonSwitch();
+        img16.setSelected(true);
+    }
+
+    @FXML
+    private void onImg17Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/17.jpeg";
+        radioButtonSwitch();
+        img17.setSelected(true);
+    }
+
+    @FXML
+    private void onImg18Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/18.jpeg";
+        radioButtonSwitch();
+        img18.setSelected(true);
+    }
+
+    @FXML
+    private void onImg19Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/19.jpeg";
+        radioButtonSwitch();
+        img19.setSelected(true);
+    }
+
+    @FXML
+    private void onImg20Action() {
+        backgroundImage = "https://bibleversesgeo.netlify.app/images/20.jpeg";
+        radioButtonSwitch();
+        img20.setSelected(true);
     }
 
 
     private void darkModeColorsChanger(String color) {
         if (color.equals(whiteColor)) {
-            anchorPane.setStyle("-fx-background-color:" + blackColor);
+            anchorPane.setStyle("-fx-background-color: " + blackColor);
             mainAnchorPane.setStyle("-fx-background-color:" + blackColor);
             language.setStyle("-fx-text-fill:" + "white");
             versions.setStyle("-fx-text-fill:" + "white");
@@ -393,5 +598,29 @@ public class FrontController extends ProjectorController {
             }
         }
 
+    }
+
+    private void radioButtonSwitch() {
+        img1.setSelected(false);
+        img2.setSelected(false);
+        img3.setSelected(false);
+        img4.setSelected(false);
+        img5.setSelected(false);
+        img6.setSelected(false);
+        img7.setSelected(false);
+        img8.setSelected(false);
+        img9.setSelected(false);
+        img10.setSelected(false);
+        img11.setSelected(false);
+        img12.setSelected(false);
+        img13.setSelected(false);
+        img14.setSelected(false);
+        img15.setSelected(false);
+        img16.setSelected(false);
+        img17.setSelected(false);
+        img18.setSelected(false);
+        img19.setSelected(false);
+        img20.setSelected(false);
+        projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('" + backgroundImage + "');");
     }
 }

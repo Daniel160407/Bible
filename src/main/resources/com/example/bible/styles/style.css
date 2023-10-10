@@ -1,0 +1,13 @@
+.separate-button{
+    -fx-background-color: lightgray;
+}
+
+.newVerseBox{
+    -fx-fill: white;
+    -fx-font-size: 15px;
+}
+
+.projectorTextBox{
+    -fx-fill: white;
+    -fx-font-weight: bold;
+}

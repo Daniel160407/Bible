@@ -4,7 +4,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="projectorAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.ProjectorController">
-   <children>
-      <Text fx:id="projectorTextBox" layoutY="545.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="1972.0" />
-   </children>
+    <children>
+        <Text fx:id="projectorTextBox" layoutY="545.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="1972.0" />
+    </children>
 </AnchorPane>
