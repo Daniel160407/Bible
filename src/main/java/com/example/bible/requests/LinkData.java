@@ -94,7 +94,8 @@ public class LinkData {
                 if (search != null && !search.equals("")) {
                     for (int i = verse - 1; i < jsonObject.getJSONArray("bibleData").length(); i++) {
                         System.out.println(i + ": " + jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
-                        verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
+
+                        verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv").replaceAll("<span class='markedText'>|</span>", ""));
 
                         versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
                         versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));

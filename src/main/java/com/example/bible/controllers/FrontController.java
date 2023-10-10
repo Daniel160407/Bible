@@ -4,8 +4,11 @@ import com.example.bible.Bible;
 import com.example.bible.runtimeData.BibleVersions;
 import com.example.bible.runtimeData.InputtedData;
 import com.example.bible.requests.LinkData;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -278,7 +282,11 @@ public class FrontController extends ProjectorController {
             StackPane stackPane = new StackPane();
             Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
             Button separateButton = new Button();
-            stackPane.getChildren().addAll(rec, newVerseBox, separateButton);
+            VBox vBox = new VBox();
+            vBox.setAlignment(Pos.CENTER);
+            vBox.setSpacing(10);
+            vBox.getChildren().addAll(newVerseBox, separateButton);
+            stackPane.getChildren().addAll(rec, vBox);
 
             stackPane.setLayoutX(400);
             stackPane.setLayoutY(previousLayoutYPath + 100);
@@ -289,6 +297,20 @@ public class FrontController extends ProjectorController {
             separateButton.getStyleClass().add("separate-button");
             separateButton.setLayoutY(100);
             separateButton.setText("Separate");
+            separateButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+                    StackPane stackPane2 = new StackPane();
+                    stackPane2.setLayoutX(400);
+                    stackPane2.setLayoutY(73);
+                    stackPane2.getChildren().addAll(rec, newVerseBox);
+                    mainAnchorPane.getChildren().add(stackPane2);
+                    mainAnchorPane.setPrefHeight(scrollPane.getPrefHeight());
+                    linkData.verses.clear();
+                    linkData.verses.add(newVerseBox.getText());
+                }
+            });
 
             newVerseBox.setTextAlignment(TextAlignment.CENTER);
             newVerseBox.setWrappingWidth(rec.getWidth());
