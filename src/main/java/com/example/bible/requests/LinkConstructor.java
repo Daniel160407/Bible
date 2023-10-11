@@ -39,8 +39,6 @@ public class LinkConstructor {
         if (language.equals("rus")) {
             language = "russian";
         }
-        System.out.println("Link: " + till);
-        System.out.println("Link: " + search);
         if (search != null && !search.equals("")) {
             return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=" + search + "&mv=" + bibleVersion + "&language="
                     + language + "&page=1";

@@ -34,6 +34,10 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class FrontController extends ProjectorController {
     @FXML
@@ -100,6 +104,18 @@ public class FrontController extends ProjectorController {
     private RadioButton img19;
     @FXML
     private RadioButton img20;
+    @FXML
+    private ComboBox<String> geoProjectorVersions;
+    @FXML
+    private ComboBox<String> engProjectorVersions;
+    @FXML
+    private ComboBox<String> rusProjectorVersions;
+    @FXML
+    private CheckBox geoCheckBox;
+    @FXML
+    private CheckBox engCheckBox;
+    @FXML
+    private CheckBox rusCheckBox;
 
 
     private final String whiteColor = "0xf4f4f4ff";
@@ -232,8 +248,6 @@ public class FrontController extends ProjectorController {
     @FXML
     private void onClearButtonAction() {
         mainAnchorPane.setPrefHeight(478);
-
-
         projectorController.projectorAnchorPane.getChildren().clear();
     }
 
@@ -243,6 +257,8 @@ public class FrontController extends ProjectorController {
         Parent root = loader.load();
         projectorController = loader.getController();
         Stage newStage = new Stage();
+        newStage.getIcons().add(new Image("https://cdn-icons-png.flaticon.com/512/3004/3004416.png"));
+        newStage.setTitle("Bible");
         newStage.setTitle("Present View");
         Scene scene = new Scene(root, 1600, 400);
         scene.getStylesheets().add(Objects.requireNonNull(Bible.class.getResource("styles/style.css")).toExternalForm());
@@ -253,13 +269,13 @@ public class FrontController extends ProjectorController {
 
     @FXML
     private void onShowButtonAction() {
+        projectorController.projectorAnchorPane.getChildren().removeIf(node -> node instanceof Text);
         if (projectorController.projectorAnchorPane.getChildren() != null) {
             projectorController.projectorAnchorPane.getChildren().clear();
         }
         String allVersesInOne = "";
-        for (int i = 0; i < linkData.verses.size(); i++) {
-            allVersesInOne += linkData.verses.get(i) + " ";
-        }
+        allVersesInOne = requestManager(allVersesInOne);
+
         projectorController.projectorTextBox.getStyleClass().add("projectorTextBox");
         projectorController.projectorTextBox.setStyle("-fx-font-size: " + Integer.parseInt(fontSize.getValue()) + 2 + "px;");
         projectorController.projectorAnchorPane.getChildren().add(projectorController.projectorTextBox);
@@ -321,6 +337,36 @@ public class FrontController extends ProjectorController {
 
         }
         previousLayoutYPath = -73;
+    }
+
+    @FXML
+    private void onGeoCheckBoxAction() {
+
+    }
+
+    @FXML
+    private void onGeoProjectorVersionsAction() {
+
+    }
+
+    @FXML
+    private void onEngCheckBoxAction() {
+
+    }
+
+    @FXML
+    private void onEngProjectorVersionsAction() {
+
+    }
+
+    @FXML
+    private void onRusCheckBoxAction() {
+
+    }
+
+    @FXML
+    private void onRusProjectorVersionsAction() {
+
     }
 
     @FXML
@@ -511,8 +557,14 @@ public class FrontController extends ProjectorController {
 
             versions.getItems().clear();
             books.getItems().clear();
+            geoProjectorVersions.getItems().clear();
+            engProjectorVersions.getItems().clear();
+            rusProjectorVersions.getItems().clear();
             versions.getItems().addAll(versionsList);
             books.getItems().addAll(booksList);
+            geoProjectorVersions.getItems().addAll(bibleVersions.georgianVersions.split(","));
+            engProjectorVersions.getItems().addAll(bibleVersions.englishVersions.split(","));
+            rusProjectorVersions.getItems().addAll(bibleVersions.russianVersions.split(","));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -644,5 +696,81 @@ public class FrontController extends ProjectorController {
         img19.setSelected(false);
         img20.setSelected(false);
         projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('" + backgroundImage + "');");
+    }
+
+    private String requestManager(String allVersesInOne) {
+        int versesCount = linkData.verses.size();
+        List<String> versesData = new ArrayList<>(linkData.verses);
+        linkData.verses.clear();
+        linkData.useCache = false;
+
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        List<Future<String>> futures = new ArrayList<>();
+        futures.add(executor.submit(() -> {
+            String str = "";
+            if (geoCheckBox.isSelected()) {
+                if (versesCount == 1) {
+                    linkData.setLinkInfo("geo", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                } else if (versesCount > 1) {
+                    linkData.setLinkInfo("geo", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                }
+                for (int i = 0; i < linkData.verses.size(); i++) {
+                    str += linkData.verses.get(i) + " ";
+                }
+                str += "\n";
+                linkData.verses.clear();
+            }
+            return str;
+        }));
+
+
+        futures.add(executor.submit(() -> {
+            String str = "";
+            if (engCheckBox.isSelected()) {
+                if (versesCount == 1) {
+                    linkData.setLinkInfo("eng", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                } else if (versesCount > 1) {
+                    linkData.setLinkInfo("eng", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                }
+                for (int i = 0; i < linkData.verses.size(); i++) {
+                    str += linkData.verses.get(i) + " ";
+                }
+                str += "\n";
+                linkData.verses.clear();
+            }
+            return str;
+        }));
+
+
+        futures.add(executor.submit(() -> {
+            String str = "";
+            if (rusCheckBox.isSelected()) {
+                if (versesCount == 1) {
+                    linkData.setLinkInfo("rus", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                } else if (versesCount > 1) {
+                    linkData.setLinkInfo("rus", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                }
+                for (int i = 0; i < linkData.verses.size(); i++) {
+                    str += linkData.verses.get(i) + " ";
+                }
+                str += "\n";
+                linkData.verses.clear();
+            }
+            return str;
+        }));
+
+        for (Future<String> future : futures) {
+            try {
+                allVersesInOne += future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+
+        executor.shutdown();
+        linkData.verses.addAll(versesData);
+        linkData.useCache = true;
+
+        return allVersesInOne;
     }
 }

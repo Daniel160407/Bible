@@ -5,6 +5,7 @@ import com.example.bible.runtimeData.BibleVersions;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ public class Bible extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Bible.class.getResource("fxml files/front.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1600, 240);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/style.css")).toExternalForm());
+        stage.getIcons().add(new Image("https://cdn-icons-png.flaticon.com/512/3004/3004416.png"));
         stage.setTitle("Bible");
         stage.setScene(scene);
         stage.show();
