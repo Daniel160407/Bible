@@ -216,7 +216,7 @@ public class FrontController extends ProjectorController {
             previousLayoutYPath = -27;
             inputtedData.setTill(Integer.parseInt(till.getEditor().getText()));
             linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
-            String str = "";
+
             for (int i = 0; i < linkData.verses.size(); i++) {
                 Text newVerseBox = new Text();
                 newVerseBox.getStyleClass().add("newVerseBox");
@@ -240,7 +240,7 @@ public class FrontController extends ProjectorController {
             }
 
             previousLayoutYPath = 73;
-            System.out.println(str);
+
         }
 
     }
