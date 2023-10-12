@@ -64,7 +64,7 @@
                 <Font size="15.0" />
             </font>
         </Button>
-        <Label layoutX="441.0" layoutY="575.0" text="Font Size:">
+        <Label fx:id="fontSizeLabel" layoutX="441.0" layoutY="575.0" text="Font Size:">
             <font>
                 <Font size="15.0" />
             </font>
@@ -284,26 +284,46 @@
                 </ImageView>
             </children>
         </HBox>
-      <Label layoutX="386.0" layoutY="634.0" text="Georgian">
+      <Label fx:id="langLab1" layoutX="386.0" layoutY="634.0" text="Georgian">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <CheckBox fx:id="geoCheckBox" layoutX="481.0" layoutY="636.0" mnemonicParsing="false" onAction="#onGeoCheckBoxAction" />
-      <ComboBox fx:id="geoProjectorVersions" layoutX="511.0" layoutY="632.0" onAction="#onGeoProjectorVersionsAction" prefWidth="150.0" />
-      <CheckBox fx:id="engCheckBox" layoutX="481.0" layoutY="711.0" mnemonicParsing="false" onAction="#onEngCheckBoxAction" />
-      <ComboBox fx:id="engProjectorVersions" layoutX="511.0" layoutY="707.0" onAction="#onEngProjectorVersionsAction" prefWidth="150.0" />
-      <Label layoutX="392.0" layoutY="709.0" text="English">
+      <CheckBox fx:id="geoCheckBox" layoutX="481.0" layoutY="636.0" mnemonicParsing="false" />
+      <ComboBox fx:id="geoProjectorVersions" layoutX="511.0" layoutY="632.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+      <CheckBox fx:id="engCheckBox" layoutX="481.0" layoutY="711.0" mnemonicParsing="false" />
+      <ComboBox fx:id="engProjectorVersions" layoutX="511.0" layoutY="707.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+      <Label fx:id="langLab2" layoutX="392.0" layoutY="709.0" text="English">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="391.0" layoutY="784.0" text="Russian">
+      <Label fx:id="langLab3" layoutX="391.0" layoutY="784.0" text="Russian">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <CheckBox fx:id="rusCheckBox" layoutX="481.0" layoutY="786.0" mnemonicParsing="false" onAction="#onRusCheckBoxAction" />
-      <ComboBox fx:id="rusProjectorVersions" layoutX="511.0" layoutY="782.0" onAction="#onRusProjectorVersionsAction" prefWidth="150.0" />
+      <CheckBox fx:id="rusCheckBox" layoutX="481.0" layoutY="786.0" mnemonicParsing="false" />
+      <ComboBox fx:id="rusProjectorVersions" layoutX="511.0" layoutY="782.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+      <Label fx:id="ideaOf" layoutX="952.0" layoutY="947.0" text="Idea Of">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="eso" layoutX="1003.0" layoutY="947.0" onMouseClicked="#onEsoMouseClicked" text="Eso" underline="true">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="madeBy" layoutX="936.0" layoutY="975.0" text="Made By">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="daniel" layoutX="998.0" layoutY="975.0" onMouseClicked="#onDanielMouseClicked" text="Daniel" underline="true">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

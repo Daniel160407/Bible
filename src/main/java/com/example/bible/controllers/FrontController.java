@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -32,6 +33,7 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.net.URI;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -116,10 +118,26 @@ public class FrontController extends ProjectorController {
     private CheckBox engCheckBox;
     @FXML
     private CheckBox rusCheckBox;
+    @FXML
+    private Label fontSizeLabel;
+    @FXML
+    private Label langLab1;
+    @FXML
+    private Label langLab2;
+    @FXML
+    private Label langLab3;
+    @FXML
+    private Label ideaOf;
+    @FXML
+    private Label madeBy;
+    @FXML
+    private Label eso;
+    @FXML
+    private Label daniel;
 
 
     private final String whiteColor = "0xf4f4f4ff";
-    private final String blackColor = "#000000";
+    private final String darkColor = "#030028";
     private List<String> versionsList = new ArrayList<>();
     private List<String> booksList = new ArrayList<>();
     private InputtedData inputtedData = new InputtedData();
@@ -194,6 +212,8 @@ public class FrontController extends ProjectorController {
             newVerseBox.getStyleClass().add("newVerseBox");
             StackPane stackPane = new StackPane();
             Rectangle rec = new Rectangle(1067, 83, Color.DARKBLUE);
+            rec.setArcWidth(20);
+            rec.setArcHeight(20);
             stackPane.getChildren().add(rec);
             stackPane.getChildren().add(newVerseBox);
             stackPane.setLayoutX(400);
@@ -222,6 +242,8 @@ public class FrontController extends ProjectorController {
                 newVerseBox.getStyleClass().add("newVerseBox");
                 StackPane stackPane = new StackPane();
                 Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
+                rec.setArcWidth(20);
+                rec.setArcHeight(20);
                 stackPane.getChildren().add(rec);
                 stackPane.getChildren().add(newVerseBox);
                 stackPane.setLayoutX(400);
@@ -258,7 +280,6 @@ public class FrontController extends ProjectorController {
         projectorController = loader.getController();
         Stage newStage = new Stage();
         newStage.getIcons().add(new Image("https://cdn-icons-png.flaticon.com/512/3004/3004416.png"));
-        newStage.setTitle("Bible");
         newStage.setTitle("Present View");
         Scene scene = new Scene(root, 1600, 400);
         scene.getStylesheets().add(Objects.requireNonNull(Bible.class.getResource("styles/style.css")).toExternalForm());
@@ -294,6 +315,8 @@ public class FrontController extends ProjectorController {
             newVerseBox.getStyleClass().add("newVerseBox");
             StackPane stackPane = new StackPane();
             Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
+            rec.setArcWidth(20);
+            rec.setArcHeight(20);
             Button separateButton = new Button();
             VBox vBox = new VBox();
             vBox.setAlignment(Pos.CENTER);
@@ -337,33 +360,27 @@ public class FrontController extends ProjectorController {
     }
 
     @FXML
-    private void onGeoCheckBoxAction() {
-
+    private void onEsoMouseClicked() {
+        try {
+            String url = "https://www.facebook.com/esaia.gafrindashvili/";
+            URI uri = new URI(url);
+            Desktop desktop = Desktop.getDesktop();
+            desktop.browse(uri);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    private void onGeoProjectorVersionsAction() {
-
-    }
-
-    @FXML
-    private void onEngCheckBoxAction() {
-
-    }
-
-    @FXML
-    private void onEngProjectorVersionsAction() {
-
-    }
-
-    @FXML
-    private void onRusCheckBoxAction() {
-
-    }
-
-    @FXML
-    private void onRusProjectorVersionsAction() {
-
+    private void onDanielMouseClicked() {
+        try {
+            String url = "https://www.facebook.com/daniel.abulashvili.5";
+            URI uri = new URI(url);
+            Desktop desktop = Desktop.getDesktop();
+            desktop.browse(uri);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -509,8 +526,8 @@ public class FrontController extends ProjectorController {
 
     private void darkModeColorsChanger(String color) {
         if (color.equals(whiteColor)) {
-            anchorPane.setStyle("-fx-background-color: " + blackColor);
-            mainAnchorPane.setStyle("-fx-background-color:" + blackColor);
+            anchorPane.setStyle("-fx-background-color: " + darkColor);
+            mainAnchorPane.setStyle("-fx-background-color:" + darkColor);
             language.setStyle("-fx-text-fill:" + "white");
             versions.setStyle("-fx-text-fill:" + "white");
             books.setStyle("-fx-text-fill:" + "white");
@@ -519,17 +536,33 @@ public class FrontController extends ProjectorController {
             till.setStyle("-fx-text-fill:" + "white");
             search.setStyle("-fx-text-fill:" + "white");
             darkMode.setStyle("-fx-text-fill:" + "white");
+            fontSizeLabel.setStyle("-fx-text-fill:" + "white");
+            langLab1.setStyle("-fx-text-fill:" + "white");
+            langLab2.setStyle("-fx-text-fill:" + "white");
+            langLab3.setStyle("-fx-text-fill:" + "white");
+            ideaOf.setStyle("-fx-text-fill:" + "white");
+            madeBy.setStyle("-fx-text-fill:" + "white");
+            eso.setStyle("-fx-text-fill:" + "white");
+            daniel.setStyle("-fx-text-fill:" + "white");
         } else {
             anchorPane.setStyle("-fx-background-color:" + whiteColor);
             mainAnchorPane.setStyle("-fx-background-color:" + whiteColor);
-            language.setStyle("-fx-text-fill:" + blackColor);
-            versions.setStyle("-fx-text-fill:" + blackColor);
-            books.setStyle("-fx-text-fill:" + blackColor);
-            chapter.setStyle("-fx-text-fill:" + blackColor);
-            verse.setStyle("-fx-text-fill:" + blackColor);
-            till.setStyle("-fx-text-fill:" + blackColor);
-            search.setStyle("-fx-text-fill:" + blackColor);
-            darkMode.setStyle("-fx-text-fill:" + blackColor);
+            language.setStyle("-fx-text-fill:" + darkColor);
+            versions.setStyle("-fx-text-fill:" + darkColor);
+            books.setStyle("-fx-text-fill:" + darkColor);
+            chapter.setStyle("-fx-text-fill:" + darkColor);
+            verse.setStyle("-fx-text-fill:" + darkColor);
+            till.setStyle("-fx-text-fill:" + darkColor);
+            search.setStyle("-fx-text-fill:" + darkColor);
+            darkMode.setStyle("-fx-text-fill:" + darkColor);
+            fontSizeLabel.setStyle("-fx-text-fill:" + darkColor);
+            langLab1.setStyle("-fx-text-fill:" + darkColor);
+            langLab2.setStyle("-fx-text-fill:" + darkColor);
+            langLab3.setStyle("-fx-text-fill:" + darkColor);
+            ideaOf.setStyle("-fx-text-fill:" + darkColor);
+            madeBy.setStyle("-fx-text-fill:" + darkColor);
+            eso.setStyle("-fx-text-fill:" + darkColor);
+            daniel.setStyle("-fx-text-fill:" + darkColor);
         }
     }
 
