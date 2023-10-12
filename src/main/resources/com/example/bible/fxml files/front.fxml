@@ -239,7 +239,7 @@
                 <RadioButton fx:id="img16" mnemonicParsing="false" onAction="#onImg16Action" prefHeight="58.0" prefWidth="29.0" />
                 <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/16.jpeg" />
+                  <Image url="@../images/16.png" />
                </image>
                 </ImageView>
             </children>

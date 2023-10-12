@@ -2,40 +2,40 @@ package com.example.bible.runtimeData;
 
 public class BibleVersions {
     //Georgian Bible versions
-    public String newRedactedEdition2015 = "ახალიგადამუშავებულიგამოცემა2015";
+    public String newRedactedEdition2015 = "ახალი+გადამუშავებული+გამოცემა+2015";
     public String sbs2013 = "სბს–2013";
-    public String sbsStockholm2001 = "სბს–სტოკჰოლმი2001";
-    public String patriarchate = "საპატრიარქო–orthodoxy.ge";
-    public String mtskhetaManuscript = "მცხეთურიხელნაწერი–გ.მთაწმინდელი";
-    public String theFourChaptersOfAddish = "ადიშისოთხთავი897წ.–ძველიმონუსკრიპტები";
-    public String newWorldTranslation = "ახალიქვეყნიერებისთარგმანი*";
-    public String newTestamentStockholm1985 = "ახალიაღთქმა,სტოკჰოლმი1985";
+    public String sbsStockholm2001 = "სბს–სტოკჰოლმი+2001";
+    public String patriarchate = "საპატრიარქო+–+orthodoxy.ge";
+    public String mtskhetaManuscript = "მცხეთური+ხელნაწერი–გ.+მთაწმინდელი";
+    public String theFourChaptersOfAddish = "ადიშის+ოთხთავი+897წ.+–ძველიმონუსკრიპტები";
+    public String newWorldTranslation = "ახალი+ქვეყნიერების+თარგმანი*";
+    public String newTestamentStockholm1985 = "ახალი+აღთქმა,+სტოკჰოლმი+1985";
 
     //English Bible versions
-    public String NASBNewAmericanStandardBible = "NASBNewAmericanStandardBible";
-    public String NIVNewInternationalVersion = "NIVNewInternationalVersion";
-    public String KJVKingJamesVersion = "KJVKingJamesVersion";
-    public String genevaBible1599 = "GenevaBible1599";
-    public String NRSVNewRevisedStandardBible = "NRSVNewRevisedStandardBible";
-    public String darbysNewTranslation = "Darby'sNewTranslation";
-    public String ESVEnglishStandardVersion2001 = "ESVEnglishStandardVersion2001";
-    public String douayRheimsBible = "DouayRheimsBible";
-    public String WEBWorldEnglishBible = "WEB-WorldEnglishBible";
-    public String modernKJV = "ModernKJV";
-    public String ASVAmericanStandardVersion1901 = "ASVAmericanStandardVersion1901";
-    public String basicEnglishBible = "BasicEnglishBible";
-    public String catholicPublicDomainVersion2009 = "CatholicPublicDomainVersion2009";
+    public String NASBNewAmericanStandardBible = "NASB+New+American+Standard+Bible";
+    public String NIVNewInternationalVersion = "NIV+New+International+Version";
+    public String KJVKingJamesVersion = "KJV+King+James+Version";
+    public String genevaBible1599 = "Geneva+Bible+1599";
+    public String NRSVNewRevisedStandardBible = "NRSV+New+Revised+Standard+Bible";
+    public String darbysNewTranslation = "Darby's+New+Translation";
+    public String ESVEnglishStandardVersion2001 = "ESV+English+Standard+Version+2001";
+    public String douayRheimsBible = "Douay+Rheims+Bible";
+    public String WEBWorldEnglishBible = "WEB-World+English+Bible";
+    public String modernKJV = "Modern+KJV";
+    public String ASVAmericanStandardVersion1901 = "ASV+American+Standard+Version+1901";
+    public String basicEnglishBible = "Basic+English+Bible";
+    public String catholicPublicDomainVersion2009 = "Catholic+Public+Domain+Version+2009";
 
     //Russian Bible versions
-    public String synodalTranslation = "Синодальныйперевод";
-    public String modernTranslation = "Современныйперевод";
-    public String newRussianTranslationIBS = "HовыйPусскийПеревод(IBS)";
-    public String bibleByHermannMenge = "БиблияГерманаМенге";
-    public String holyBibleMeaningfulTranslation = "СвященноеПисание-СмысловойПеревод";
-    public String churchSlavonicBibleOfCyrilAndMethodius = "Церковно-славянскаяБиблияКириллаиМефодия";
-    public String newTestamentRestorationTranslation1998 = "НовыйЗавет-Восстановительныйперевод1998";
-    public String wordOfLifeNewTestament1991 = "СловоЖизни-НовыйЗавет1991";
-    public String newTestamentBishopsTranslationCassianaBezobrazova = "НовыйЗавет-переводеписк.Кассиана(Безобразова)";
+    public String synodalTranslation = "Синодальный+перевод";
+    public String modernTranslation = "Современный+перевод";
+    public String newRussianTranslationIBS = "Hовый+Pусский+Перевод+(IBS)";
+    public String bibleByHermannMenge = "Библия+Германа+Менге";
+    public String holyBibleMeaningfulTranslation = "Священное+Писание-Смысловой+Перевод";
+    public String churchSlavonicBibleOfCyrilAndMethodius = "Церковно-славянская+Библия+Кирилла+и+Мефодия";
+    public String newTestamentRestorationTranslation1998 = "Новый+Завет-Восстановительный+перевод+1998";
+    public String wordOfLifeNewTestament1991 = "Слово+Жизни-Новый+Завет+1991";
+    public String newTestamentBishopsTranslationCassianaBezobrazova = "Новый+Завет-перевод+еписк.+Кассиана+(Безобразова)";
 
     //Bible version names
     public String georgianVersions = "ახალი გადამუშავებული გამოცემა 2015, სბს–2013,სბს–სტოკჰოლმი 2001,საპატრიარქო – orthodoxy.ge,მცხეთური ხელნაწერი–გ. მთაწმინდელი,ადიშის ოთხთავი 897 წ. – ძველი მონუსკრიპტები,ახალი ქვეყნიერების თარგმანი*,ახალი აღთქმა, სტოკჰოლმი 1985";

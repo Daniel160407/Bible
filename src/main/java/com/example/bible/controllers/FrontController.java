@@ -182,7 +182,7 @@ public class FrontController extends ProjectorController {
             linkData.verses.clear();
             mainAnchorPane.setPrefHeight(scrollPane.getHeight());
             inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
-            versionDefinition();
+            inputtedData.setVersion(versionDefinition());
             linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
             String str = "";
             for (int i = 0; i < linkData.verses.size(); i++) {
@@ -270,9 +270,6 @@ public class FrontController extends ProjectorController {
     @FXML
     private void onShowButtonAction() {
         projectorController.projectorAnchorPane.getChildren().removeIf(node -> node instanceof Text);
-        if (projectorController.projectorAnchorPane.getChildren() != null) {
-            projectorController.projectorAnchorPane.getChildren().clear();
-        }
         String allVersesInOne = "";
         allVersesInOne = requestManager(allVersesInOne);
 
@@ -288,7 +285,7 @@ public class FrontController extends ProjectorController {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         linkData.verses.clear();
         mainAnchorPane.setPrefHeight(scrollPane.getPrefHeight());
-        versionDefinition();
+        inputtedData.setVersion(versionDefinition());
         linkData.search = search.getText();
         linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1);
 
@@ -476,7 +473,7 @@ public class FrontController extends ProjectorController {
 
     @FXML
     private void onImg16Action() {
-        backgroundImage = "https://bibleversesgeo.netlify.app/images/16.jpeg";
+        backgroundImage = "https://blackscreen.space/images/pro/black-screen_39.png";
         radioButtonSwitch();
         img16.setSelected(true);
     }
@@ -570,108 +567,214 @@ public class FrontController extends ProjectorController {
         }
     }
 
-    private void versionDefinition() {
+    private String versionDefinition() {
+        String version = "";
         if (inputtedData.getLanguage().equals("geo")) {
             switch (inputtedData.getVersionIndex()) {
                 case 1:
-                    inputtedData.setVersion(bibleVersions.sbs2013);
+                    version = bibleVersions.sbs2013;
                     break;
                 case 2:
-                    inputtedData.setVersion(bibleVersions.sbsStockholm2001);
+                    version = bibleVersions.sbsStockholm2001;
                     break;
                 case 3:
-                    inputtedData.setVersion(bibleVersions.patriarchate);
+                    version = bibleVersions.patriarchate;
                     break;
                 case 4:
-                    inputtedData.setVersion(bibleVersions.mtskhetaManuscript);
+                    version = bibleVersions.mtskhetaManuscript;
                     break;
                 case 5:
-                    inputtedData.setVersion(bibleVersions.theFourChaptersOfAddish);
+                    version = bibleVersions.theFourChaptersOfAddish;
                     break;
                 case 6:
-                    inputtedData.setVersion(bibleVersions.newWorldTranslation);
+                    version = bibleVersions.newWorldTranslation;
                     break;
                 case 7:
-                    inputtedData.setVersion(bibleVersions.newTestamentStockholm1985);
+                    version = bibleVersions.newTestamentStockholm1985;
                     break;
                 default:
-                    inputtedData.setVersion(bibleVersions.newRedactedEdition2015);
+                    version = bibleVersions.newRedactedEdition2015;
                     break;
             }
         } else if (inputtedData.getLanguage().equals("eng")) {
             switch (inputtedData.getVersionIndex()) {
                 case 1:
-                    inputtedData.setVersion(bibleVersions.NIVNewInternationalVersion);
+                    version = bibleVersions.NIVNewInternationalVersion;
                     break;
                 case 2:
-                    inputtedData.setVersion(bibleVersions.KJVKingJamesVersion);
+                    version = bibleVersions.KJVKingJamesVersion;
                     break;
                 case 3:
-                    inputtedData.setVersion(bibleVersions.genevaBible1599);
+                    version = bibleVersions.genevaBible1599;
                     break;
                 case 4:
-                    inputtedData.setVersion(bibleVersions.NRSVNewRevisedStandardBible);
+                    version = bibleVersions.NRSVNewRevisedStandardBible;
                     break;
                 case 5:
-                    inputtedData.setVersion(bibleVersions.darbysNewTranslation);
+                    version = bibleVersions.darbysNewTranslation;
                     break;
                 case 6:
-                    inputtedData.setVersion(bibleVersions.ESVEnglishStandardVersion2001);
+                    version = bibleVersions.ESVEnglishStandardVersion2001;
                     break;
                 case 7:
-                    inputtedData.setVersion(bibleVersions.douayRheimsBible);
+                    version = bibleVersions.douayRheimsBible;
                     break;
                 case 8:
-                    inputtedData.setVersion(bibleVersions.WEBWorldEnglishBible);
+                    version = bibleVersions.WEBWorldEnglishBible;
                     break;
                 case 9:
-                    inputtedData.setVersion(bibleVersions.modernKJV);
+                    version = bibleVersions.modernKJV;
                     break;
                 case 10:
-                    inputtedData.setVersion(bibleVersions.ASVAmericanStandardVersion1901);
+                    version = bibleVersions.ASVAmericanStandardVersion1901;
                     break;
                 case 11:
-                    inputtedData.setVersion(bibleVersions.basicEnglishBible);
+                    version = bibleVersions.basicEnglishBible;
                     break;
                 case 12:
-                    inputtedData.setVersion(bibleVersions.catholicPublicDomainVersion2009);
+                    version = bibleVersions.catholicPublicDomainVersion2009;
                     break;
                 default:
-                    inputtedData.setVersion(bibleVersions.NASBNewAmericanStandardBible);
+                    version = bibleVersions.NASBNewAmericanStandardBible;
                     break;
             }
         } else if (inputtedData.getLanguage().equals("rus")) {
             switch (inputtedData.getVersionIndex()) {
                 case 1:
-                    inputtedData.setVersion(bibleVersions.modernTranslation);
+                    version = bibleVersions.modernTranslation;
                     break;
                 case 2:
-                    inputtedData.setVersion(bibleVersions.newRussianTranslationIBS);
+                    version = bibleVersions.newRussianTranslationIBS;
                     break;
                 case 3:
-                    inputtedData.setVersion(bibleVersions.bibleByHermannMenge);
+                    version = bibleVersions.bibleByHermannMenge;
                     break;
                 case 4:
-                    inputtedData.setVersion(bibleVersions.holyBibleMeaningfulTranslation);
+                    version = bibleVersions.holyBibleMeaningfulTranslation;
                     break;
                 case 5:
-                    inputtedData.setVersion(bibleVersions.churchSlavonicBibleOfCyrilAndMethodius);
+                    version = bibleVersions.churchSlavonicBibleOfCyrilAndMethodius;
                     break;
                 case 6:
-                    inputtedData.setVersion(bibleVersions.newTestamentRestorationTranslation1998);
+                    version = bibleVersions.newTestamentRestorationTranslation1998;
                     break;
                 case 7:
-                    inputtedData.setVersion(bibleVersions.wordOfLifeNewTestament1991);
+                    version = bibleVersions.wordOfLifeNewTestament1991;
                     break;
                 case 8:
-                    inputtedData.setVersion(bibleVersions.newTestamentBishopsTranslationCassianaBezobrazova);
+                    version = bibleVersions.newTestamentBishopsTranslationCassianaBezobrazova;
                     break;
                 default:
-                    inputtedData.setVersion(bibleVersions.synodalTranslation);
+                    version = bibleVersions.synodalTranslation;
                     break;
             }
         }
+        return version;
+    }
 
+    private String projectorVersionDefinition(String language) {
+        String version = "";
+        if (geoCheckBox.isSelected() && language.equals("geo")) {
+            switch (inputtedData.getVersionIndex()) {
+                case 1:
+                    version = bibleVersions.sbs2013;
+                    break;
+                case 2:
+                    version = bibleVersions.sbsStockholm2001;
+                    break;
+                case 3:
+                    version = bibleVersions.patriarchate;
+                    break;
+                case 4:
+                    version = bibleVersions.mtskhetaManuscript;
+                    break;
+                case 5:
+                    version = bibleVersions.theFourChaptersOfAddish;
+                    break;
+                case 6:
+                    version = bibleVersions.newWorldTranslation;
+                    break;
+                case 7:
+                    version = bibleVersions.newTestamentStockholm1985;
+                    break;
+                default:
+                    version = bibleVersions.newRedactedEdition2015;
+                    break;
+            }
+        } else if (engCheckBox.isSelected() && language.equals("eng")) {
+            switch (inputtedData.getVersionIndex()) {
+                case 1:
+                    version = bibleVersions.NIVNewInternationalVersion;
+                    break;
+                case 2:
+                    version = bibleVersions.KJVKingJamesVersion;
+                    break;
+                case 3:
+                    version = bibleVersions.genevaBible1599;
+                    break;
+                case 4:
+                    version = bibleVersions.NRSVNewRevisedStandardBible;
+                    break;
+                case 5:
+                    version = bibleVersions.darbysNewTranslation;
+                    break;
+                case 6:
+                    version = bibleVersions.ESVEnglishStandardVersion2001;
+                    break;
+                case 7:
+                    version = bibleVersions.douayRheimsBible;
+                    break;
+                case 8:
+                    version = bibleVersions.WEBWorldEnglishBible;
+                    break;
+                case 9:
+                    version = bibleVersions.modernKJV;
+                    break;
+                case 10:
+                    version = bibleVersions.ASVAmericanStandardVersion1901;
+                    break;
+                case 11:
+                    version = bibleVersions.basicEnglishBible;
+                    break;
+                case 12:
+                    version = bibleVersions.catholicPublicDomainVersion2009;
+                    break;
+                default:
+                    version = bibleVersions.NASBNewAmericanStandardBible;
+                    break;
+            }
+        } else if (rusCheckBox.isSelected() && language.equals("rus")) {
+            switch (inputtedData.getVersionIndex()) {
+                case 1:
+                    version = bibleVersions.modernTranslation;
+                    break;
+                case 2:
+                    version = bibleVersions.newRussianTranslationIBS;
+                    break;
+                case 3:
+                    version = bibleVersions.bibleByHermannMenge;
+                    break;
+                case 4:
+                    version = bibleVersions.holyBibleMeaningfulTranslation;
+                    break;
+                case 5:
+                    version = bibleVersions.churchSlavonicBibleOfCyrilAndMethodius;
+                    break;
+                case 6:
+                    version = bibleVersions.newTestamentRestorationTranslation1998;
+                    break;
+                case 7:
+                    version = bibleVersions.wordOfLifeNewTestament1991;
+                    break;
+                case 8:
+                    version = bibleVersions.newTestamentBishopsTranslationCassianaBezobrazova;
+                    break;
+                default:
+                    version = bibleVersions.synodalTranslation;
+                    break;
+            }
+        }
+        return version;
     }
 
     private void radioButtonSwitch() {
@@ -702,74 +805,55 @@ public class FrontController extends ProjectorController {
         int versesCount = linkData.verses.size();
         List<String> versesData = new ArrayList<>(linkData.verses);
         linkData.verses.clear();
-        linkData.useCache = false;
 
-        ExecutorService executor = Executors.newFixedThreadPool(3);
-        List<Future<String>> futures = new ArrayList<>();
-        futures.add(executor.submit(() -> {
-            String str = "";
-            if (geoCheckBox.isSelected()) {
-                if (versesCount == 1) {
-                    linkData.setLinkInfo("geo", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
-                } else if (versesCount > 1) {
-                    linkData.setLinkInfo("geo", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
-                }
-                for (int i = 0; i < linkData.verses.size(); i++) {
-                    str += linkData.verses.get(i) + " ";
-                }
-                str += "\n";
-                linkData.verses.clear();
+        if (geoCheckBox.isSelected()) {
+            inputtedData.setVersionIndex(geoProjectorVersions.getSelectionModel().getSelectedIndex());
+            inputtedData.setGeoVersion(projectorVersionDefinition("geo"));
+            if (versesCount == 1) {
+                linkData.setLinkInfo("geo", inputtedData.getGeoVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+            } else if (versesCount > 1) {
+                linkData.setLinkInfo("geo", inputtedData.getGeoVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
             }
-            return str;
-        }));
-
-
-        futures.add(executor.submit(() -> {
-            String str = "";
-            if (engCheckBox.isSelected()) {
-                if (versesCount == 1) {
-                    linkData.setLinkInfo("eng", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
-                } else if (versesCount > 1) {
-                    linkData.setLinkInfo("eng", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
-                }
-                for (int i = 0; i < linkData.verses.size(); i++) {
-                    str += linkData.verses.get(i) + " ";
-                }
-                str += "\n";
-                linkData.verses.clear();
+            for (int i = 0; i < linkData.verses.size(); i++) {
+                allVersesInOne += linkData.verses.get(i) + " ";
             }
-            return str;
-        }));
-
-
-        futures.add(executor.submit(() -> {
-            String str = "";
-            if (rusCheckBox.isSelected()) {
-                if (versesCount == 1) {
-                    linkData.setLinkInfo("rus", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
-                } else if (versesCount > 1) {
-                    linkData.setLinkInfo("rus", inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
-                }
-                for (int i = 0; i < linkData.verses.size(); i++) {
-                    str += linkData.verses.get(i) + " ";
-                }
-                str += "\n";
-                linkData.verses.clear();
-            }
-            return str;
-        }));
-
-        for (Future<String> future : futures) {
-            try {
-                allVersesInOne += future.get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+            allVersesInOne += "\n";
+            linkData.verses.clear();
         }
 
-        executor.shutdown();
+
+        if (engCheckBox.isSelected()) {
+            inputtedData.setVersionIndex(engProjectorVersions.getSelectionModel().getSelectedIndex());
+            inputtedData.setEngVersion(projectorVersionDefinition("eng"));
+            if (versesCount == 1) {
+                linkData.setLinkInfo("eng", inputtedData.getEngVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+            } else if (versesCount > 1) {
+                linkData.setLinkInfo("eng", inputtedData.getEngVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+            }
+            for (int i = 0; i < linkData.verses.size(); i++) {
+                allVersesInOne += linkData.verses.get(i) + " ";
+            }
+            allVersesInOne += "\n";
+            linkData.verses.clear();
+        }
+
+
+        if (rusCheckBox.isSelected()) {
+            inputtedData.setVersionIndex(rusProjectorVersions.getSelectionModel().getSelectedIndex());
+            inputtedData.setRusVersion(projectorVersionDefinition("rus"));
+            if (versesCount == 1) {
+                linkData.setLinkInfo("rus", inputtedData.getRusVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+            } else if (versesCount > 1) {
+                linkData.setLinkInfo("rus", inputtedData.getRusVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+            }
+            for (int i = 0; i < linkData.verses.size(); i++) {
+                allVersesInOne += linkData.verses.get(i) + " ";
+            }
+            allVersesInOne += "\n";
+            linkData.verses.clear();
+        }
+
         linkData.verses.addAll(versesData);
-        linkData.useCache = true;
 
         return allVersesInOne;
     }

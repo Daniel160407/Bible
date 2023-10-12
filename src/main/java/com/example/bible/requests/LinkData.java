@@ -23,13 +23,12 @@ public class LinkData {
     public List<String> verses = new ArrayList<>();
     public List<String> versePath = new ArrayList<>();
     public String search = "";
-    public boolean useCache = true;
 
     public void setLinkInfo(String language, String bibleVersion, int book, int chapter, int verse, int till) {
         try {
             LinkConstructor link = new LinkConstructor(language, bibleVersion, book, chapter, verse);
             link.setSearch(search);
-            if (!apiUrl.equals(link.getLink()) || !useCache) {
+            if (!apiUrl.equals(link.getLink())) {
                 System.out.println("First");
                 apiUrl = link.getLink();
                 System.out.println(apiUrl);
