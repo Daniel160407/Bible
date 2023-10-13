@@ -8,22 +8,11 @@ public class InputtedData {
     private int chapter;
     private int verse;
     private int till;
-    private String search;
     private String geoVersion;
     private String engVersion;
     private String rusVersion;
 
     public InputtedData() {
-    }
-
-    public InputtedData(String language, int versionIndex, String version, String book, int chapter, int verse, int till) {
-        this.language = language;
-        this.versionIndex = versionIndex;
-        this.version = version;
-        this.book = book;
-        this.chapter = chapter;
-        this.verse = verse;
-        this.till = till;
     }
 
 
@@ -56,9 +45,6 @@ public class InputtedData {
         return till;
     }
 
-    public String getSearch() {
-        return search;
-    }
 
     public String getGeoVersion() {
         return geoVersion;
@@ -100,9 +86,6 @@ public class InputtedData {
         this.till = till;
     }
 
-    public void setSearch(String search) {
-        this.search = search;
-    }
 
     public void setGeoVersion(String geoVersion) {
         this.geoVersion = geoVersion;

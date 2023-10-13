@@ -4,12 +4,9 @@ import com.example.bible.Bible;
 import com.example.bible.runtimeData.BibleVersions;
 import com.example.bible.runtimeData.InputtedData;
 import com.example.bible.requests.LinkData;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -26,20 +22,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class FrontController extends ProjectorController {
     @FXML
@@ -136,13 +125,11 @@ public class FrontController extends ProjectorController {
     private Label daniel;
 
 
-    private final String whiteColor = "0xf4f4f4ff";
-    private final String darkColor = "#030028";
-    private List<String> versionsList = new ArrayList<>();
-    private List<String> booksList = new ArrayList<>();
-    private InputtedData inputtedData = new InputtedData();
-    private static BibleVersions bibleVersions = new BibleVersions();
-    private LinkData linkData = new LinkData();
+    private final List<String> versionsList = new ArrayList<>();
+    private final List<String> booksList = new ArrayList<>();
+    private final InputtedData inputtedData = new InputtedData();
+    private static final BibleVersions bibleVersions = new BibleVersions();
+    private final LinkData linkData = new LinkData();
     private int previousLayoutYPath = -27;
     private ProjectorController projectorController;
     private String backgroundImage;
@@ -202,9 +189,9 @@ public class FrontController extends ProjectorController {
             inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
             inputtedData.setVersion(versionDefinition());
             linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
-            String str = "";
+            StringBuilder str = new StringBuilder();
             for (int i = 0; i < linkData.verses.size(); i++) {
-                str += linkData.verses.get(i) + " ";
+                str.append(linkData.verses.get(i)).append(" ");
             }
 
             Text newVerseBox = new Text();
@@ -219,10 +206,9 @@ public class FrontController extends ProjectorController {
             stackPane.setLayoutX(400);
             stackPane.setLayoutY(73);
             mainAnchorPane.getChildren().add(stackPane);
-            newVerseBox.setText(str);
+            newVerseBox.setText(str.toString());
             newVerseBox.setTextAlignment(TextAlignment.CENTER);
             newVerseBox.setWrappingWidth(rec.getWidth());
-            System.out.println("tt: " + str);
         }
 
     }
@@ -268,8 +254,32 @@ public class FrontController extends ProjectorController {
     }
 
     @FXML
-    private void onClearButtonAction() {
+    private void onChapterXAction() {
+        chapter.getEditor().clear();
+    }
+
+    @FXML
+    private void onVerseXAction() {
+        verse.getEditor().clear();
+    }
+
+    @FXML
+    private void onTillXAction() {
+        till.getEditor().clear();
+    }
+
+    @FXML
+    private void onClearVersesAction() {
+        mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         mainAnchorPane.setPrefHeight(478);
+        chapter.getEditor().clear();
+        verse.getEditor().clear();
+        till.getEditor().clear();
+    }
+
+    @FXML
+    private void onClearButtonAction() {
+
         projectorController.projectorAnchorPane.getChildren().clear();
     }
 
@@ -281,7 +291,7 @@ public class FrontController extends ProjectorController {
         Stage newStage = new Stage();
         newStage.getIcons().add(new Image("https://cdn-icons-png.flaticon.com/512/3004/3004416.png"));
         newStage.setTitle("Present View");
-        Scene scene = new Scene(root, 1600, 400);
+        Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add(Objects.requireNonNull(Bible.class.getResource("styles/style.css")).toExternalForm());
         newStage.setScene(scene);
         newStage.show();
@@ -333,19 +343,16 @@ public class FrontController extends ProjectorController {
             separateButton.getStyleClass().add("separate-button");
             separateButton.setLayoutY(100);
             separateButton.setText("Separate");
-            separateButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
-                    StackPane stackPane2 = new StackPane();
-                    stackPane2.setLayoutX(400);
-                    stackPane2.setLayoutY(73);
-                    stackPane2.getChildren().addAll(rec, newVerseBox);
-                    mainAnchorPane.getChildren().add(stackPane2);
-                    mainAnchorPane.setPrefHeight(scrollPane.getPrefHeight());
-                    linkData.verses.clear();
-                    linkData.verses.add(newVerseBox.getText());
-                }
+            separateButton.setOnAction(event -> {
+                mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+                StackPane stackPane2 = new StackPane();
+                stackPane2.setLayoutX(400);
+                stackPane2.setLayoutY(73);
+                stackPane2.getChildren().addAll(rec, newVerseBox);
+                mainAnchorPane.getChildren().add(stackPane2);
+                mainAnchorPane.setPrefHeight(scrollPane.getPrefHeight());
+                linkData.verses.clear();
+                linkData.verses.add(newVerseBox.getText());
             });
 
             newVerseBox.setTextAlignment(TextAlignment.CENTER);
@@ -369,6 +376,18 @@ public class FrontController extends ProjectorController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    private void onDocumentationAction() throws IOException {
+        FXMLLoader loader = new FXMLLoader(Bible.class.getResource("fxml files/documentation.fxml"));
+        Parent root = loader.load();
+        Stage newStage = new Stage();
+        newStage.getIcons().add(new Image("https://cdn-icons-png.flaticon.com/512/3004/3004416.png"));
+        newStage.setTitle("Documentation");
+        Scene scene = new Scene(root, 800, 600);
+        scene.getStylesheets().add(Objects.requireNonNull(Bible.class.getResource("styles/style.css")).toExternalForm());
+        newStage.setScene(scene);
+        newStage.show();
     }
 
     @FXML
@@ -525,6 +544,8 @@ public class FrontController extends ProjectorController {
 
 
     private void darkModeColorsChanger(String color) {
+        String whiteColor = "0xf4f4f4ff";
+        String darkColor = "#030028";
         if (color.equals(whiteColor)) {
             anchorPane.setStyle("-fx-background-color: " + darkColor);
             mainAnchorPane.setStyle("-fx-background-color:" + darkColor);
@@ -568,21 +589,25 @@ public class FrontController extends ProjectorController {
 
     private void getVersionsAndBooksInfo() {
         try {
-            if (inputtedData.getLanguage().equals("geo")) {
-                versionsList.clear();
-                versionsList.addAll(Arrays.asList(bibleVersions.georgianVersions.split(",")));
-                booksList.clear();
-                booksList.addAll(Arrays.asList(bibleVersions.georgianBooks.split(",")));
-            } else if (inputtedData.getLanguage().equals("eng")) {
-                versionsList.clear();
-                versionsList.addAll(Arrays.asList(bibleVersions.englishVersions.split(",")));
-                booksList.clear();
-                booksList.addAll(Arrays.asList(bibleVersions.englishBooks.split(",")));
-            } else if (inputtedData.getLanguage().equals("rus")) {
-                versionsList.clear();
-                versionsList.addAll(Arrays.asList(bibleVersions.russianVersions.split(",")));
-                booksList.clear();
-                booksList.addAll(Arrays.asList(bibleVersions.russianBooks.split(",")));
+            switch (inputtedData.getLanguage()) {
+                case "geo":
+                    versionsList.clear();
+                    versionsList.addAll(Arrays.asList(bibleVersions.georgianVersions.split(",")));
+                    booksList.clear();
+                    booksList.addAll(Arrays.asList(bibleVersions.georgianBooks.split(",")));
+                    break;
+                case "eng":
+                    versionsList.clear();
+                    versionsList.addAll(Arrays.asList(bibleVersions.englishVersions.split(",")));
+                    booksList.clear();
+                    booksList.addAll(Arrays.asList(bibleVersions.englishBooks.split(",")));
+                    break;
+                case "rus":
+                    versionsList.clear();
+                    versionsList.addAll(Arrays.asList(bibleVersions.russianVersions.split(",")));
+                    booksList.clear();
+                    booksList.addAll(Arrays.asList(bibleVersions.russianBooks.split(",")));
+                    break;
             }
 
             versions.getItems().clear();
@@ -602,105 +627,109 @@ public class FrontController extends ProjectorController {
 
     private String versionDefinition() {
         String version = "";
-        if (inputtedData.getLanguage().equals("geo")) {
-            switch (inputtedData.getVersionIndex()) {
-                case 1:
-                    version = bibleVersions.sbs2013;
-                    break;
-                case 2:
-                    version = bibleVersions.sbsStockholm2001;
-                    break;
-                case 3:
-                    version = bibleVersions.patriarchate;
-                    break;
-                case 4:
-                    version = bibleVersions.mtskhetaManuscript;
-                    break;
-                case 5:
-                    version = bibleVersions.theFourChaptersOfAddish;
-                    break;
-                case 6:
-                    version = bibleVersions.newWorldTranslation;
-                    break;
-                case 7:
-                    version = bibleVersions.newTestamentStockholm1985;
-                    break;
-                default:
-                    version = bibleVersions.newRedactedEdition2015;
-                    break;
-            }
-        } else if (inputtedData.getLanguage().equals("eng")) {
-            switch (inputtedData.getVersionIndex()) {
-                case 1:
-                    version = bibleVersions.NIVNewInternationalVersion;
-                    break;
-                case 2:
-                    version = bibleVersions.KJVKingJamesVersion;
-                    break;
-                case 3:
-                    version = bibleVersions.genevaBible1599;
-                    break;
-                case 4:
-                    version = bibleVersions.NRSVNewRevisedStandardBible;
-                    break;
-                case 5:
-                    version = bibleVersions.darbysNewTranslation;
-                    break;
-                case 6:
-                    version = bibleVersions.ESVEnglishStandardVersion2001;
-                    break;
-                case 7:
-                    version = bibleVersions.douayRheimsBible;
-                    break;
-                case 8:
-                    version = bibleVersions.WEBWorldEnglishBible;
-                    break;
-                case 9:
-                    version = bibleVersions.modernKJV;
-                    break;
-                case 10:
-                    version = bibleVersions.ASVAmericanStandardVersion1901;
-                    break;
-                case 11:
-                    version = bibleVersions.basicEnglishBible;
-                    break;
-                case 12:
-                    version = bibleVersions.catholicPublicDomainVersion2009;
-                    break;
-                default:
-                    version = bibleVersions.NASBNewAmericanStandardBible;
-                    break;
-            }
-        } else if (inputtedData.getLanguage().equals("rus")) {
-            switch (inputtedData.getVersionIndex()) {
-                case 1:
-                    version = bibleVersions.modernTranslation;
-                    break;
-                case 2:
-                    version = bibleVersions.newRussianTranslationIBS;
-                    break;
-                case 3:
-                    version = bibleVersions.bibleByHermannMenge;
-                    break;
-                case 4:
-                    version = bibleVersions.holyBibleMeaningfulTranslation;
-                    break;
-                case 5:
-                    version = bibleVersions.churchSlavonicBibleOfCyrilAndMethodius;
-                    break;
-                case 6:
-                    version = bibleVersions.newTestamentRestorationTranslation1998;
-                    break;
-                case 7:
-                    version = bibleVersions.wordOfLifeNewTestament1991;
-                    break;
-                case 8:
-                    version = bibleVersions.newTestamentBishopsTranslationCassianaBezobrazova;
-                    break;
-                default:
-                    version = bibleVersions.synodalTranslation;
-                    break;
-            }
+        switch (inputtedData.getLanguage()) {
+            case "geo":
+                switch (inputtedData.getVersionIndex()) {
+                    case 1:
+                        version = bibleVersions.sbs2013;
+                        break;
+                    case 2:
+                        version = bibleVersions.sbsStockholm2001;
+                        break;
+                    case 3:
+                        version = bibleVersions.patriarchate;
+                        break;
+                    case 4:
+                        version = bibleVersions.mtskhetaManuscript;
+                        break;
+                    case 5:
+                        version = bibleVersions.theFourChaptersOfAddish;
+                        break;
+                    case 6:
+                        version = bibleVersions.newWorldTranslation;
+                        break;
+                    case 7:
+                        version = bibleVersions.newTestamentStockholm1985;
+                        break;
+                    default:
+                        version = bibleVersions.newRedactedEdition2015;
+                        break;
+                }
+                break;
+            case "eng":
+                switch (inputtedData.getVersionIndex()) {
+                    case 1:
+                        version = bibleVersions.NIVNewInternationalVersion;
+                        break;
+                    case 2:
+                        version = bibleVersions.KJVKingJamesVersion;
+                        break;
+                    case 3:
+                        version = bibleVersions.genevaBible1599;
+                        break;
+                    case 4:
+                        version = bibleVersions.NRSVNewRevisedStandardBible;
+                        break;
+                    case 5:
+                        version = bibleVersions.darbysNewTranslation;
+                        break;
+                    case 6:
+                        version = bibleVersions.ESVEnglishStandardVersion2001;
+                        break;
+                    case 7:
+                        version = bibleVersions.douayRheimsBible;
+                        break;
+                    case 8:
+                        version = bibleVersions.WEBWorldEnglishBible;
+                        break;
+                    case 9:
+                        version = bibleVersions.modernKJV;
+                        break;
+                    case 10:
+                        version = bibleVersions.ASVAmericanStandardVersion1901;
+                        break;
+                    case 11:
+                        version = bibleVersions.basicEnglishBible;
+                        break;
+                    case 12:
+                        version = bibleVersions.catholicPublicDomainVersion2009;
+                        break;
+                    default:
+                        version = bibleVersions.NASBNewAmericanStandardBible;
+                        break;
+                }
+                break;
+            case "rus":
+                switch (inputtedData.getVersionIndex()) {
+                    case 1:
+                        version = bibleVersions.modernTranslation;
+                        break;
+                    case 2:
+                        version = bibleVersions.newRussianTranslationIBS;
+                        break;
+                    case 3:
+                        version = bibleVersions.bibleByHermannMenge;
+                        break;
+                    case 4:
+                        version = bibleVersions.holyBibleMeaningfulTranslation;
+                        break;
+                    case 5:
+                        version = bibleVersions.churchSlavonicBibleOfCyrilAndMethodius;
+                        break;
+                    case 6:
+                        version = bibleVersions.newTestamentRestorationTranslation1998;
+                        break;
+                    case 7:
+                        version = bibleVersions.wordOfLifeNewTestament1991;
+                        break;
+                    case 8:
+                        version = bibleVersions.newTestamentBishopsTranslationCassianaBezobrazova;
+                        break;
+                    default:
+                        version = bibleVersions.synodalTranslation;
+                        break;
+                }
+                break;
         }
         return version;
     }
@@ -847,9 +876,11 @@ public class FrontController extends ProjectorController {
             } else if (versesCount > 1) {
                 linkData.setLinkInfo("geo", inputtedData.getGeoVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
             }
+            StringBuilder allVersesInOneBuilder = new StringBuilder(allVersesInOne);
             for (int i = 0; i < linkData.verses.size(); i++) {
-                allVersesInOne += linkData.verses.get(i) + " ";
+                allVersesInOneBuilder.append(linkData.verses.get(i)).append(" ");
             }
+            allVersesInOne = allVersesInOneBuilder.toString();
             allVersesInOne += "\n";
             linkData.verses.clear();
         }
@@ -863,9 +894,11 @@ public class FrontController extends ProjectorController {
             } else if (versesCount > 1) {
                 linkData.setLinkInfo("eng", inputtedData.getEngVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
             }
+            StringBuilder allVersesInOneBuilder = new StringBuilder(allVersesInOne);
             for (int i = 0; i < linkData.verses.size(); i++) {
-                allVersesInOne += linkData.verses.get(i) + " ";
+                allVersesInOneBuilder.append(linkData.verses.get(i)).append(" ");
             }
+            allVersesInOne = allVersesInOneBuilder.toString();
             allVersesInOne += "\n";
             linkData.verses.clear();
         }
@@ -879,9 +912,11 @@ public class FrontController extends ProjectorController {
             } else if (versesCount > 1) {
                 linkData.setLinkInfo("rus", inputtedData.getRusVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
             }
+            StringBuilder allVersesInOneBuilder = new StringBuilder(allVersesInOne);
             for (int i = 0; i < linkData.verses.size(); i++) {
-                allVersesInOne += linkData.verses.get(i) + " ";
+                allVersesInOneBuilder.append(linkData.verses.get(i)).append(" ");
             }
+            allVersesInOne = allVersesInOneBuilder.toString();
             allVersesInOne += "\n";
             linkData.verses.clear();
         }

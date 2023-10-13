@@ -29,10 +29,8 @@ public class LinkData {
             LinkConstructor link = new LinkConstructor(language, bibleVersion, book, chapter, verse);
             link.setSearch(search);
             if (!apiUrl.equals(link.getLink())) {
-                System.out.println("First");
                 apiUrl = link.getLink();
                 System.out.println(apiUrl);
-                System.out.println("________");
                 URL url = new URL(apiUrl);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -50,29 +48,18 @@ public class LinkData {
                     JSONObject jsonObject = new JSONObject(linkData);
                     if (till == 0) {
                         till = verse;
-                        System.out.println("Error3");
                     }
-                    System.out.println("Till: " + till);
-                    System.out.println("Verse: " + verse);
                     chapterCount = Integer.parseInt(jsonObject.getJSONArray("tavi").getJSONObject(0).getString("cc"));
                     verseCount = Integer.parseInt(jsonObject.getJSONArray("muxli").getJSONObject(0).getString("cc"));
                     if (search != null && !search.equals("")) {
-
-
                         for (int i = verse - 1; i < jsonObject.getJSONArray("bibleData").length(); i++) {
-                            System.out.println(i + ": " + jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
-
                             verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv").replaceAll("<span class='markedText'>|</span>", ""));
-
                             versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
                             versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
                         }
                     } else {
                         for (int i = verse - 1; i < till; i++) {
-                            System.out.println(i + ": " + jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
-
                             verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
-
                             versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
                             versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
                         }
@@ -83,31 +70,21 @@ public class LinkData {
                     System.err.println("API request failed with response code: " + responseCode);
                 }
             } else {
-                System.out.println("Second");
                 JSONObject jsonObject = new JSONObject(linkData);
                 if (till == 0) {
                     till = verse;
-                    System.out.println("Error3");
                 }
-                System.out.println("Till: " + till);
-                System.out.println("Verse: " + verse);
                 chapterCount = Integer.parseInt(jsonObject.getJSONArray("tavi").getJSONObject(0).getString("cc"));
                 verseCount = Integer.parseInt(jsonObject.getJSONArray("muxli").getJSONObject(0).getString("cc"));
                 if (search != null && !search.equals("")) {
                     for (int i = verse - 1; i < jsonObject.getJSONArray("bibleData").length(); i++) {
-                        System.out.println(i + ": " + jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
-
                         verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv").replaceAll("<span class='markedText'>|</span>", ""));
-
                         versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
                         versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
                     }
                 } else {
                     for (int i = verse - 1; i < till; i++) {
-                        System.out.println(i + ": " + jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
-
                         verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
-
                         versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
                         versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
                     }

@@ -17,313 +17,247 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1972.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.FrontController">
-    <children>
-        <Button fx:id="clearButton" layoutX="372.0" layoutY="568.0" mnemonicParsing="false" onAction="#onClearButtonAction" style="-fx-background-color: #DC2626; -fx-background-radius: 10;" text="Clear" textFill="WHITE">
-            <font>
-                <Font size="15.0" />
-            </font>
-            <effect>
-                <DropShadow />
-            </effect>
-        </Button>
-        <RadioButton fx:id="darkMode" layoutX="1803.0" layoutY="930.0" mnemonicParsing="false" onAction="#onDarkModeAction" prefHeight="55.0" prefWidth="117.0" text="Dark Mode">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </RadioButton>
-        <ComboBox fx:id="language" layoutX="35.0" layoutY="14.0" onAction="#onLanguageAction" prefHeight="25.0" prefWidth="87.0" promptText="GEO" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" visibleRowCount="3">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="GEO" />
-                    <String fx:value="ENG" />
-                    <String fx:value="RUS" />
-                </FXCollections>
-            </items>
-        </ComboBox>
-        <ComboBox fx:id="versions" layoutX="139.0" layoutY="14.0" onAction="#onVersionsAction" onMouseClicked="#onVersionsMouseClicked" prefHeight="25.0" prefWidth="287.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
-        <ComboBox fx:id="books" layoutX="441.0" layoutY="14.0" onAction="#onBooksAction" prefHeight="25.0" prefWidth="253.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
-        <ComboBox fx:id="chapter" editable="true" layoutX="711.0" layoutY="14.0" onAction="#onChapterAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
-        <ComboBox fx:id="verse" editable="true" layoutX="877.0" layoutY="14.0" onAction="#onVerseAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
-        <ComboBox fx:id="till" editable="true" layoutX="1044.0" layoutY="14.0" onAction="#onTillAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
-        <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" onAction="#onSearchAction" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
-        <ScrollPane fx:id="scrollPane" layoutY="56.0" prefHeight="491.0" prefWidth="1920.0">
-            <content>
-                <AnchorPane fx:id="mainAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="476.0" prefWidth="1919.0" />
-            </content>
-        </ScrollPane>
-        <Button layoutX="300.0" layoutY="568.0" mnemonicParsing="false" onAction="#onShowButtonAction" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #047857; -fx-background-radius: 10;" text="Show" textFill="WHITE">
-            <font>
-                <Font size="15.0" />
-            </font>
-            <effect>
-                <DropShadow />
-            </effect>
-        </Button>
-        <Button fx:id="openPresentView" layoutX="1612.0" layoutY="945.0" mnemonicParsing="false" onAction="#onOpenPresentViewAction" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" text="Open Present View">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Button>
-        <Label fx:id="fontSizeLabel" layoutX="441.0" layoutY="575.0" text="Font Size:">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Label>
-        <ComboBox fx:id="fontSize" layoutX="511.0" layoutY="573.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="1" />
-                    <String fx:value="2" />
-                    <String fx:value="3" />
-                    <String fx:value="4" />
-                    <String fx:value="5" />
-                    <String fx:value="6" />
-                    <String fx:value="7" />
-                    <String fx:value="8" />
-                    <String fx:value="9" />
-                </FXCollections>
-            </items>
-        </ComboBox>
-        <HBox alignment="CENTER" layoutX="1035.0" layoutY="615.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img4" mnemonicParsing="false" onAction="#onImg4Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/4.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="1155.0" layoutY="615.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img5" mnemonicParsing="false" onAction="#onImg5Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/5.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="795.0" layoutY="615.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img2" mnemonicParsing="false" onAction="#onImg2Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/2.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="675.0" layoutY="615.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img1" mnemonicParsing="false" onAction="#onImg1Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/1.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="915.0" layoutY="615.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img3" mnemonicParsing="false" onAction="#onImg3Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/3.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="675.0" layoutY="690.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img6" mnemonicParsing="false" onAction="#onImg6Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/6.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="795.0" layoutY="690.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img7" mnemonicParsing="false" onAction="#onImg7Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/7.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="915.0" layoutY="690.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img8" mnemonicParsing="false" onAction="#onImg8Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/8.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="1035.0" layoutY="690.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img9" mnemonicParsing="false" onAction="#onImg9Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/9.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="1155.0" layoutY="690.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img10" mnemonicParsing="false" onAction="#onImg10Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/10.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="675.0" layoutY="765.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img11" mnemonicParsing="false" onAction="#onImg11Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/11.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="795.0" layoutY="765.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img12" mnemonicParsing="false" onAction="#onImg12Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/12.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="915.0" layoutY="765.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img13" mnemonicParsing="false" onAction="#onImg13Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/13.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="1035.0" layoutY="765.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img14" mnemonicParsing="false" onAction="#onImg14Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/14.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="1155.0" layoutY="765.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img15" mnemonicParsing="false" onAction="#onImg15Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/15.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="675.0" layoutY="840.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img16" mnemonicParsing="false" onAction="#onImg16Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/16.png" />
-               </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="795.0" layoutY="840.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img17" mnemonicParsing="false" onAction="#onImg17Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/17.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="915.0" layoutY="840.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img18" mnemonicParsing="false" onAction="#onImg18Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/18.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="1035.0" layoutY="840.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img19" mnemonicParsing="false" onAction="#onImg19Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/19.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="1155.0" layoutY="840.0" prefHeight="58.0" prefWidth="99.0">
-            <children>
-                <RadioButton fx:id="img20" mnemonicParsing="false" onAction="#onImg20Action" prefHeight="58.0" prefWidth="29.0" />
-                <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/20.jpeg" />
-                    </image>
-                </ImageView>
-            </children>
-        </HBox>
-      <Label fx:id="langLab1" layoutX="386.0" layoutY="634.0" text="Georgian">
-         <font>
+    <Button layoutX="372.0" layoutY="568.0" mnemonicParsing="false" onAction="#onClearButtonAction" style="-fx-background-color: #DC2626; -fx-background-radius: 10;" text="Clear" textFill="WHITE">
+        <font>
             <Font size="15.0" />
-         </font>
-      </Label>
-      <CheckBox fx:id="geoCheckBox" layoutX="481.0" layoutY="636.0" mnemonicParsing="false" />
-      <ComboBox fx:id="geoProjectorVersions" layoutX="511.0" layoutY="632.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
-      <CheckBox fx:id="engCheckBox" layoutX="481.0" layoutY="711.0" mnemonicParsing="false" />
-      <ComboBox fx:id="engProjectorVersions" layoutX="511.0" layoutY="707.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
-      <Label fx:id="langLab2" layoutX="392.0" layoutY="709.0" text="English">
-         <font>
+        </font>
+        <effect>
+            <DropShadow />
+        </effect>
+    </Button>
+    <RadioButton fx:id="darkMode" layoutX="1803.0" layoutY="930.0" mnemonicParsing="false" onAction="#onDarkModeAction" prefHeight="55.0" prefWidth="117.0" text="Dark Mode">
+        <font>
             <Font size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="langLab3" layoutX="391.0" layoutY="784.0" text="Russian">
-         <font>
+        </font>
+    </RadioButton>
+    <ComboBox fx:id="language" layoutX="35.0" layoutY="14.0" onAction="#onLanguageAction" prefHeight="25.0" prefWidth="87.0" promptText="GEO" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" visibleRowCount="3">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="GEO" />
+                <String fx:value="ENG" />
+                <String fx:value="RUS" />
+            </FXCollections>
+        </items>
+    </ComboBox>
+    <ComboBox fx:id="versions" layoutX="145.0" layoutY="14.0" onAction="#onVersionsAction" onMouseClicked="#onVersionsMouseClicked" prefHeight="25.0" prefWidth="287.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+    <ComboBox fx:id="books" layoutX="441.0" layoutY="14.0" onAction="#onBooksAction" prefHeight="25.0" prefWidth="253.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+    <ComboBox fx:id="chapter" editable="true" layoutX="711.0" layoutY="14.0" onAction="#onChapterAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+    <ComboBox fx:id="verse" editable="true" layoutX="877.0" layoutY="14.0" onAction="#onVerseAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+    <ComboBox fx:id="till" editable="true" layoutX="1044.0" layoutY="14.0" onAction="#onTillAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+    <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" onAction="#onSearchAction" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+    <ScrollPane fx:id="scrollPane" layoutY="56.0" prefHeight="491.0" prefWidth="1920.0">
+        <AnchorPane fx:id="mainAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="476.0" prefWidth="1919.0">
+         <children>
+            <Button layoutX="1853.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClearVersesAction" style="-fx-background-color: #DC2626; -fx-border-radius: 10;" text="Clear" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+         </children></AnchorPane>
+    </ScrollPane>
+    <Button layoutX="300.0" layoutY="568.0" mnemonicParsing="false" onAction="#onShowButtonAction" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #047857; -fx-background-radius: 10;" text="Show" textFill="WHITE">
+        <font>
             <Font size="15.0" />
-         </font>
-      </Label>
-      <CheckBox fx:id="rusCheckBox" layoutX="481.0" layoutY="786.0" mnemonicParsing="false" />
-      <ComboBox fx:id="rusProjectorVersions" layoutX="511.0" layoutY="782.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
-      <Label fx:id="ideaOf" layoutX="952.0" layoutY="947.0" text="Idea Of">
-         <font>
+        </font>
+        <effect>
+            <DropShadow />
+        </effect>
+    </Button>
+    <Button layoutX="1612.0" layoutY="945.0" mnemonicParsing="false" onAction="#onOpenPresentViewAction" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" text="Open Present View">
+        <font>
             <Font size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="eso" layoutX="1003.0" layoutY="947.0" onMouseClicked="#onEsoMouseClicked" text="Eso" underline="true">
-         <font>
+        </font>
+    </Button>
+    <Label fx:id="fontSizeLabel" layoutX="441.0" layoutY="575.0" text="Font Size:">
+        <font>
             <Font size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="madeBy" layoutX="936.0" layoutY="975.0" text="Made By">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="daniel" layoutX="998.0" layoutY="975.0" onMouseClicked="#onDanielMouseClicked" text="Daniel" underline="true">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-    </children>
+        </font>
+    </Label>
+    <ComboBox fx:id="fontSize" layoutX="511.0" layoutY="573.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="1" />
+                <String fx:value="2" />
+                <String fx:value="3" />
+                <String fx:value="4" />
+                <String fx:value="5" />
+                <String fx:value="6" />
+                <String fx:value="7" />
+                <String fx:value="8" />
+                <String fx:value="9" />
+            </FXCollections>
+        </items>
+    </ComboBox>
+    <HBox alignment="CENTER" layoutX="1035.0" layoutY="615.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img4" mnemonicParsing="false" onAction="#onImg4Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/4.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="1155.0" layoutY="615.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img5" mnemonicParsing="false" onAction="#onImg5Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/5.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="795.0" layoutY="615.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img2" mnemonicParsing="false" onAction="#onImg2Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/2.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="675.0" layoutY="615.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img1" mnemonicParsing="false" onAction="#onImg1Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/1.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="915.0" layoutY="615.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img3" mnemonicParsing="false" onAction="#onImg3Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/3.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="675.0" layoutY="690.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img6" mnemonicParsing="false" onAction="#onImg6Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/6.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="795.0" layoutY="690.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img7" mnemonicParsing="false" onAction="#onImg7Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/7.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="915.0" layoutY="690.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img8" mnemonicParsing="false" onAction="#onImg8Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/8.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="1035.0" layoutY="690.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img9" mnemonicParsing="false" onAction="#onImg9Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/9.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="1155.0" layoutY="690.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img10" mnemonicParsing="false" onAction="#onImg10Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/10.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="675.0" layoutY="765.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img11" mnemonicParsing="false" onAction="#onImg11Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/11.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="795.0" layoutY="765.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img12" mnemonicParsing="false" onAction="#onImg12Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/12.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="915.0" layoutY="765.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img13" mnemonicParsing="false" onAction="#onImg13Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/13.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="1035.0" layoutY="765.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img14" mnemonicParsing="false" onAction="#onImg14Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/14.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="1155.0" layoutY="765.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img15" mnemonicParsing="false" onAction="#onImg15Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/15.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="675.0" layoutY="840.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img16" mnemonicParsing="false" onAction="#onImg16Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/16.png" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="795.0" layoutY="840.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img17" mnemonicParsing="false" onAction="#onImg17Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/17.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="915.0" layoutY="840.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img18" mnemonicParsing="false" onAction="#onImg18Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/18.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="1035.0" layoutY="840.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img19" mnemonicParsing="false" onAction="#onImg19Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/19.jpeg" />
+        </ImageView>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="1155.0" layoutY="840.0" prefHeight="58.0" prefWidth="99.0">
+        <RadioButton fx:id="img20" mnemonicParsing="false" onAction="#onImg20Action" prefHeight="58.0" prefWidth="29.0" />
+        <ImageView fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/20.jpeg" />
+        </ImageView>
+    </HBox>
+    <Label fx:id="langLab1" layoutX="386.0" layoutY="634.0" text="Georgian">
+        <font>
+          <Font size="15.0" />
+        </font>
+    </Label>
+    <CheckBox fx:id="geoCheckBox" layoutX="481.0" layoutY="636.0" mnemonicParsing="false" />
+    <ComboBox fx:id="geoProjectorVersions" layoutX="511.0" layoutY="632.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+    <CheckBox fx:id="engCheckBox" layoutX="481.0" layoutY="711.0" mnemonicParsing="false" />
+    <ComboBox fx:id="engProjectorVersions" layoutX="511.0" layoutY="707.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+    <Label fx:id="langLab2" layoutX="392.0" layoutY="709.0" text="English">
+        <font>
+          <Font size="15.0" />
+        </font>
+    </Label>
+    <Label fx:id="langLab3" layoutX="391.0" layoutY="784.0" text="Russian">
+        <font>
+          <Font size="15.0" />
+        </font>
+    </Label>
+    <CheckBox fx:id="rusCheckBox" layoutX="481.0" layoutY="786.0" mnemonicParsing="false" />
+    <ComboBox fx:id="rusProjectorVersions" layoutX="511.0" layoutY="782.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
+    <Label fx:id="ideaOf" layoutX="952.0" layoutY="947.0" text="Idea Of">
+        <font>
+          <Font size="15.0" />
+        </font>
+    </Label>
+    <Label fx:id="eso" layoutX="1003.0" layoutY="947.0" onMouseClicked="#onEsoMouseClicked" text="Eso" underline="true">
+        <font>
+          <Font size="15.0" />
+        </font>
+    </Label>
+    <Label fx:id="madeBy" layoutX="936.0" layoutY="975.0" text="Made By">
+        <font>
+          <Font size="15.0" />
+        </font>
+    </Label>
+    <Label fx:id="daniel" layoutX="998.0" layoutY="975.0" onMouseClicked="#onDanielMouseClicked" text="Daniel" underline="true">
+        <font>
+          <Font size="15.0" />
+        </font>
+    </Label>
+   <Button layoutX="1149.0" layoutY="15.0" mnemonicParsing="false" onAction="#onTillXAction" prefHeight="25.0" prefWidth="23.0" style="-fx-background-color: transparent;" text="X" />
+   <Button layoutX="982.0" layoutY="15.0" mnemonicParsing="false" onAction="#onVerseXAction" prefHeight="25.0" prefWidth="23.0" style="-fx-background-color: transparent;" text="X" />
+   <Button layoutX="814.0" layoutY="15.0" mnemonicParsing="false" onAction="#onChapterXAction" prefHeight="25.0" prefWidth="23.0" style="-fx-background-color: transparent;" text="X" />
+   <Button layoutX="53.0" layoutY="945.0" mnemonicParsing="false" onAction="#onDocumentationAction" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" text="Documentation">
+      <font>
+         <Font size="15.0" />
+      </font>
+   </Button>
 </AnchorPane>
