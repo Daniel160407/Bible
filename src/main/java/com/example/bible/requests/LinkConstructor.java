@@ -22,6 +22,7 @@ public class LinkConstructor {
         this.search = search;
     }
 
+
     public String getLink() {
         if (language.equals("rus")) {
             language = "russian";

@@ -241,13 +241,13 @@ public class FrontController extends ProjectorController {
                 newVerseBox.setTextAlignment(TextAlignment.CENTER);
                 newVerseBox.setWrappingWidth(rec.getWidth());
 
-                if (linkData.verses.size() > 5) {
+                if (linkData.verses.size() > 4) {
                     int prefHeight = (int) mainAnchorPane.getPrefHeight();
                     mainAnchorPane.setPrefHeight(prefHeight + 87);
                 }
             }
 
-            previousLayoutYPath = 73;
+            previousLayoutYPath = -73;
 
         }
 
@@ -272,6 +272,7 @@ public class FrontController extends ProjectorController {
     private void onClearVersesAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         mainAnchorPane.setPrefHeight(478);
+        linkData.verses.clear();
         chapter.getEditor().clear();
         verse.getEditor().clear();
         till.getEditor().clear();
@@ -357,13 +358,14 @@ public class FrontController extends ProjectorController {
 
             newVerseBox.setTextAlignment(TextAlignment.CENTER);
             newVerseBox.setWrappingWidth(rec.getWidth());
-            if (linkData.verses.size() > 5) {
+            if (linkData.verses.size() > 4) {
                 int prefHeight = (int) mainAnchorPane.getPrefHeight();
                 mainAnchorPane.setPrefHeight(prefHeight + rec.getHeight() + 9);
             }
 
         }
         previousLayoutYPath = -73;
+        linkData.search = null;
     }
 
     @FXML
@@ -377,6 +379,7 @@ public class FrontController extends ProjectorController {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void onDocumentationAction() throws IOException {
         FXMLLoader loader = new FXMLLoader(Bible.class.getResource("fxml files/documentation.fxml"));

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1972.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.FrontController">
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.FrontController">
     <Button layoutX="372.0" layoutY="568.0" mnemonicParsing="false" onAction="#onClearButtonAction" style="-fx-background-color: #DC2626; -fx-background-radius: 10;" text="Clear" textFill="WHITE">
         <font>
             <Font size="15.0" />
@@ -46,7 +46,7 @@
     <ComboBox fx:id="till" editable="true" layoutX="1044.0" layoutY="14.0" onAction="#onTillAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
     <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" onAction="#onSearchAction" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" />
     <ScrollPane fx:id="scrollPane" layoutY="56.0" prefHeight="491.0" prefWidth="1920.0">
-        <AnchorPane fx:id="mainAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="476.0" prefWidth="1919.0">
+        <AnchorPane fx:id="mainAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="476.0" prefWidth="1918.0">
          <children>
             <Button layoutX="1853.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClearVersesAction" style="-fx-background-color: #DC2626; -fx-border-radius: 10;" text="Clear" textFill="WHITE">
                <font>

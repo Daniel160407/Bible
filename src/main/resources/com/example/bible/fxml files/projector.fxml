@@ -7,7 +7,7 @@
 
 <AnchorPane fx:id="projectorAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.ProjectorController">
     <children>
-        <Text fx:id="projectorTextBox" layoutY="545.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="1972.0" />
+        <Text fx:id="projectorTextBox" layoutX="162.0" layoutY="515.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="1600.0" />
       <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="1873.0" layoutY="971.0" onMouseClicked="#onFullScreenMouseClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/fullScreen.png" />
