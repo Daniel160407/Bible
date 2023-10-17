@@ -21,7 +21,7 @@ public class LinkData {
     public String apiUrl = "";
     public String linkData;
     public List<String> verses = new ArrayList<>();
-    public List<String> versePath = new ArrayList<>();
+    public List<List<String>> versePath = new ArrayList<>();
     public String search = "";
 
     public void setLinkInfo(String language, String bibleVersion, int book, int chapter, int verse, int till) {
@@ -54,14 +54,18 @@ public class LinkData {
                     if (search != null && !search.equals("")) {
                         for (int i = verse - 1; i < jsonObject.getJSONArray("bibleData").length(); i++) {
                             verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv").replaceAll("<span class='markedText'>|</span>", ""));
-                            versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
-                            versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
+                            List<String> list = new ArrayList<>();
+                            list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
+                            list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
+                            versePath.add(list);
                         }
                     } else {
                         for (int i = verse - 1; i < till; i++) {
                             verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
-                            versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
-                            versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
+                            List<String> list = new ArrayList<>();
+                            list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
+                            list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
+                            versePath.add(list);
                         }
                     }
 
@@ -79,14 +83,18 @@ public class LinkData {
                 if (search != null && !search.equals("")) {
                     for (int i = verse - 1; i < jsonObject.getJSONArray("bibleData").length(); i++) {
                         verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv").replaceAll("<span class='markedText'>|</span>", ""));
-                        versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
-                        versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
+                        List<String> list = new ArrayList<>();
+                        list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
+                        list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
+                        versePath.add(list);
                     }
                 } else {
                     for (int i = verse - 1; i < till; i++) {
                         verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
-                        versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
-                        versePath.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
+                        List<String> list = new ArrayList<>();
+                        list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
+                        list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
+                        versePath.add(list);
                     }
                 }
 

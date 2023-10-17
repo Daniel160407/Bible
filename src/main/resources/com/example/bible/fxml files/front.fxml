@@ -76,7 +76,7 @@
             <Font size="15.0" />
         </font>
     </Label>
-    <ComboBox fx:id="fontSize" layoutX="511.0" layoutY="573.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;">
+    <ComboBox fx:id="fontSize" layoutX="511.0" layoutY="573.0" onAction="#onFontSizeAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="1" />

@@ -206,7 +206,8 @@ public class FrontController extends ProjectorController {
             stackPane.setLayoutX(400);
             stackPane.setLayoutY(73);
             mainAnchorPane.getChildren().add(stackPane);
-            newVerseBox.setText(str.toString());
+            newVerseBox.setText(str + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(0).get(0) + ":" + linkData.versePath.get(0).get(1));
+            linkData.versePath.clear();
             newVerseBox.setTextAlignment(TextAlignment.CENTER);
             newVerseBox.setWrappingWidth(rec.getWidth());
         }
@@ -236,7 +237,7 @@ public class FrontController extends ProjectorController {
                 stackPane.setLayoutY(previousLayoutYPath + 100);
                 mainAnchorPane.getChildren().add(stackPane);
                 previousLayoutYPath = (int) stackPane.getLayoutY();
-                newVerseBox.setText(linkData.verses.get(i));
+                newVerseBox.setText(linkData.verses.get(i) + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(i).get(0) + ":" + linkData.versePath.get(i).get(1));
 
                 newVerseBox.setTextAlignment(TextAlignment.CENTER);
                 newVerseBox.setWrappingWidth(rec.getWidth());
@@ -246,7 +247,7 @@ public class FrontController extends ProjectorController {
                     mainAnchorPane.setPrefHeight(prefHeight + 87);
                 }
             }
-
+            linkData.versePath.clear();
             previousLayoutYPath = -73;
 
         }
@@ -256,11 +257,14 @@ public class FrontController extends ProjectorController {
     @FXML
     private void onChapterXAction() {
         chapter.getEditor().clear();
+        verse.getEditor().clear();
+        till.getEditor().clear();
     }
 
     @FXML
     private void onVerseXAction() {
         verse.getEditor().clear();
+        till.getEditor().clear();
     }
 
     @FXML
@@ -280,7 +284,6 @@ public class FrontController extends ProjectorController {
 
     @FXML
     private void onClearButtonAction() {
-
         projectorController.projectorAnchorPane.getChildren().clear();
     }
 
@@ -306,13 +309,21 @@ public class FrontController extends ProjectorController {
         allVersesInOne = requestManager(allVersesInOne);
 
         projectorController.projectorTextBox.getStyleClass().add("projectorTextBox");
-        projectorController.projectorTextBox.setStyle("-fx-font-size: " + Integer.parseInt(fontSize.getValue()) + 2 + "px;");
         projectorController.projectorAnchorPane.getChildren().add(projectorController.projectorTextBox);
-        projectorController.projectorTextBox.setText(allVersesInOne);
+
+        projectorController.projectorTextBox.setText(allVersesInOne + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(0).get(0) + ":"
+                + linkData.versePath.get(0).get(1) + "-" + linkData.versePath.get(linkData.versePath.size() - 1).get(1));
+        linkData.versePath.clear();
         projectorController.projectorTextBox.setTextAlignment(TextAlignment.CENTER);
     }
 
     @FXML
+    private void onFontSizeAction() {
+        projectorController.projectorTextBox.setStyle("-fx-font-size: " + fontSize.getValue() + 2 + "px;");
+    }
+
+    @FXML
+
     private void onSearchAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         linkData.verses.clear();
@@ -325,7 +336,7 @@ public class FrontController extends ProjectorController {
             Text newVerseBox = new Text();
             newVerseBox.getStyleClass().add("newVerseBox");
             StackPane stackPane = new StackPane();
-            Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
+            Rectangle rec = new Rectangle(1100, 100, Color.DARKBLUE);
             rec.setArcWidth(20);
             rec.setArcHeight(20);
             Button separateButton = new Button();
@@ -336,14 +347,15 @@ public class FrontController extends ProjectorController {
             stackPane.getChildren().addAll(rec, vBox);
 
             stackPane.setLayoutX(400);
-            stackPane.setLayoutY(previousLayoutYPath + 100);
+            stackPane.setLayoutY(previousLayoutYPath + 117);
             mainAnchorPane.getChildren().add(stackPane);
             previousLayoutYPath = (int) stackPane.getLayoutY();
-            newVerseBox.setText(linkData.verses.get(i));
+            newVerseBox.setText(linkData.verses.get(i) + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(i).get(0) + ":" + linkData.versePath.get(i).get(1));
 
             separateButton.getStyleClass().add("separate-button");
             separateButton.setLayoutY(100);
             separateButton.setText("Separate");
+            int finalI = i;
             separateButton.setOnAction(event -> {
                 mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
                 StackPane stackPane2 = new StackPane();
@@ -353,7 +365,8 @@ public class FrontController extends ProjectorController {
                 mainAnchorPane.getChildren().add(stackPane2);
                 mainAnchorPane.setPrefHeight(scrollPane.getPrefHeight());
                 linkData.verses.clear();
-                linkData.verses.add(newVerseBox.getText());
+                linkData.verses.add(newVerseBox.getText() + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(finalI).get(0) + ":" + linkData.versePath.get(finalI).get(1));
+                linkData.versePath.clear();
             });
 
             newVerseBox.setTextAlignment(TextAlignment.CENTER);
@@ -366,19 +379,10 @@ public class FrontController extends ProjectorController {
         }
         previousLayoutYPath = -73;
         linkData.search = null;
+        linkData.versePath.clear();
     }
 
-    @FXML
-    private void onEsoMouseClicked() {
-        try {
-            String url = "https://www.facebook.com/esaia.gafrindashvili/";
-            URI uri = new URI(url);
-            Desktop desktop = Desktop.getDesktop();
-            desktop.browse(uri);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     @FXML
     private void onDocumentationAction() throws IOException {
@@ -391,6 +395,21 @@ public class FrontController extends ProjectorController {
         scene.getStylesheets().add(Objects.requireNonNull(Bible.class.getResource("styles/style.css")).toExternalForm());
         newStage.setScene(scene);
         newStage.show();
+    }
+    @FXML
+    private void onEsoMouseClicked() {
+        try {
+            String url = "https://www.facebook.com/esaia.gafrindashvili/";
+            URI uri = new URI(url);
+            Desktop desktop = Desktop.getDesktop();
+            desktop.browse(uri);
+            url = "https://bibleversesgeo.netlify.app/";
+            uri = new URI(url);
+            desktop = Desktop.getDesktop();
+            desktop.browse(uri);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -558,7 +577,6 @@ public class FrontController extends ProjectorController {
             chapter.setStyle("-fx-text-fill:" + "white");
             verse.setStyle("-fx-text-fill:" + "white");
             till.setStyle("-fx-text-fill:" + "white");
-            search.setStyle("-fx-text-fill:" + "white");
             darkMode.setStyle("-fx-text-fill:" + "white");
             fontSizeLabel.setStyle("-fx-text-fill:" + "white");
             langLab1.setStyle("-fx-text-fill:" + "white");
@@ -577,7 +595,6 @@ public class FrontController extends ProjectorController {
             chapter.setStyle("-fx-text-fill:" + darkColor);
             verse.setStyle("-fx-text-fill:" + darkColor);
             till.setStyle("-fx-text-fill:" + darkColor);
-            search.setStyle("-fx-text-fill:" + darkColor);
             darkMode.setStyle("-fx-text-fill:" + darkColor);
             fontSizeLabel.setStyle("-fx-text-fill:" + darkColor);
             langLab1.setStyle("-fx-text-fill:" + darkColor);

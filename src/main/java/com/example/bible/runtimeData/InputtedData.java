@@ -45,7 +45,6 @@ public class InputtedData {
         return till;
     }
 
-
     public String getGeoVersion() {
         return geoVersion;
     }
@@ -85,7 +84,6 @@ public class InputtedData {
     public void setTill(int till) {
         this.till = till;
     }
-
 
     public void setGeoVersion(String geoVersion) {
         this.geoVersion = geoVersion;
