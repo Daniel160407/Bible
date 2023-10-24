@@ -37,9 +37,9 @@
     <ComboBox fx:id="verse" editable="true" layoutX="877.0" layoutY="14.0" onAction="#onVerseAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
     <ComboBox fx:id="till" editable="true" layoutX="1044.0" layoutY="14.0" onAction="#onTillAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
     <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" onAction="#onSearchAction" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
-    <ScrollPane fx:id="scrollPane" layoutY="56.0" prefHeight="491.0" prefWidth="1920.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
-        <AnchorPane fx:id="mainAnchorPane" prefHeight="488.0" prefWidth="1918.0">
-            <Button layoutX="1853.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClearVersesAction" style="-fx-background-color: #DC2626; -fx-border-radius: 10;" text="Clear" textFill="WHITE" AnchorPane.leftAnchor="1853.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="14.0">
+    <ScrollPane fx:id="scrollPane" layoutY="56.0" prefHeight="491.0" prefWidth="1920.0" AnchorPane.bottomAnchor="371.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+        <AnchorPane fx:id="mainAnchorPane" prefHeight="592.0" prefWidth="1918.0">
+            <Button layoutX="1839.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClearVersesAction" style="-fx-background-color: #DC2626; -fx-border-radius: 10;" text="Clear" textFill="WHITE" AnchorPane.leftAnchor="1839.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="14.0">
                 <font>
                     <Font size="15.0" />
                 </font>
@@ -259,10 +259,13 @@
           <ComboBox fx:id="engProjectorVersions" layoutX="499.0" layoutY="781.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="499.0" />
           <CheckBox fx:id="rusCheckBox" layoutX="474.0" layoutY="861.0" mnemonicParsing="false" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="474.0" />
           <ComboBox fx:id="rusProjectorVersions" layoutX="499.0" layoutY="856.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="499.0" />
-   <Button layoutX="1287.0" layoutY="572.0" mnemonicParsing="false" onAction="#onAddYourAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #43a047;" text="Add Your" textFill="WHITE" AnchorPane.bottomAnchor="327.0" AnchorPane.leftAnchor="1287.0">
+   <Button layoutX="1287.0" layoutY="572.0" mnemonicParsing="false" onAction="#onAddYourAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #047857;" text="Add Your" textFill="WHITE" AnchorPane.bottomAnchor="327.0" AnchorPane.leftAnchor="1287.0">
       <font>
          <Font size="13.0" />
       </font>
+      <effect>
+         <DropShadow />
+      </effect>
    </Button>
    <HBox alignment="CENTER" layoutX="1271.0" layoutY="630.0" prefHeight="58.0" prefWidth="99.0" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="1271.0">
       <children>

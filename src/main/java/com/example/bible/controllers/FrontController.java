@@ -150,14 +150,15 @@ public class FrontController extends ProjectorController {
         darkModeColorsChanger(anchorPane.getBackground().getFills().get(0).getFill().toString());
     }
 
-    @FXML
-    private void onVersionsMouseClicked() {
-        getVersionsAndBooksInfo();
-    }
 
     @FXML
     private void onLanguageAction() {
         inputtedData.setLanguage(language.getValue().toLowerCase());
+    }
+
+    @FXML
+    private void onVersionsMouseClicked() {
+        getVersionsAndBooksInfo();
     }
 
     @FXML
@@ -180,6 +181,7 @@ public class FrontController extends ProjectorController {
     private void onChapterAction() {
         if (chapter.getEditor().getText() != null && !chapter.getEditor().getText().isEmpty()) {
             inputtedData.setChapter(Integer.parseInt(chapter.getEditor().getText()));
+            inputtedData.setVersion(versionDefinition());
         }
         linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1);
         verse.getItems().clear();
@@ -285,7 +287,7 @@ public class FrontController extends ProjectorController {
     @FXML
     private void onClearVersesAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
-        mainAnchorPane.setPrefHeight(478);
+        mainAnchorPane.setPrefHeight(592);
         linkData.verses.clear();
         chapter.getEditor().clear();
         verse.getEditor().clear();
@@ -446,7 +448,7 @@ public class FrontController extends ProjectorController {
         if (selectedFile != null) {
             selectedBackgroundImage = new Image(selectedFile.toURI().toString());
             selectedImage.setImage(selectedBackgroundImage);
-            if(myImg.isSelected()){
+            if (myImg.isSelected()) {
                 projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('" + selectedBackgroundImage.getUrl() + "');");
             }
         }
@@ -597,7 +599,6 @@ public class FrontController extends ProjectorController {
         backgroundImage = selectedBackgroundImage.getUrl();
         radioButtonSwitch();
         myImg.setSelected(true);
-        System.out.println(backgroundImage);
     }
 
 

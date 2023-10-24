@@ -31,10 +31,8 @@ public class LinkConstructor {
             return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=" + search + "&mv=" + bibleVersion + "&language="
                     + language + "&page=1";
         }else if (till == 0) {
-            return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language=" + language + "&page=1&verse=" + verse;
-        } else {
-            return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language="
-                    + language + "&page=1&verse" + verse + "&versemde=" + till;
+            return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language=" + language + "&page=1";
         }
+        return "";
     }
 }
