@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.FrontController">
+<AnchorPane fx:id="anchorPane" prefHeight="918.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.FrontController">
     <RadioButton fx:id="darkMode" layoutX="1803.0" layoutY="930.0" mnemonicParsing="false" onAction="#onDarkModeAction" prefHeight="55.0" prefWidth="117.0" text="Dark Mode" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="0.0">
         <font>
             <Font size="15.0" />
@@ -259,4 +259,15 @@
           <ComboBox fx:id="engProjectorVersions" layoutX="499.0" layoutY="781.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="499.0" />
           <CheckBox fx:id="rusCheckBox" layoutX="474.0" layoutY="861.0" mnemonicParsing="false" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="474.0" />
           <ComboBox fx:id="rusProjectorVersions" layoutX="499.0" layoutY="856.0" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="499.0" />
+   <Button layoutX="1287.0" layoutY="572.0" mnemonicParsing="false" onAction="#onAddYourAction" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #43a047;" text="Add Your" textFill="WHITE" AnchorPane.bottomAnchor="327.0" AnchorPane.leftAnchor="1287.0">
+      <font>
+         <Font size="13.0" />
+      </font>
+   </Button>
+   <HBox alignment="CENTER" layoutX="1271.0" layoutY="630.0" prefHeight="58.0" prefWidth="99.0" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="1271.0">
+      <children>
+         <RadioButton fx:id="myImg" mnemonicParsing="false" onAction="#onMyImgAction" prefHeight="58.0" prefWidth="29.0" />
+         <ImageView fx:id="selectedImage" fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+      </children>
+   </HBox>
 </AnchorPane>

@@ -4,9 +4,11 @@ import com.example.bible.Bible;
 import com.example.bible.runtimeData.BibleVersions;
 import com.example.bible.runtimeData.InputtedData;
 import com.example.bible.requests.LinkData;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -22,9 +25,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
@@ -96,6 +101,8 @@ public class FrontController extends ProjectorController {
     @FXML
     private RadioButton img20;
     @FXML
+    private RadioButton myImg;
+    @FXML
     private ComboBox<String> geoProjectorVersions;
     @FXML
     private ComboBox<String> engProjectorVersions;
@@ -123,6 +130,8 @@ public class FrontController extends ProjectorController {
     private Label eso;
     @FXML
     private Label daniel;
+    @FXML
+    private ImageView selectedImage;
 
 
     private final List<String> versionsList = new ArrayList<>();
@@ -133,6 +142,7 @@ public class FrontController extends ProjectorController {
     private int previousLayoutYPath = -27;
     private ProjectorController projectorController;
     private String backgroundImage;
+    private Image selectedBackgroundImage;
 
 
     @FXML
@@ -198,7 +208,7 @@ public class FrontController extends ProjectorController {
             newVerseBox.prefHeight(70);
             newVerseBox.getStyleClass().add("newVerseBox");
             StackPane stackPane = new StackPane();
-            Rectangle rec = new Rectangle(1067, 83, Color.DARKBLUE);
+            Rectangle rec = new Rectangle(1067, 83, Color.web("#374151"));
             rec.setArcWidth(20);
             rec.setArcHeight(20);
             stackPane.getChildren().add(rec);
@@ -228,7 +238,7 @@ public class FrontController extends ProjectorController {
                 Text newVerseBox = new Text();
                 newVerseBox.getStyleClass().add("newVerseBox");
                 StackPane stackPane = new StackPane();
-                Rectangle rec = new Rectangle(1100, 83, Color.DARKBLUE);
+                Rectangle rec = new Rectangle(1100, 83, Color.web("#374151"));
                 rec.setArcWidth(20);
                 rec.setArcHeight(20);
                 stackPane.getChildren().add(rec);
@@ -335,7 +345,7 @@ public class FrontController extends ProjectorController {
             Text newVerseBox = new Text();
             newVerseBox.getStyleClass().add("newVerseBox");
             StackPane stackPane = new StackPane();
-            Rectangle rec = new Rectangle(1100, 100, Color.DARKBLUE);
+            Rectangle rec = new Rectangle(1100, 100, Color.web("#374151"));
             rec.setArcWidth(20);
             rec.setArcHeight(20);
             Button separateButton = new Button();
@@ -382,7 +392,6 @@ public class FrontController extends ProjectorController {
     }
 
 
-
     @FXML
     private void onDocumentationAction() throws IOException {
         FXMLLoader loader = new FXMLLoader(Bible.class.getResource("fxml files/documentation.fxml"));
@@ -395,6 +404,7 @@ public class FrontController extends ProjectorController {
         newStage.setScene(scene);
         newStage.show();
     }
+
     @FXML
     private void onEsoMouseClicked() {
         try {
@@ -420,6 +430,25 @@ public class FrontController extends ProjectorController {
             desktop.browse(uri);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onAddYourAction(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open File");
+        File initialDirectory = new File(System.getProperty("user.home"));
+        fileChooser.setInitialDirectory(initialDirectory);
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.gif", "*.jpeg");
+        fileChooser.getExtensionFilters().add(filter);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        if (selectedFile != null) {
+            selectedBackgroundImage = new Image(selectedFile.toURI().toString());
+            selectedImage.setImage(selectedBackgroundImage);
+            if(myImg.isSelected()){
+                projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('" + selectedBackgroundImage.getUrl() + "');");
+            }
         }
     }
 
@@ -563,10 +592,18 @@ public class FrontController extends ProjectorController {
         img20.setSelected(true);
     }
 
+    @FXML
+    private void onMyImgAction() {
+        backgroundImage = selectedBackgroundImage.getUrl();
+        radioButtonSwitch();
+        myImg.setSelected(true);
+        System.out.println(backgroundImage);
+    }
+
 
     private void darkModeColorsChanger(String color) {
         String whiteColor = "0xf4f4f4ff";
-        String darkColor = "#030028";
+        String darkColor = "#101828";
         if (color.equals(whiteColor)) {
             anchorPane.setStyle("-fx-background-color: " + darkColor);
             mainAnchorPane.setStyle("-fx-background-color:" + darkColor);
@@ -879,6 +916,7 @@ public class FrontController extends ProjectorController {
         img18.setSelected(false);
         img19.setSelected(false);
         img20.setSelected(false);
+        myImg.setSelected(false);
         projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('" + backgroundImage + "');");
     }
 
@@ -944,4 +982,6 @@ public class FrontController extends ProjectorController {
 
         return allVersesInOne;
     }
+
+
 }
