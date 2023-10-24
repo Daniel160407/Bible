@@ -1,9 +1,5 @@
 package com.example.bible.requests;
 
-import com.example.bible.Bible;
-import com.example.bible.controllers.FrontController;
-import com.example.bible.requests.LinkConstructor;
-import javafx.fxml.FXMLLoader;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -12,8 +8,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class LinkData {
     public int chapterCount;
@@ -51,7 +45,7 @@ public class LinkData {
                     }
                     chapterCount = Integer.parseInt(jsonObject.getJSONArray("tavi").getJSONObject(0).getString("cc"));
                     verseCount = Integer.parseInt(jsonObject.getJSONArray("muxli").getJSONObject(0).getString("cc"));
-                    if (search != null && !search.equals("")) {
+                    if (search != null && !search.isEmpty()) {
                         for (int i = verse - 1; i < jsonObject.getJSONArray("bibleData").length(); i++) {
                             verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv").replaceAll("<span class='markedText'>|</span>", ""));
                             List<String> list = new ArrayList<>();
@@ -80,7 +74,7 @@ public class LinkData {
                 }
                 chapterCount = Integer.parseInt(jsonObject.getJSONArray("tavi").getJSONObject(0).getString("cc"));
                 verseCount = Integer.parseInt(jsonObject.getJSONArray("muxli").getJSONObject(0).getString("cc"));
-                if (search != null && !search.equals("")) {
+                if (search != null && !search.isEmpty()) {
                     for (int i = verse - 1; i < jsonObject.getJSONArray("bibleData").length(); i++) {
                         verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv").replaceAll("<span class='markedText'>|</span>", ""));
                         List<String> list = new ArrayList<>();

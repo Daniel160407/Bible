@@ -12,99 +12,102 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.DocumentationController">
-    <children>
-        <ScrollPane layoutX="-1.0" layoutY="-4.0" prefHeight="1088.0" prefWidth="1920.0">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1830.0" prefWidth="1904.0" style="-fx-background-color: #030028;">
-                    <children>
-                        <Label fx:id="title" layoutX="738.0" layoutY="57.0" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="50.0" />
-                            </font>
-                        </Label>
-                        <ImageView fitHeight="86.0" fitWidth="992.0" layoutX="514.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../images/docExample1.png" />
-                            </image>
-                        </ImageView>
-                        <ImageView fitHeight="227.0" fitWidth="493.0" layoutX="514.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../images/docExample2.png" />
-                            </image>
-                        </ImageView>
-                        <ImageView fitHeight="200.0" fitWidth="316.0" layoutX="513.0" layoutY="1111.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../images/docExample3.png" />
-                            </image>
-                        </ImageView>
-                        <ImageView fitHeight="198.0" fitWidth="371.0" layoutX="513.0" layoutY="1398.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../images/docExample4.png" />
-                            </image>
-                        </ImageView>
-                        <Button layoutX="513.0" layoutY="1686.0" mnemonicParsing="false" onMouseClicked="#onMessengerMouseClicked" style="-fx-background-color: transparent;" text="Messenger" textFill="WHITE">
-                            <font>
-                                <Font size="15.0" />
-                            </font>
-                        </Button>
-                        <ImageView fitHeight="22.0" fitWidth="19.0" layoutX="597.0" layoutY="1693.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../images/messengerIcon.png" />
-                            </image>
-                        </ImageView>
-                        <ComboBox fx:id="language" layoutX="24.0" layoutY="14.0" onAction="#onLanguageAction" prefHeight="27.0" prefWidth="72.0" promptText="GEO" style="-fx-background-color: f4f4f4; -fx-border-color: gray;">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="GEO" />
-                                    <String fx:value="ENG" />
-                                    <String fx:value="RUS" />
-                                </FXCollections>
-                            </items>
-                        </ComboBox>
-                  <Text fx:id="firstText" fill="WHITE" layoutX="514.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1000.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="secondText" fill="WHITE" layoutX="513.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1000.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="thirdText" fill="WHITE" layoutX="514.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1000.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="fourthText" fill="WHITE" layoutX="513.0" layoutY="788.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1000.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="secondTitle" fill="WHITE" layoutX="510.0" layoutY="833.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1000.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="fivethText" fill="WHITE" layoutX="510.0" layoutY="885.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1000.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="sixthText" fill="WHITE" layoutX="513.0" layoutY="1351.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1000.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="seventhText" fill="WHITE" layoutX="524.0" layoutY="1648.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1000.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                    </children>
-                </AnchorPane>
-            </content>
-        </ScrollPane>
-    </children>
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.DocumentationController">
+    <ScrollPane layoutX="-1.0" layoutY="-4.0" prefHeight="1088.0" prefWidth="1920.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1830.0" prefWidth="1904.0"
+                    style="-fx-background-color: #030028;">
+            <Label fx:id="title" layoutX="738.0" layoutY="57.0" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="50.0"/>
+                </font>
+            </Label>
+            <ImageView fitHeight="86.0" fitWidth="992.0" layoutX="514.0" layoutY="310.0" pickOnBounds="true"
+                       preserveRatio="true">
+                <Image url="@../images/docExample1.png"/>
+            </ImageView>
+            <ImageView fitHeight="227.0" fitWidth="493.0" layoutX="514.0" layoutY="526.0" pickOnBounds="true"
+                       preserveRatio="true">
+                <Image url="@../images/docExample2.png"/>
+            </ImageView>
+            <ImageView fitHeight="200.0" fitWidth="316.0" layoutX="513.0" layoutY="1111.0" pickOnBounds="true"
+                       preserveRatio="true">
+                <Image url="@../images/docExample3.png"/>
+            </ImageView>
+            <ImageView fitHeight="198.0" fitWidth="371.0" layoutX="513.0" layoutY="1398.0" pickOnBounds="true"
+                       preserveRatio="true">
+                <Image url="@../images/docExample4.png"/>
+            </ImageView>
+            <Button layoutX="513.0" layoutY="1686.0" mnemonicParsing="false"
+                    onMouseClicked="#onMessengerMouseClicked" style="-fx-background-color: transparent;"
+                    text="Messenger" textFill="WHITE">
+                <font>
+                    <Font size="15.0"/>
+                </font>
+            </Button>
+            <ImageView fitHeight="22.0" fitWidth="19.0" layoutX="597.0" layoutY="1693.0" pickOnBounds="true"
+                       preserveRatio="true">
+                <Image url="@../images/messengerIcon.png"/>
+            </ImageView>
+            <ComboBox fx:id="language" layoutX="24.0" layoutY="14.0" onAction="#onLanguageAction"
+                      prefHeight="27.0" prefWidth="72.0" promptText="GEO"
+                      style="-fx-background-color: f4f4f4; -fx-border-color: gray;">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="GEO"/>
+                        <String fx:value="ENG"/>
+                        <String fx:value="RUS"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <Text fx:id="firstText" fill="WHITE" layoutX="514.0" layoutY="262.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0" wrappingWidth="1000.0">
+                <font>
+                    <Font size="15.0"/>
+                </font>
+            </Text>
+            <Text fx:id="secondText" fill="WHITE" layoutX="513.0" layoutY="384.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0" wrappingWidth="1000.0">
+                <font>
+                    <Font size="15.0"/>
+                </font>
+            </Text>
+            <Text fx:id="thirdText" fill="WHITE" layoutX="514.0" layoutY="453.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0" wrappingWidth="1000.0">
+                <font>
+                    <Font size="15.0"/>
+                </font>
+            </Text>
+            <Text fx:id="fourthText" fill="WHITE" layoutX="513.0" layoutY="788.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0" wrappingWidth="1000.0">
+                <font>
+                    <Font size="15.0"/>
+                </font>
+            </Text>
+            <Text fx:id="secondTitle" fill="WHITE" layoutX="510.0" layoutY="833.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0" wrappingWidth="1000.0">
+                <font>
+                    <Font size="15.0"/>
+                </font>
+            </Text>
+            <Text fx:id="fivethText" fill="WHITE" layoutX="510.0" layoutY="885.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0" wrappingWidth="1000.0">
+                <font>
+                    <Font size="15.0"/>
+                </font>
+            </Text>
+            <Text fx:id="sixthText" fill="WHITE" layoutX="513.0" layoutY="1351.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0" wrappingWidth="1000.0">
+                <font>
+                    <Font size="15.0"/>
+                </font>
+            </Text>
+            <Text fx:id="seventhText" fill="WHITE" layoutX="524.0" layoutY="1648.0" strokeType="OUTSIDE"
+                  strokeWidth="0.0" wrappingWidth="1000.0">
+                <font>
+                    <Font size="15.0"/>
+                </font>
+            </Text>
+        </AnchorPane>
+    </ScrollPane>
 </AnchorPane>

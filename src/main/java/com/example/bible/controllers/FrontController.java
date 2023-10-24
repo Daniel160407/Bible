@@ -168,7 +168,7 @@ public class FrontController extends ProjectorController {
 
     @FXML
     private void onChapterAction() {
-        if (chapter.getEditor().getText() != null && !chapter.getEditor().getText().equals("")) {
+        if (chapter.getEditor().getText() != null && !chapter.getEditor().getText().isEmpty()) {
             inputtedData.setChapter(Integer.parseInt(chapter.getEditor().getText()));
         }
         linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1);
@@ -182,7 +182,7 @@ public class FrontController extends ProjectorController {
 
     @FXML
     private void onVerseAction() {
-        if (verse.getEditor().getText() != null && !verse.getEditor().getText().equals("")) {
+        if (verse.getEditor().getText() != null && !verse.getEditor().getText().isEmpty()) {
             mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
             linkData.verses.clear();
             mainAnchorPane.setPrefHeight(scrollPane.getHeight());
@@ -216,7 +216,7 @@ public class FrontController extends ProjectorController {
 
     @FXML
     private void onTillAction() {
-        if (till.getEditor().getText() != null && !till.getEditor().getText().equals("")) {
+        if (till.getEditor().getText() != null && !till.getEditor().getText().isEmpty()) {
             mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
             linkData.verses.clear();
             mainAnchorPane.setPrefHeight(scrollPane.getHeight());
@@ -323,7 +323,6 @@ public class FrontController extends ProjectorController {
     }
 
     @FXML
-
     private void onSearchAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         linkData.verses.clear();

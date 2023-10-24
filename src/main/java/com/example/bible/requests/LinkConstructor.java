@@ -27,7 +27,7 @@ public class LinkConstructor {
         if (language.equals("rus")) {
             language = "russian";
         }
-        if (search != null && !search.equals("")) {
+        if (search != null && !search.isEmpty()) {
             return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=" + search + "&mv=" + bibleVersion + "&language="
                     + language + "&page=1";
         }else if (till == 0) {
