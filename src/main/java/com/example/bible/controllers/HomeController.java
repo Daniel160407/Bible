@@ -190,6 +190,8 @@ public class HomeController extends ProjectorController {
             verse.getItems().add(i + 1);
             till.getItems().add(i + 1);
         }
+        verse.getEditor().clear();
+        till.getEditor().clear();
     }
 
     @FXML
@@ -222,6 +224,7 @@ public class HomeController extends ProjectorController {
             linkData.versePath.clear();
             newVerseBox.setTextAlignment(TextAlignment.CENTER);
             newVerseBox.setWrappingWidth(rec.getWidth());
+            till.getEditor().clear();
         }
 
     }
@@ -271,17 +274,23 @@ public class HomeController extends ProjectorController {
         chapter.getEditor().clear();
         verse.getEditor().clear();
         till.getEditor().clear();
+        inputtedData.setChapter(0);
+        inputtedData.setVerse(0);
+        inputtedData.setTill(0);
     }
 
     @FXML
     private void onVerseXAction() {
         verse.getEditor().clear();
         till.getEditor().clear();
+        inputtedData.setVerse(0);
+        inputtedData.setTill(0);
     }
 
     @FXML
     private void onTillXAction() {
         till.getEditor().clear();
+        inputtedData.setTill(0);
     }
 
     @FXML
@@ -292,6 +301,9 @@ public class HomeController extends ProjectorController {
         chapter.getEditor().clear();
         verse.getEditor().clear();
         till.getEditor().clear();
+        inputtedData.setChapter(0);
+        inputtedData.setVerse(0);
+        inputtedData.setTill(0);
     }
 
     @FXML
@@ -324,7 +336,11 @@ public class HomeController extends ProjectorController {
         projectorController.projectorAnchorPane.getChildren().add(projectorController.projectorTextBox);
 
         projectorController.projectorTextBox.setText(allVersesInOne + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(0).get(0) + ":"
-                + linkData.versePath.get(0).get(1) + "-" + linkData.versePath.get(linkData.versePath.size() - 1).get(1));
+                + linkData.versePath.get(0).get(1) + (inputtedData.getTill() != 0 ? "-"
+                + linkData.versePath.get(linkData.versePath.size() - 1).get(1) : ""));
+
+        System.out.println(inputtedData.getTill());
+
         linkData.versePath.clear();
         projectorController.projectorTextBox.setTextAlignment(TextAlignment.CENTER);
     }
