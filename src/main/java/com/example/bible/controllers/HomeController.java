@@ -35,7 +35,7 @@ import java.net.URI;
 import java.util.*;
 import java.util.List;
 
-public class FrontController extends ProjectorController {
+public class HomeController extends ProjectorController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -947,10 +947,33 @@ public class FrontController extends ProjectorController {
         if (engCheckBox.isSelected()) {
             inputtedData.setVersionIndex(engProjectorVersions.getSelectionModel().getSelectedIndex());
             inputtedData.setEngVersion(projectorVersionDefinition("eng"));
+            Map<Integer, Integer> englishBooksIndexes = new HashMap<>() {{
+                put(48, 62);
+                put(49, 63);
+                put(50, 64);
+                put(51, 65);
+                put(52, 66);
+                put(53, 67);
+                put(54, 68);
+                put(55, 48);
+                put(56, 49);
+                put(57, 50);
+                put(58, 51);
+                put(59, 52);
+                put(60, 53);
+                put(61, 54);
+                put(62, 55);
+                put(63, 56);
+                put(64, 57);
+                put(65, 58);
+                put(66, 59);
+                put(67, 60);
+                put(68, 61);
+            }};
             if (versesCount == 1) {
-                linkData.setLinkInfo("eng", inputtedData.getEngVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                linkData.setLinkInfo("eng", inputtedData.getEngVersion(), englishBooksIndexes.get(books.getItems().indexOf(inputtedData.getBook()) + 1), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
             } else if (versesCount > 1) {
-                linkData.setLinkInfo("eng", inputtedData.getEngVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                linkData.setLinkInfo("eng", inputtedData.getEngVersion(), englishBooksIndexes.get(books.getItems().indexOf(inputtedData.getBook()) + 1), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
             }
             StringBuilder allVersesInOneBuilder = new StringBuilder(allVersesInOne);
             for (int i = 0; i < linkData.verses.size(); i++) {
