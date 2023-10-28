@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.*;
 
 public class HomeController extends ProjectorController {
     @FXML
@@ -329,13 +330,13 @@ public class HomeController extends ProjectorController {
     @FXML
     private void onShowButtonAction() {
         projectorController.projectorAnchorPane.getChildren().removeIf(node -> node instanceof Text);
-        String allVersesInOne = "";
-        allVersesInOne = requestManager(allVersesInOne);
+        String allVersesInOne = requestManager();
 
         projectorController.projectorTextBox.getStyleClass().add("projectorTextBox");
         projectorController.projectorAnchorPane.getChildren().add(projectorController.projectorTextBox);
 
-        projectorController.projectorTextBox.setText(allVersesInOne + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(0).get(0) + ":"
+        projectorController.projectorTextBox.setText(allVersesInOne + "\n" + inputtedData.getBook() + " "
+                + linkData.versePath.get(0).get(0) + ":"
                 + linkData.versePath.get(0).get(1) + (inputtedData.getTill() != 0 ? "-"
                 + linkData.versePath.get(linkData.versePath.size() - 1).get(1) : ""));
 
@@ -354,7 +355,7 @@ public class HomeController extends ProjectorController {
     private void onSearchAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         linkData.verses.clear();
-        mainAnchorPane.setPrefHeight(scrollPane.getPrefHeight());
+        mainAnchorPane.setPrefHeight(592);
         inputtedData.setVersion(versionDefinition());
         linkData.search = search.getText();
         linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1);
@@ -390,10 +391,19 @@ public class HomeController extends ProjectorController {
                 stackPane2.setLayoutY(73);
                 stackPane2.getChildren().addAll(rec, newVerseBox);
                 mainAnchorPane.getChildren().add(stackPane2);
-                mainAnchorPane.setPrefHeight(scrollPane.getPrefHeight());
+                mainAnchorPane.setPrefHeight(592);
                 linkData.verses.clear();
                 linkData.verses.add(newVerseBox.getText() + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(finalI).get(0) + ":" + linkData.versePath.get(finalI).get(1));
+                List<String> list = new ArrayList<>();
+                list.add(linkData.versePath.get(finalI).get(0));
+                list.add(linkData.versePath.get(finalI).get(1));
+
+                System.out.println(linkData.versePath.get(finalI).get(0));
+                System.out.println(linkData.versePath.get(finalI).get(1));
+                System.out.println(finalI);
+
                 linkData.versePath.clear();
+                linkData.versePath.add(list);
             });
 
             newVerseBox.setTextAlignment(TextAlignment.CENTER);
@@ -937,91 +947,130 @@ public class HomeController extends ProjectorController {
         projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('" + backgroundImage + "');");
     }
 
-    private String requestManager(String allVersesInOne) {
+    private String requestManager() {
         int versesCount = linkData.verses.size();
         List<String> versesData = new ArrayList<>(linkData.verses);
         linkData.verses.clear();
+        String allLangVersesInOne = "";
+        List<Callable<String>> tasks = new ArrayList<>();
 
-        if (geoCheckBox.isSelected()) {
-            inputtedData.setVersionIndex(geoProjectorVersions.getSelectionModel().getSelectedIndex());
-            inputtedData.setGeoVersion(projectorVersionDefinition("geo"));
-            if (versesCount == 1) {
-                linkData.setLinkInfo("geo", inputtedData.getGeoVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
-            } else if (versesCount > 1) {
-                linkData.setLinkInfo("geo", inputtedData.getGeoVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        tasks.add(() -> {
+            String allVersesInOne = "";
+            if (geoCheckBox.isSelected()) {
+                inputtedData.setVersionIndex(geoProjectorVersions.getSelectionModel().getSelectedIndex());
+                inputtedData.setGeoVersion(projectorVersionDefinition("geo"));
+                if (versesCount == 1) {
+                    linkData.setLinkInfo("geo", inputtedData.getGeoVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                } else if (versesCount > 1) {
+                    linkData.setLinkInfo("geo", inputtedData.getGeoVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                }
+                StringBuilder allVersesInOneBuilder = new StringBuilder(allVersesInOne);
+                for (int i = 0; i < linkData.verses.size(); i++) {
+                    allVersesInOneBuilder.append(linkData.verses.get(i)).append(" ");
+                }
+                allVersesInOne = allVersesInOneBuilder.toString();
+                allVersesInOne += "\n";
+                linkData.verses.clear();
+                return allVersesInOne;
             }
-            StringBuilder allVersesInOneBuilder = new StringBuilder(allVersesInOne);
-            for (int i = 0; i < linkData.verses.size(); i++) {
-                allVersesInOneBuilder.append(linkData.verses.get(i)).append(" ");
+            return "";
+        });
+
+        tasks.add(() -> {
+            String allVersesInOne = "";
+            if (engCheckBox.isSelected()) {
+                inputtedData.setVersionIndex(engProjectorVersions.getSelectionModel().getSelectedIndex());
+                inputtedData.setEngVersion(projectorVersionDefinition("eng"));
+                Map<Integer, Integer> englishBooksIndexes = new HashMap<>() {{
+                    put(48, 62);
+                    put(49, 63);
+                    put(50, 64);
+                    put(51, 65);
+                    put(52, 66);
+                    put(53, 67);
+                    put(54, 68);
+                    put(55, 48);
+                    put(56, 49);
+                    put(57, 50);
+                    put(58, 51);
+                    put(59, 52);
+                    put(60, 53);
+                    put(61, 54);
+                    put(62, 55);
+                    put(63, 56);
+                    put(64, 57);
+                    put(65, 58);
+                    put(66, 59);
+                    put(67, 60);
+                    put(68, 61);
+                }};
+                if (versesCount == 1 && !englishBooksIndexes.containsKey(books.getItems().indexOf(inputtedData.getBook()) + 1)) {
+                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                } else if (versesCount > 1 && !englishBooksIndexes.containsKey(books.getItems().indexOf(inputtedData.getBook()) + 1)) {
+                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                } else if (versesCount == 1 && englishBooksIndexes.containsKey(books.getItems().indexOf(inputtedData.getBook()) + 1)) {
+                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), englishBooksIndexes.get(books.getItems().indexOf(inputtedData.getBook()) + 1), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                } else if (versesCount > 1 && englishBooksIndexes.containsKey(books.getItems().indexOf(inputtedData.getBook()) + 1)) {
+                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), englishBooksIndexes.get(books.getItems().indexOf(inputtedData.getBook()) + 1), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                }
+                StringBuilder allVersesInOneBuilder = new StringBuilder(allVersesInOne);
+                for (int i = 0; i < linkData.verses.size(); i++) {
+                    allVersesInOneBuilder.append(linkData.verses.get(i)).append(" ");
+                }
+                allVersesInOne = allVersesInOneBuilder.toString();
+                allVersesInOne += "\n";
+                linkData.verses.clear();
+                return allVersesInOne;
             }
-            allVersesInOne = allVersesInOneBuilder.toString();
-            allVersesInOne += "\n";
-            linkData.verses.clear();
+            return "";
+        });
+
+        tasks.add(() -> {
+            String allVersesInOne = "";
+            if (rusCheckBox.isSelected()) {
+                inputtedData.setVersionIndex(rusProjectorVersions.getSelectionModel().getSelectedIndex());
+                inputtedData.setRusVersion(projectorVersionDefinition("rus"));
+                if (versesCount == 1) {
+                    linkData.setLinkInfo("rus", inputtedData.getRusVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                } else if (versesCount > 1) {
+                    linkData.setLinkInfo("rus", inputtedData.getRusVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                }
+                StringBuilder allVersesInOneBuilder = new StringBuilder();
+
+                for (int i = 0; i < linkData.verses.size(); i++) {
+                    allVersesInOneBuilder.append(linkData.verses.get(i)).append(" ");
+                }
+                allVersesInOne = allVersesInOneBuilder.toString();
+                allVersesInOne += "\n";
+                linkData.verses.clear();
+            }
+            return allVersesInOne;
+        });
+        try {
+            List<Future<String>> results = executor.invokeAll(tasks);
+
+            for (Future<String> result : results) {
+                try {
+                    allLangVersesInOne += result.get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            executor.shutdown();
+            try {
+                executor.awaitTermination(1, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-
-        if (engCheckBox.isSelected()) {
-            inputtedData.setVersionIndex(engProjectorVersions.getSelectionModel().getSelectedIndex());
-            inputtedData.setEngVersion(projectorVersionDefinition("eng"));
-            Map<Integer, Integer> englishBooksIndexes = new HashMap<>() {{
-                put(48, 62);
-                put(49, 63);
-                put(50, 64);
-                put(51, 65);
-                put(52, 66);
-                put(53, 67);
-                put(54, 68);
-                put(55, 48);
-                put(56, 49);
-                put(57, 50);
-                put(58, 51);
-                put(59, 52);
-                put(60, 53);
-                put(61, 54);
-                put(62, 55);
-                put(63, 56);
-                put(64, 57);
-                put(65, 58);
-                put(66, 59);
-                put(67, 60);
-                put(68, 61);
-            }};
-            if (versesCount == 1) {
-                linkData.setLinkInfo("eng", inputtedData.getEngVersion(), englishBooksIndexes.get(books.getItems().indexOf(inputtedData.getBook()) + 1), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
-            } else if (versesCount > 1) {
-                linkData.setLinkInfo("eng", inputtedData.getEngVersion(), englishBooksIndexes.get(books.getItems().indexOf(inputtedData.getBook()) + 1), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
-            }
-            StringBuilder allVersesInOneBuilder = new StringBuilder(allVersesInOne);
-            for (int i = 0; i < linkData.verses.size(); i++) {
-                allVersesInOneBuilder.append(linkData.verses.get(i)).append(" ");
-            }
-            allVersesInOne = allVersesInOneBuilder.toString();
-            allVersesInOne += "\n";
-            linkData.verses.clear();
-        }
-
-
-        if (rusCheckBox.isSelected()) {
-            inputtedData.setVersionIndex(rusProjectorVersions.getSelectionModel().getSelectedIndex());
-            inputtedData.setRusVersion(projectorVersionDefinition("rus"));
-            if (versesCount == 1) {
-                linkData.setLinkInfo("rus", inputtedData.getRusVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
-            } else if (versesCount > 1) {
-                linkData.setLinkInfo("rus", inputtedData.getRusVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
-            }
-            StringBuilder allVersesInOneBuilder = new StringBuilder(allVersesInOne);
-            for (int i = 0; i < linkData.verses.size(); i++) {
-                allVersesInOneBuilder.append(linkData.verses.get(i)).append(" ");
-            }
-            allVersesInOne = allVersesInOneBuilder.toString();
-            allVersesInOne += "\n";
-            linkData.verses.clear();
-        }
 
         linkData.verses.addAll(versesData);
 
-        return allVersesInOne;
+        return allLangVersesInOne;
     }
-
-
 }

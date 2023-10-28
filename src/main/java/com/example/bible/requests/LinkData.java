@@ -18,7 +18,7 @@ public class LinkData {
     public List<List<String>> versePath = new ArrayList<>();
     public String search = "";
 
-    public void setLinkInfo(String language, String bibleVersion, int book, int chapter, int verse, int till) {
+    public synchronized void setLinkInfo(String language, String bibleVersion, int book, int chapter, int verse, int till) {
         try {
             LinkConstructor link = new LinkConstructor(language, bibleVersion, book, chapter, verse);
             link.setSearch(search);
