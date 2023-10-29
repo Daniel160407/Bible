@@ -14,11 +14,4 @@ public class ProjectorController {
 
     @FXML
     protected Text projectorTextBox;
-
-    @FXML
-    private void onFullScreenMouseClicked() {
-        projectorAnchorPane.getChildren().removeIf(node -> node instanceof ImageView);
-        Stage stage = (Stage) projectorAnchorPane.getScene().getWindow();
-        stage.setFullScreen(true);
-    }
 }

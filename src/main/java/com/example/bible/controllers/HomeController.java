@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,6 +27,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -316,17 +318,33 @@ public class HomeController extends ProjectorController {
 
     @FXML
     private void onOpenPresentViewAction() throws IOException {
-        FXMLLoader loader = new FXMLLoader(Bible.class.getResource("fxml files/projector.fxml"));
-        Parent root = loader.load();
-        projectorController = loader.getController();
-        Stage newStage = new Stage();
-        newStage.getIcons().add(new Image("https://cdn-icons-png.flaticon.com/512/3004/3004416.png"));
-        newStage.setTitle("Present View");
-        Scene scene = new Scene(root, 800, 600);
-        scene.getStylesheets().add(Objects.requireNonNull(Bible.class.getResource("styles/style.css")).toExternalForm());
-        newStage.setScene(scene);
-        newStage.show();
-        projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('" + backgroundImage + "');");
+        Screen secondScreen = null;
+        for (Screen screen : Screen.getScreens()) {
+            if (!screen.equals(Screen.getPrimary())) {
+                secondScreen = screen;
+                break;
+            }
+        }
+        if (secondScreen != null) {
+            Rectangle2D visualBounds = secondScreen.getVisualBounds();
+            FXMLLoader loader = new FXMLLoader(Bible.class.getResource("fxml files/projector.fxml"));
+            Parent root = loader.load();
+            projectorController = loader.getController();
+            Stage newStage = new Stage();
+            newStage.setX(visualBounds.getMinX());
+            newStage.setY(visualBounds.getMinY());
+            newStage.setWidth(visualBounds.getWidth());
+            newStage.setHeight(visualBounds.getHeight());
+            newStage.getIcons().add(new Image("https://cdn-icons-png.flaticon.com/512/3004/3004416.png"));
+            newStage.setTitle("Present View");
+            Scene scene = new Scene(root, 800, 600);
+            scene.getStylesheets().add(Objects.requireNonNull(Bible.class.getResource("styles/style.css")).toExternalForm());
+            newStage.setScene(scene);
+            newStage.setFullScreenExitHint("");
+            newStage.setFullScreen(true);
+            newStage.show();
+            projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('" + backgroundImage + "');");
+        }
     }
 
     @FXML
