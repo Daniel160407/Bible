@@ -53,7 +53,7 @@
                style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0"/>
     <ScrollPane fx:id="scrollPane" layoutY="56.0" prefHeight="491.0" prefWidth="1920.0" AnchorPane.bottomAnchor="371.0"
                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
-        <AnchorPane fx:id="mainAnchorPane" prefHeight="592.0" prefWidth="1918.0">
+        <AnchorPane fx:id="mainAnchorPane" prefHeight="583.0" prefWidth="1918.0">
             <Button layoutX="1839.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClearVersesAction"
                     style="-fx-background-color: #DC2626; -fx-border-radius: 10;" text="Clear" textFill="WHITE"
                     AnchorPane.leftAnchor="1839.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="14.0">
@@ -355,4 +355,19 @@
             <ImageView fx:id="selectedImage" fitHeight="45.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true"/>
         </children>
     </HBox>
+    <ComboBox fx:id="textColor" layoutX="1396.0" layoutY="565.0" onAction="#onTextColorAction" prefWidth="150.0"
+              promptText="Text Color" style="-fx-background-color: f4f4f4; -fx-border-color: gray;"
+              AnchorPane.bottomAnchor="328.0" AnchorPane.leftAnchor="1396.0">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="White"/>
+                <String fx:value="Black"/>
+                <String fx:value="Gray"/>
+                <String fx:value="Blue"/>
+                <String fx:value="Red"/>
+                <String fx:value="Yellow"/>
+                <String fx:value="Green"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
 </AnchorPane>

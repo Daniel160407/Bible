@@ -62,6 +62,8 @@ public class HomeController extends ProjectorController {
     @FXML
     private ComboBox<String> fontSize;
     @FXML
+    private ComboBox<String> textColor;
+    @FXML
     private RadioButton img1;
     @FXML
     private RadioButton img2;
@@ -348,7 +350,7 @@ public class HomeController extends ProjectorController {
 
     @FXML
     private void onFontSizeAction() {
-        projectorController.projectorTextBox.setStyle("-fx-font-size: " + fontSize.getValue() + 2 + "px;");
+        projectorController.projectorTextBox.setStyle("-fx-font-size: " + fontSize.getValue() + 2 + "px; " + (textColor.getValue() != null ? "-fx-fill: " + textColor.getValue() : "-fx-fill: white"));
     }
 
     @FXML
@@ -397,10 +399,6 @@ public class HomeController extends ProjectorController {
                 List<String> list = new ArrayList<>();
                 list.add(linkData.versePath.get(finalI).get(0));
                 list.add(linkData.versePath.get(finalI).get(1));
-
-                System.out.println(linkData.versePath.get(finalI).get(0));
-                System.out.println(linkData.versePath.get(finalI).get(1));
-                System.out.println(finalI);
 
                 linkData.versePath.clear();
                 linkData.versePath.add(list);
@@ -478,6 +476,34 @@ public class HomeController extends ProjectorController {
                 projectorController.projectorAnchorPane.setStyle("-fx-background-image: url('" + selectedBackgroundImage.getUrl() + "');");
             }
         }
+    }
+
+    @FXML
+    private void onTextColorAction() {
+        switch (textColor.getValue()) {
+            case "White":
+                projectorController.projectorTextBox.setStyle("-fx-fill: white;" + "-fx-font-size: " + fontSize.getValue() + 2 + "px; ");
+                break;
+            case "Black":
+                projectorController.projectorTextBox.setStyle("-fx-fill: black;" + "-fx-font-size: " + fontSize.getValue() + 2 + "px; ");
+                break;
+            case "Gray":
+                projectorController.projectorTextBox.setStyle("-fx-fill: gray;" + "-fx-font-size: " + fontSize.getValue() + 2 + "px; ");
+                break;
+            case "Blue":
+                projectorController.projectorTextBox.setStyle("-fx-fill: Blue;" + "-fx-font-size: " + fontSize.getValue() + 2 + "px; ");
+                break;
+            case "Red":
+                projectorController.projectorTextBox.setStyle("-fx-fill: Red;" + "-fx-font-size: " + fontSize.getValue() + 2 + "px; ");
+                break;
+            case "Yellow":
+                projectorController.projectorTextBox.setStyle("-fx-fill: yellow;" + "-fx-font-size: " + fontSize.getValue() + 2 + "px; ");
+                break;
+            case "Green":
+                projectorController.projectorTextBox.setStyle("-fx-fill: green;" + "-fx-font-size: " + fontSize.getValue() + 2 + "px; ");
+                break;
+        }
+
     }
 
     @FXML
@@ -634,12 +660,6 @@ public class HomeController extends ProjectorController {
         if (color.equals(whiteColor)) {
             anchorPane.setStyle("-fx-background-color: " + darkColor);
             mainAnchorPane.setStyle("-fx-background-color:" + darkColor);
-            language.setStyle("-fx-text-fill:" + "white");
-            versions.setStyle("-fx-text-fill:" + "white");
-            books.setStyle("-fx-text-fill:" + "white");
-            chapter.setStyle("-fx-text-fill:" + "white");
-            verse.setStyle("-fx-text-fill:" + "white");
-            till.setStyle("-fx-text-fill:" + "white");
             darkMode.setStyle("-fx-text-fill:" + "white");
             fontSizeLabel.setStyle("-fx-text-fill:" + "white");
             langLab1.setStyle("-fx-text-fill:" + "white");
@@ -652,12 +672,6 @@ public class HomeController extends ProjectorController {
         } else {
             anchorPane.setStyle("-fx-background-color:" + whiteColor);
             mainAnchorPane.setStyle("-fx-background-color:" + whiteColor);
-            language.setStyle("-fx-text-fill:" + darkColor);
-            versions.setStyle("-fx-text-fill:" + darkColor);
-            books.setStyle("-fx-text-fill:" + darkColor);
-            chapter.setStyle("-fx-text-fill:" + darkColor);
-            verse.setStyle("-fx-text-fill:" + darkColor);
-            till.setStyle("-fx-text-fill:" + darkColor);
             darkMode.setStyle("-fx-text-fill:" + darkColor);
             fontSizeLabel.setStyle("-fx-text-fill:" + darkColor);
             langLab1.setStyle("-fx-text-fill:" + darkColor);
@@ -951,7 +965,7 @@ public class HomeController extends ProjectorController {
         int versesCount = linkData.verses.size();
         List<String> versesData = new ArrayList<>(linkData.verses);
         linkData.verses.clear();
-        String allLangVersesInOne = "";
+        StringBuilder allLangVersesInOne = new StringBuilder();
         List<Callable<String>> tasks = new ArrayList<>();
 
         ExecutorService executor = Executors.newFixedThreadPool(3);
@@ -1049,10 +1063,9 @@ public class HomeController extends ProjectorController {
         });
         try {
             List<Future<String>> results = executor.invokeAll(tasks);
-
             for (Future<String> result : results) {
                 try {
-                    allLangVersesInOne += result.get();
+                    allLangVersesInOne.append(result.get());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -1071,6 +1084,6 @@ public class HomeController extends ProjectorController {
 
         linkData.verses.addAll(versesData);
 
-        return allLangVersesInOne;
+        return allLangVersesInOne.toString();
     }
 }

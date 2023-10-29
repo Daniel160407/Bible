@@ -93,8 +93,6 @@ public class LinkData {
                 }
 
             }
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
