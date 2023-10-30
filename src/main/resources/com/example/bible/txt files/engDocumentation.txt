@@ -3,6 +3,6 @@ This app is used in church to play Bible verses on a projector. It is very easy 
 2. Depending on which language we have chosen, the versions will appear. Select the desired version.
 3. The next step is to select the book, chapter and article. If you want to show several articles at the same time, you can choose how far you want the articles to be shown in "Article (up to)". The result will be displayed automatically.
 How to show on the projector?
-In the lower right corner you will see the "Open Present View" button, press it and it will take you to a new tab. This page must be displayed on a projector. So that the top part of the program does not appear, if you are on Windows, press F11 or there is a zoom icon in the lower right corner. In order for the desired text to appear in the desired language, return to the main page, select the language and corresponding versions and press the show button. You can also control the font size.
+In the lower right corner you will see the "Open Present View" button, press it, and it will take you to a new tab. This page must be displayed on a projector. So that the top part of the program does not appear, if you are on Windows, press F11 or there is a zoom icon in the lower right corner. In order for the desired text to appear in the desired language, return to the main page, select the language and corresponding versions and press the show button. You can also control the font size.
 In this section you choose the desired background
 For additional notes / ideas, write me on messenger

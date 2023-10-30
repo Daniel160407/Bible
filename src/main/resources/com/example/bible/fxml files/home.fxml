@@ -36,10 +36,10 @@
     <ComboBox fx:id="chapter" editable="true" layoutX="711.0" layoutY="14.0" onAction="#onChapterAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
     <ComboBox fx:id="verse" editable="true" layoutX="877.0" layoutY="14.0" onAction="#onVerseAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
     <ComboBox fx:id="till" editable="true" layoutX="1044.0" layoutY="14.0" onAction="#onTillAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
-    <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" onAction="#onSearchAction" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
+    <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" onAction="#onSearchAction" onMouseClicked="#onSearchMouseClicked" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
     <ScrollPane fx:id="scrollPane" layoutY="56.0" prefHeight="491.0" prefWidth="1920.0" AnchorPane.bottomAnchor="371.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
-        <AnchorPane fx:id="mainAnchorPane" prefHeight="583.0" prefWidth="1918.0">
-            <Button layoutX="1839.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClearVersesAction" style="-fx-background-color: #DC2626; -fx-border-radius: 10;" text="Clear" textFill="WHITE" AnchorPane.leftAnchor="1839.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="14.0">
+        <AnchorPane fx:id="mainAnchorPane" prefHeight="609.0" prefWidth="1905.0">
+            <Button layoutX="1838.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClearVersesAction" prefHeight="31.0" prefWidth="54.0" style="-fx-background-color: #DC2626; -fx-border-radius: 10;" text="Clear" textFill="WHITE" AnchorPane.leftAnchor="1838.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="14.0">
                 <font>
                     <Font size="15.0" />
                 </font>

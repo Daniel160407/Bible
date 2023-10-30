@@ -180,6 +180,7 @@ public class HomeController extends ProjectorController {
         for (int i = 0; i < linkData.chapterCount; i++) {
             chapter.getItems().add(i + 1);
         }
+        linkData.versePath.clear();
     }
 
     @FXML
@@ -350,6 +351,7 @@ public class HomeController extends ProjectorController {
     @FXML
     private void onShowButtonAction() {
         projectorController.projectorAnchorPane.getChildren().removeIf(node -> node instanceof Text);
+        linkData.versePath.clear();
         String allVersesInOne = requestManager();
 
         projectorController.projectorTextBox.getStyleClass().add("projectorTextBox");
@@ -359,9 +361,6 @@ public class HomeController extends ProjectorController {
                 + linkData.versePath.get(0).get(0) + ":"
                 + linkData.versePath.get(0).get(1) + (inputtedData.getTill() != 0 ? "-"
                 + linkData.versePath.get(linkData.versePath.size() - 1).get(1) : ""));
-
-        System.out.println(inputtedData.getTill());
-
         linkData.versePath.clear();
         projectorController.projectorTextBox.setTextAlignment(TextAlignment.CENTER);
     }
@@ -372,9 +371,22 @@ public class HomeController extends ProjectorController {
     }
 
     @FXML
-    private void onSearchAction() {
+    private void onSearchMouseClicked() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         linkData.verses.clear();
+        linkData.versePath.clear();
+        chapter.getEditor().clear();
+        verse.getEditor().clear();
+        till.getEditor().clear();
+        if (till.getValue() != null) {
+            till.setValue(null);
+            inputtedData.setTill(0);
+        }
+    }
+
+    @FXML
+    private void onSearchAction() {
+        mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         mainAnchorPane.setPrefHeight(592);
         inputtedData.setVersion(versionDefinition());
         linkData.search = search.getText();
@@ -388,22 +400,20 @@ public class HomeController extends ProjectorController {
             rec.setArcWidth(20);
             rec.setArcHeight(20);
             Button separateButton = new Button();
+            separateButton.setId(Integer.toString(i));
             VBox vBox = new VBox();
             vBox.setAlignment(Pos.CENTER);
             vBox.setSpacing(10);
             vBox.getChildren().addAll(newVerseBox, separateButton);
             stackPane.getChildren().addAll(rec, vBox);
-
             stackPane.setLayoutX(400);
             stackPane.setLayoutY(previousLayoutYPath + 117);
             mainAnchorPane.getChildren().add(stackPane);
             previousLayoutYPath = (int) stackPane.getLayoutY();
             newVerseBox.setText(linkData.verses.get(i) + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(i).get(0) + ":" + linkData.versePath.get(i).get(1));
-
             separateButton.getStyleClass().add("separate-button");
             separateButton.setLayoutY(100);
             separateButton.setText("Separate");
-            int finalI = i;
             separateButton.setOnAction(event -> {
                 mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
                 StackPane stackPane2 = new StackPane();
@@ -412,13 +422,15 @@ public class HomeController extends ProjectorController {
                 stackPane2.getChildren().addAll(rec, newVerseBox);
                 mainAnchorPane.getChildren().add(stackPane2);
                 mainAnchorPane.setPrefHeight(592);
+                String chosenVerse = linkData.verses.get(Integer.parseInt(separateButton.getId()));
                 linkData.verses.clear();
-                linkData.verses.add(newVerseBox.getText() + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(finalI).get(0) + ":" + linkData.versePath.get(finalI).get(1));
+                inputtedData.setChapter(Integer.parseInt(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(0)));
+                inputtedData.setVerse(Integer.parseInt(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(1)));
+                linkData.verses.add(chosenVerse + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(0) +
+                        ":" + linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(1));
                 List<String> list = new ArrayList<>();
-                list.add(linkData.versePath.get(finalI).get(0));
-                list.add(linkData.versePath.get(finalI).get(1));
-
-                linkData.versePath.clear();
+                list.add(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(0));
+                list.add(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(1));
                 linkData.versePath.add(list);
             });
 
@@ -432,7 +444,6 @@ public class HomeController extends ProjectorController {
         }
         previousLayoutYPath = -73;
         linkData.search = null;
-        linkData.versePath.clear();
     }
 
 
@@ -452,11 +463,11 @@ public class HomeController extends ProjectorController {
     @FXML
     private void onEsoMouseClicked() {
         try {
-            String url = "https://www.facebook.com/esaia.gafrindashvili/";
+            String url = "https://bibleversesgeo.netlify.app/";
             URI uri = new URI(url);
             Desktop desktop = Desktop.getDesktop();
             desktop.browse(uri);
-            url = "https://bibleversesgeo.netlify.app/";
+            url = "https://www.facebook.com/esaia.gafrindashvili/";
             uri = new URI(url);
             desktop = Desktop.getDesktop();
             desktop.browse(uri);
@@ -521,7 +532,6 @@ public class HomeController extends ProjectorController {
                 projectorController.projectorTextBox.setStyle("-fx-fill: green;" + "-fx-font-size: " + fontSize.getValue() + 2 + "px; ");
                 break;
         }
-
     }
 
     @FXML
