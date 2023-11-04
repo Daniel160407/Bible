@@ -18,7 +18,7 @@ public class LinkData {
     public List<List<String>> versePath = new ArrayList<>();
     public String search = "";
 
-    public synchronized void setLinkInfo(String language, String bibleVersion, int book, int chapter, int verse, int till) {
+    public synchronized void setLinkInfo(String language, String bibleVersion, int book, int chapter, int verse, int till, boolean getFullBible) {
         try {
             LinkConstructor link = new LinkConstructor(language, bibleVersion, book, chapter, verse);
             link.setSearch(search);
@@ -54,12 +54,23 @@ public class LinkData {
                             versePath.add(list);
                         }
                     } else {
-                        for (int i = verse - 1; i < till; i++) {
-                            verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
-                            List<String> list = new ArrayList<>();
-                            list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
-                            list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
-                            versePath.add(list);
+                        if (getFullBible) {
+                            for (int i = 0; i < verseCount; i++) {
+                                verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
+                                System.out.println(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
+                                List<String> list = new ArrayList<>();
+                                list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
+                                list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
+                                versePath.add(list);
+                            }
+                        } else {
+                            for (int i = verse - 1; i < till; i++) {
+                                verses.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("bv"));
+                                List<String> list = new ArrayList<>();
+                                list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("tavi"));
+                                list.add(jsonObject.getJSONArray("bibleData").getJSONObject(i).getString("muxli"));
+                                versePath.add(list);
+                            }
                         }
                     }
 

@@ -175,7 +175,7 @@ public class HomeController extends ProjectorController {
     private void onBooksAction() {
         inputtedData.setBook(books.getValue());
 
-        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, 1, 1, 1);
+        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, 1, 1, 1, false);
         chapter.getItems().clear();
         for (int i = 0; i < linkData.chapterCount; i++) {
             chapter.getItems().add(i + 1);
@@ -189,7 +189,7 @@ public class HomeController extends ProjectorController {
             inputtedData.setChapter(Integer.parseInt(chapter.getEditor().getText()));
             inputtedData.setVersion(versionDefinition());
         }
-        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1);
+        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1, false);
         verse.getItems().clear();
         till.getItems().clear();
         for (int i = 0; i < linkData.verseCount; i++) {
@@ -208,7 +208,7 @@ public class HomeController extends ProjectorController {
             mainAnchorPane.setPrefHeight(scrollPane.getHeight());
             inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
             inputtedData.setVersion(versionDefinition());
-            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse(), false);
             StringBuilder str = new StringBuilder();
             for (int i = 0; i < linkData.verses.size(); i++) {
                 str.append(linkData.verses.get(i)).append(" ");
@@ -243,7 +243,7 @@ public class HomeController extends ProjectorController {
             mainAnchorPane.setPrefHeight(scrollPane.getHeight());
             previousLayoutYPath = -27;
             inputtedData.setTill(Integer.parseInt(till.getEditor().getText()));
-            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
 
             for (int i = 0; i < linkData.verses.size(); i++) {
                 Text newVerseBox = new Text();
@@ -390,7 +390,7 @@ public class HomeController extends ProjectorController {
         mainAnchorPane.setPrefHeight(592);
         inputtedData.setVersion(versionDefinition());
         linkData.search = search.getText();
-        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1);
+        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1, false);
 
         for (int i = 0; i < linkData.verses.size(); i++) {
             Text newVerseBox = new Text();
@@ -532,6 +532,29 @@ public class HomeController extends ProjectorController {
                 projectorController.projectorTextBox.setStyle("-fx-fill: green;" + "-fx-font-size: " + fontSize.getValue() + 2 + "px; ");
                 break;
         }
+    }
+
+    @FXML
+    private void onBibleButtonAction() throws IOException {
+        FXMLLoader loader = new FXMLLoader(Bible.class.getResource("fxml files/bible.fxml"));
+        Parent root = loader.load();
+        BibleController bibleController = loader.getController();
+        if (darkMode.isSelected()) {
+            bibleController.getMainAnchorPane().setStyle("-fx-background-color:  #101828");
+            bibleController.getOuterAnchorPane().setStyle("-fx-background-color:  #101828");
+            bibleController.setBackgroundColor("#101828");
+        } else {
+            bibleController.getMainAnchorPane().setStyle("-fx-background-color:  white");
+            bibleController.getOuterAnchorPane().setStyle("-fx-background-color:  white");
+            bibleController.setBackgroundColor("white");
+        }
+        Stage newStage = new Stage();
+        newStage.getIcons().add(new Image("https://cdn-icons-png.flaticon.com/512/3004/3004416.png"));
+        newStage.setTitle("Bible");
+        Scene scene = new Scene(root, 800, 600);
+        newStage.setScene(scene);
+        newStage.show();
+
     }
 
     @FXML
@@ -750,7 +773,7 @@ public class HomeController extends ProjectorController {
         }
     }
 
-    private String versionDefinition() {
+    protected String versionDefinition() {
         String version = "";
         switch (inputtedData.getLanguage()) {
             case "geo":
@@ -1003,9 +1026,9 @@ public class HomeController extends ProjectorController {
                 inputtedData.setVersionIndex(geoProjectorVersions.getSelectionModel().getSelectedIndex());
                 inputtedData.setGeoVersion(projectorVersionDefinition("geo"));
                 if (versesCount == 1) {
-                    linkData.setLinkInfo("geo", inputtedData.getGeoVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                    linkData.setLinkInfo("geo", inputtedData.getGeoVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse(), false);
                 } else if (versesCount > 1) {
-                    linkData.setLinkInfo("geo", inputtedData.getGeoVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                    linkData.setLinkInfo("geo", inputtedData.getGeoVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
                 }
                 StringBuilder allVersesInOneBuilder = new StringBuilder(allVersesInOne);
                 for (int i = 0; i < linkData.verses.size(); i++) {
@@ -1048,13 +1071,13 @@ public class HomeController extends ProjectorController {
                     put(68, 61);
                 }};
                 if (versesCount == 1 && !englishBooksIndexes.containsKey(books.getItems().indexOf(inputtedData.getBook()) + 1)) {
-                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse(), false);
                 } else if (versesCount > 1 && !englishBooksIndexes.containsKey(books.getItems().indexOf(inputtedData.getBook()) + 1)) {
-                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
                 } else if (versesCount == 1 && englishBooksIndexes.containsKey(books.getItems().indexOf(inputtedData.getBook()) + 1)) {
-                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), englishBooksIndexes.get(books.getItems().indexOf(inputtedData.getBook()) + 1), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), englishBooksIndexes.get(books.getItems().indexOf(inputtedData.getBook()) + 1), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse(), false);
                 } else if (versesCount > 1 && englishBooksIndexes.containsKey(books.getItems().indexOf(inputtedData.getBook()) + 1)) {
-                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), englishBooksIndexes.get(books.getItems().indexOf(inputtedData.getBook()) + 1), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                    linkData.setLinkInfo("eng", inputtedData.getEngVersion(), englishBooksIndexes.get(books.getItems().indexOf(inputtedData.getBook()) + 1), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
                 }
                 StringBuilder allVersesInOneBuilder = new StringBuilder(allVersesInOne);
                 for (int i = 0; i < linkData.verses.size(); i++) {
@@ -1074,9 +1097,9 @@ public class HomeController extends ProjectorController {
                 inputtedData.setVersionIndex(rusProjectorVersions.getSelectionModel().getSelectedIndex());
                 inputtedData.setRusVersion(projectorVersionDefinition("rus"));
                 if (versesCount == 1) {
-                    linkData.setLinkInfo("rus", inputtedData.getRusVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse());
+                    linkData.setLinkInfo("rus", inputtedData.getRusVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse(), false);
                 } else if (versesCount > 1) {
-                    linkData.setLinkInfo("rus", inputtedData.getRusVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill());
+                    linkData.setLinkInfo("rus", inputtedData.getRusVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
                 }
                 StringBuilder allVersesInOneBuilder = new StringBuilder();
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="outerAnchorPane" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #101828;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.BibleController">
+    <children>
+        <ComboBox fx:id="versions" layoutX="294.0" layoutY="23.0" onAction="#onVersionsAction" onMouseClicked="#onVersionsMouseClicked" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.leftAnchor="294.0" AnchorPane.topAnchor="23.0" />
+        <ComboBox fx:id="books" layoutX="472.0" layoutY="23.0" onAction="#onBooksAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.leftAnchor="472.0" AnchorPane.topAnchor="23.0" />
+        <ComboBox fx:id="chapter" editable="true" layoutX="649.0" layoutY="24.0" onAction="#onChapterAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.leftAnchor="649.0" AnchorPane.topAnchor="24.0" />
+        <ScrollPane layoutX="69.0" layoutY="70.0" prefHeight="1010.0" prefWidth="1804.0" AnchorPane.leftAnchor="69.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="70.0">
+            <content>
+                <AnchorPane fx:id="mainAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="1009.0" prefWidth="1789.0" style="-fx-background-color: #101828;" />
+            </content>
+        </ScrollPane>
+        <ComboBox fx:id="language" layoutX="199.0" layoutY="24.0" onAction="#onLanguageAction" prefHeight="27.0" prefWidth="70.0" promptText="GEO" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.leftAnchor="199.0" AnchorPane.topAnchor="24.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="GEO" />
+                    <String fx:value="ENG" />
+                    <String fx:value="RUS" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+    </children>
+</AnchorPane>

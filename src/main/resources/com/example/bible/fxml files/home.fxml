@@ -286,4 +286,9 @@
             </FXCollections>
         </items>
     </ComboBox>
+   <Button layoutX="170.0" layoutY="863.0" mnemonicParsing="false" onAction="#onBibleButtonAction" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" text="Bible" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="170.0">
+      <font>
+         <Font size="15.0" />
+      </font>
+   </Button>
 </AnchorPane>
