@@ -1,8 +1,12 @@
 package com.example.bible.runtimeData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class InputtedData {
     private String language = "geo";
     private int versionIndex;
+    private int bookIndex;
     private String version;
     private String book;
     private int chapter;
@@ -11,10 +15,11 @@ public class InputtedData {
     private String geoVersion;
     private String engVersion;
     private String rusVersion;
+    private String schedule;
+    private final List<String> scheduleBooks = new ArrayList<>();
 
     public InputtedData() {
     }
-
 
 
     public String getLanguage() {
@@ -23,6 +28,10 @@ public class InputtedData {
 
     public int getVersionIndex() {
         return versionIndex;
+    }
+
+    public int getBookIndex() {
+        return bookIndex;
     }
 
     public String getVersion() {
@@ -57,12 +66,24 @@ public class InputtedData {
         return rusVersion;
     }
 
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public List<String> getScheduleBooks() {
+        return scheduleBooks;
+    }
+
     public void setLanguage(String language) {
         this.language = language;
     }
 
     public void setVersionIndex(int version) {
         this.versionIndex = version;
+    }
+
+    public void setBookIndex(int bookIndex) {
+        this.bookIndex = bookIndex;
     }
 
     public void setVersion(String version) {
@@ -95,5 +116,12 @@ public class InputtedData {
 
     public void setRusVersion(String rusVersion) {
         this.rusVersion = rusVersion;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+    public void addScheduleBook(String book){
+        this.scheduleBooks.add(book);
     }
 }

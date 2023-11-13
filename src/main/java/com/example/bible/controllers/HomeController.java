@@ -16,10 +16,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -37,6 +39,8 @@ import java.net.URI;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HomeController extends ProjectorController {
     @FXML
@@ -137,6 +141,10 @@ public class HomeController extends ProjectorController {
     private Label daniel;
     @FXML
     private ImageView selectedImage;
+    @FXML
+    private TextArea schedule;
+    @FXML
+    private Pane schedulePane;
 
 
     private final List<String> versionsList = new ArrayList<>();
@@ -148,7 +156,8 @@ public class HomeController extends ProjectorController {
     private ProjectorController projectorController;
     private String backgroundImage;
     private Image selectedBackgroundImage;
-
+    private int scheduledVerse = -1;
+    private List<String> versePath = new ArrayList<>();
 
     @FXML
     private void onDarkModeAction() {
@@ -204,6 +213,7 @@ public class HomeController extends ProjectorController {
     private void onVerseAction() {
         if (verse.getEditor().getText() != null && !verse.getEditor().getText().isEmpty()) {
             mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+            scheduledVerse = 0;
             linkData.verses.clear();
             mainAnchorPane.setPrefHeight(scrollPane.getHeight());
             inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
@@ -351,15 +361,14 @@ public class HomeController extends ProjectorController {
     @FXML
     private void onShowButtonAction() {
         projectorController.projectorAnchorPane.getChildren().removeIf(node -> node instanceof Text);
-        linkData.versePath.clear();
         String allVersesInOne = requestManager();
 
         projectorController.projectorTextBox.getStyleClass().add("projectorTextBox");
         projectorController.projectorAnchorPane.getChildren().add(projectorController.projectorTextBox);
 
         projectorController.projectorTextBox.setText(allVersesInOne + "\n" + inputtedData.getBook() + " "
-                + linkData.versePath.get(0).get(0) + ":"
-                + linkData.versePath.get(0).get(1) + (inputtedData.getTill() != 0 ? "-"
+                + linkData.versePath.get(scheduledVerse).get(0) + ":"
+                + linkData.versePath.get(scheduledVerse).get(1) + (inputtedData.getTill() != 0 ? "-"
                 + linkData.versePath.get(linkData.versePath.size() - 1).get(1) : ""));
         linkData.versePath.clear();
         projectorController.projectorTextBox.setTextAlignment(TextAlignment.CENTER);
@@ -387,6 +396,7 @@ public class HomeController extends ProjectorController {
     @FXML
     private void onSearchAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+        scheduledVerse = 0;
         mainAnchorPane.setPrefHeight(592);
         inputtedData.setVersion(versionDefinition());
         linkData.search = search.getText();
@@ -555,6 +565,138 @@ public class HomeController extends ProjectorController {
         newStage.setScene(scene);
         newStage.show();
 
+    }
+
+    @FXML
+    private void onAddScheduleButtonAction() {
+        schedulePane.setVisible(true);
+    }
+
+    @FXML
+    private void onSaveButtonAction() {
+        schedulePane.setVisible(false);
+        inputtedData.setSchedule(schedule.getText());
+        String geoPatternString = "[\\\\p{L}ა-ჰ]+";
+        String engPatternString = "[\\\\p{L}[a-z|A-Z]]+";
+        String rusPatternString = "[\\\\p{L}-я]+";
+        Pattern pattern = Pattern.compile(inputtedData.getLanguage().equals("geo") ? geoPatternString : inputtedData.getLanguage().equals("eng") ? engPatternString : rusPatternString);
+        Matcher matcher = pattern.matcher(inputtedData.getSchedule());
+        inputtedData.getScheduleBooks().clear();
+        while (matcher.find()) {
+            inputtedData.addScheduleBook(matcher.group());
+        }
+        String patternString = "[0-9]+";
+        pattern = Pattern.compile(patternString);
+        matcher = pattern.matcher(inputtedData.getSchedule());
+        int i = 0;
+        versePath.clear();
+        while (matcher.find()) {
+            if (i == 0) {
+                versePath.add(matcher.group());
+            } else {
+                versePath.add(matcher.group());
+            }
+            i++;
+        }
+        getVersionsAndBooksInfo();
+    }
+
+    @FXML
+    private void onLeftArrowMouseClicked() {
+        mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+        linkData.versePath.clear();
+        for (int i = 1; i < versePath.size(); i++) {
+            if (i % 2 != 0) {
+                List<String> list = new ArrayList<>();
+                list.add(versePath.get(i - 1));
+                list.add(versePath.get(i));
+                linkData.versePath.add(list);
+            }
+        }
+        if (scheduledVerse > 0) {
+            scheduledVerse--;
+        }
+        inputtedData.setChapter(Integer.parseInt(linkData.versePath.get(scheduledVerse).get(0)));
+        inputtedData.setVerse(Integer.parseInt(linkData.versePath.get(scheduledVerse).get(1)));
+        linkData.verses.clear();
+        mainAnchorPane.setPrefHeight(scrollPane.getHeight());
+        inputtedData.setBookIndex(books.getItems().indexOf(inputtedData.getScheduleBooks().get(scheduledVerse)) + 1);
+        inputtedData.setBook(inputtedData.getScheduleBooks().get(scheduledVerse));
+        inputtedData.setVersionIndex(0);
+        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion() != null ? inputtedData.getVersion() : versionDefinition(), inputtedData.getBookIndex(), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
+        linkData.versePath.remove(linkData.versePath.size() - 1);
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < linkData.verses.size(); i++) {
+            str.append(linkData.verses.get(i)).append(" ");
+        }
+        Text newVerseBox = new Text();
+        newVerseBox.prefHeight(70);
+        newVerseBox.getStyleClass().add("newVerseBox");
+        StackPane stackPane = new StackPane();
+        Rectangle rec = new Rectangle(1067, 83, Color.web("#374151"));
+        rec.setArcWidth(20);
+        rec.setArcHeight(20);
+        stackPane.getChildren().add(rec);
+        stackPane.getChildren().add(newVerseBox);
+        stackPane.setLayoutX(400);
+        stackPane.setLayoutY(73);
+        mainAnchorPane.getChildren().add(stackPane);
+        newVerseBox.setText(str + "\n" + inputtedData.getScheduleBooks().get(scheduledVerse) + " " + linkData.versePath.get(scheduledVerse).get(0) + ":" + linkData.versePath.get(scheduledVerse).get(1));
+        newVerseBox.setTextAlignment(TextAlignment.CENTER);
+        newVerseBox.setWrappingWidth(rec.getWidth());
+        books.getEditor().clear();
+        chapter.getEditor().clear();
+        verse.getEditor().clear();
+        till.getEditor().clear();
+    }
+
+    @FXML
+    private void onRightArrowMouseClicked() {
+        mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+        linkData.versePath.clear();
+        for (int i = 1; i < versePath.size(); i++) {
+            if (i % 2 != 0) {
+                List<String> list = new ArrayList<>();
+                list.add(versePath.get(i - 1));
+                list.add(versePath.get(i));
+                linkData.versePath.add(list);
+            }
+        }
+        if (linkData.versePath.size()-1 > scheduledVerse) {
+            scheduledVerse++;
+        }
+        inputtedData.setChapter(Integer.parseInt(linkData.versePath.get(scheduledVerse).get(0)));
+        inputtedData.setVerse(Integer.parseInt(linkData.versePath.get(scheduledVerse).get(1)));
+        linkData.verses.clear();
+        mainAnchorPane.setPrefHeight(scrollPane.getHeight());
+        inputtedData.setBookIndex(books.getItems().indexOf(inputtedData.getScheduleBooks().get(scheduledVerse)) + 1);
+        inputtedData.setBook(inputtedData.getScheduleBooks().get(scheduledVerse));
+        inputtedData.setVersionIndex(0);
+        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion() != null ? inputtedData.getVersion() : versionDefinition(), inputtedData.getBookIndex(), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
+        linkData.versePath.remove(linkData.versePath.size() - 1);
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < linkData.verses.size(); i++) {
+            str.append(linkData.verses.get(i)).append(" ");
+        }
+        Text newVerseBox = new Text();
+        newVerseBox.prefHeight(70);
+        newVerseBox.getStyleClass().add("newVerseBox");
+        StackPane stackPane = new StackPane();
+        Rectangle rec = new Rectangle(1067, 83, Color.web("#374151"));
+        rec.setArcWidth(20);
+        rec.setArcHeight(20);
+        stackPane.getChildren().add(rec);
+        stackPane.getChildren().add(newVerseBox);
+        stackPane.setLayoutX(400);
+        stackPane.setLayoutY(73);
+        mainAnchorPane.getChildren().add(stackPane);
+        newVerseBox.setText(str + "\n" + inputtedData.getScheduleBooks().get(scheduledVerse) + " " + linkData.versePath.get(scheduledVerse).get(0) + ":" + linkData.versePath.get(scheduledVerse).get(1));
+        newVerseBox.setTextAlignment(TextAlignment.CENTER);
+        newVerseBox.setWrappingWidth(rec.getWidth());
+        books.getEditor().clear();
+        chapter.getEditor().clear();
+        verse.getEditor().clear();
+        till.getEditor().clear();
     }
 
     @FXML
@@ -1018,7 +1160,7 @@ public class HomeController extends ProjectorController {
         linkData.verses.clear();
         StringBuilder allLangVersesInOne = new StringBuilder();
         List<Callable<String>> tasks = new ArrayList<>();
-
+        System.out.println(inputtedData.getBook());
         ExecutorService executor = Executors.newFixedThreadPool(3);
         tasks.add(() -> {
             String allVersesInOne = "";

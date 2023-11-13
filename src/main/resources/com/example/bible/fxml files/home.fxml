@@ -8,12 +8,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchorPane" prefHeight="918.0" prefWidth="1920.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bible.controllers.HomeController">
@@ -291,4 +293,25 @@
          <Font size="15.0" />
       </font>
    </Button>
+   <Button layoutX="20.0" layoutY="807.0" mnemonicParsing="false" onAction="#onAddScheduleButtonAction" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" text="Add Schedule" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="22.0">
+      <font>
+         <Font size="15.0" />
+      </font>
+   </Button>
+   <Pane fx:id="schedulePane" layoutX="22.0" layoutY="553.0" prefHeight="252.0" prefWidth="227.0" visible="false" AnchorPane.bottomAnchor="113.0" AnchorPane.leftAnchor="22.0">
+      <children>
+         <Button layoutX="186.0" layoutY="226.0" mnemonicParsing="false" onAction="#onSaveButtonAction" style="-fx-background-color: #047857; -fx-background-radius: 10;" text="Save" />
+         <TextArea fx:id="schedule" prefHeight="252.0" prefWidth="185.0" />
+      </children>
+   </Pane>
+   <ImageView fitHeight="21.0" fitWidth="50.0" layoutX="25.0" layoutY="780.0" onMouseClicked="#onLeftArrowMouseClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="25.0">
+      <image>
+         <Image url="@../images/leftArrow.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="21.0" fitWidth="50.0" layoutX="58.0" layoutY="780.0" onMouseClicked="#onRightArrowMouseClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="58.0">
+      <image>
+         <Image url="@../images/rightArrow.png" />
+      </image>
+   </ImageView>
 </AnchorPane>
