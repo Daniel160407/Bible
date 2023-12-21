@@ -576,29 +576,37 @@ public class HomeController extends ProjectorController {
     private void onSaveButtonAction() {
         schedulePane.setVisible(false);
         inputtedData.setSchedule(schedule.getText());
-        String geoPatternString = "[\\\\p{L}ა-ჰ]+";
-        String engPatternString = "[\\\\p{L}[a-z|A-Z]]+";
-        String rusPatternString = "[\\\\p{L}-я]+";
+        String geoPatternString = "(\\d*\\s*[\\\\p{L}ა-ჰ]+)";
+        String engPatternString = "(\\d*\\s*[\\\\p{L}[a-z|A-Z]]+)";
+        String rusPatternString = "(\\d*\\s*[\\\\p{L}-я]+)";
         Pattern pattern = Pattern.compile(inputtedData.getLanguage().equals("geo") ? geoPatternString : inputtedData.getLanguage().equals("eng") ? engPatternString : rusPatternString);
         Matcher matcher = pattern.matcher(inputtedData.getSchedule());
         inputtedData.getScheduleBooks().clear();
+        getVersionsAndBooksInfo();
         while (matcher.find()) {
-            inputtedData.addScheduleBook(matcher.group());
+            String scheduleBook = matcher.group();
+            System.out.println(scheduleBook);
+            for (String book : booksList) {
+                if (book.startsWith(scheduleBook)) {
+                    inputtedData.addScheduleBook(book);
+                    break;
+                }
+            }
         }
-        String patternString = "[0-9]+";
+        String patternString = "[ |:]([0-9]+)";
         pattern = Pattern.compile(patternString);
         matcher = pattern.matcher(inputtedData.getSchedule());
         int i = 0;
         versePath.clear();
         while (matcher.find()) {
             if (i == 0) {
-                versePath.add(matcher.group());
+                versePath.add(matcher.group(1));
             } else {
-                versePath.add(matcher.group());
+                versePath.add(matcher.group(1));
             }
             i++;
         }
-        getVersionsAndBooksInfo();
+
     }
 
     @FXML
@@ -616,38 +624,7 @@ public class HomeController extends ProjectorController {
         if (scheduledVerse > 0) {
             scheduledVerse--;
         }
-        inputtedData.setChapter(Integer.parseInt(linkData.versePath.get(scheduledVerse).get(0)));
-        inputtedData.setVerse(Integer.parseInt(linkData.versePath.get(scheduledVerse).get(1)));
-        linkData.verses.clear();
-        mainAnchorPane.setPrefHeight(scrollPane.getHeight());
-        inputtedData.setBookIndex(books.getItems().indexOf(inputtedData.getScheduleBooks().get(scheduledVerse)) + 1);
-        inputtedData.setBook(inputtedData.getScheduleBooks().get(scheduledVerse));
-        inputtedData.setVersionIndex(0);
-        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion() != null ? inputtedData.getVersion() : versionDefinition(), inputtedData.getBookIndex(), inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
-        linkData.versePath.remove(linkData.versePath.size() - 1);
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i < linkData.verses.size(); i++) {
-            str.append(linkData.verses.get(i)).append(" ");
-        }
-        Text newVerseBox = new Text();
-        newVerseBox.prefHeight(70);
-        newVerseBox.getStyleClass().add("newVerseBox");
-        StackPane stackPane = new StackPane();
-        Rectangle rec = new Rectangle(1067, 83, Color.web("#374151"));
-        rec.setArcWidth(20);
-        rec.setArcHeight(20);
-        stackPane.getChildren().add(rec);
-        stackPane.getChildren().add(newVerseBox);
-        stackPane.setLayoutX(400);
-        stackPane.setLayoutY(73);
-        mainAnchorPane.getChildren().add(stackPane);
-        newVerseBox.setText(str + "\n" + inputtedData.getScheduleBooks().get(scheduledVerse) + " " + linkData.versePath.get(scheduledVerse).get(0) + ":" + linkData.versePath.get(scheduledVerse).get(1));
-        newVerseBox.setTextAlignment(TextAlignment.CENTER);
-        newVerseBox.setWrappingWidth(rec.getWidth());
-        books.getEditor().clear();
-        chapter.getEditor().clear();
-        verse.getEditor().clear();
-        till.getEditor().clear();
+        mainActionOnArrowsMouseClicked();
     }
 
     @FXML
@@ -662,9 +639,13 @@ public class HomeController extends ProjectorController {
                 linkData.versePath.add(list);
             }
         }
-        if (linkData.versePath.size()-1 > scheduledVerse) {
+        if (linkData.versePath.size() - 1 > scheduledVerse) {
             scheduledVerse++;
         }
+        mainActionOnArrowsMouseClicked();
+    }
+
+    private void mainActionOnArrowsMouseClicked() {
         inputtedData.setChapter(Integer.parseInt(linkData.versePath.get(scheduledVerse).get(0)));
         inputtedData.setVerse(Integer.parseInt(linkData.versePath.get(scheduledVerse).get(1)));
         linkData.verses.clear();
@@ -1155,6 +1136,7 @@ public class HomeController extends ProjectorController {
     }
 
     private String requestManager() {
+
         int versesCount = linkData.verses.size();
         List<String> versesData = new ArrayList<>(linkData.verses);
         linkData.verses.clear();

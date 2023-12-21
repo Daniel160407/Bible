@@ -8,6 +8,7 @@
 }
 
 .projectorTextBox{
+    -fx-font-size: 32px;
     -fx-fill: white;
     -fx-font-weight: bold;
 }
