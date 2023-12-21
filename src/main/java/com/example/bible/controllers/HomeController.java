@@ -585,13 +585,13 @@ public class HomeController extends ProjectorController {
         getVersionsAndBooksInfo();
         while (matcher.find()) {
             String scheduleBook = matcher.group();
-            System.out.println(scheduleBook);
             for (String book : booksList) {
-                if (book.startsWith(scheduleBook)) {
+                if (book.toLowerCase().startsWith(scheduleBook.toLowerCase())) {
                     inputtedData.addScheduleBook(book);
                     break;
                 }
             }
+            System.out.println();
         }
         String patternString = "[ |:]([0-9]+)";
         pattern = Pattern.compile(patternString);
