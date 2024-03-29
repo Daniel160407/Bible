@@ -576,9 +576,9 @@ public class HomeController extends ProjectorController {
     private void onSaveButtonAction() {
         schedulePane.setVisible(false);
         inputtedData.setSchedule(schedule.getText());
-        String geoPatternString = "(\\d*\\s*[\\\\p{L}ა-ჰ]+)";
-        String engPatternString = "(\\d*\\s*[\\\\p{L}[a-z|A-Z]]+)";
-        String rusPatternString = "(\\d*\\s*[\\\\p{L}-я]+)";
+        String geoPatternString = "(?:\\\\d*\\\\s*)?([\\\\p{L}ა-ჰ]+)";
+        String engPatternString = "(?:\\\\d*\\\\s*)?([\\\\p{L}a-z]+)";
+        String rusPatternString = "(?:\\\\d*\\\\s*)?([\\\\p{L}а-я]+)";
         Pattern pattern = Pattern.compile(inputtedData.getLanguage().equals("geo") ? geoPatternString : inputtedData.getLanguage().equals("eng") ? engPatternString : rusPatternString);
         Matcher matcher = pattern.matcher(inputtedData.getSchedule());
         inputtedData.getScheduleBooks().clear();
@@ -606,7 +606,6 @@ public class HomeController extends ProjectorController {
             }
             i++;
         }
-
     }
 
     @FXML
