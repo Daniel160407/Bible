@@ -30,7 +30,7 @@ public class LinkConstructor {
         if (search != null && !search.isEmpty()) {
             return "https://holybible.ge/service.php?w=" + book + "&t=&m=&s=" + search + "&mv=" + bibleVersion + "&language="
                     + language + "&page=1";
-        }else if (till == 0) {
+        } else if (till == 0) {
             return "https://holybible.ge/service.php?w=" + book + "&t=" + chapter + "&m=&s=&mv=" + bibleVersion + "&language=" + language + "&page=1";
         }
         return "";

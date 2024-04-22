@@ -1,9 +1,9 @@
 package com.example.bible.controllers;
 
 import com.example.bible.Bible;
+import com.example.bible.requests.LinkData;
 import com.example.bible.runtimeData.BibleVersions;
 import com.example.bible.runtimeData.InputtedData;
-import com.example.bible.requests.LinkData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,12 +12,12 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -36,8 +36,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -145,7 +145,6 @@ public class HomeController extends ProjectorController {
     private TextArea schedule;
     @FXML
     private Pane schedulePane;
-
 
     private final List<String> versionsList = new ArrayList<>();
     private final List<String> booksList = new ArrayList<>();
@@ -399,8 +398,37 @@ public class HomeController extends ProjectorController {
         scheduledVerse = 0;
         mainAnchorPane.setPrefHeight(592);
         inputtedData.setVersion(versionDefinition());
-        linkData.search = search.getText();
-        linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1, false);
+        String searchText = search.getText();
+        if (searchText.matches(".*\\d.*")) {
+            String patternString = "(\\D+?) (\\d+):(\\d+)(?:-(\\d+))?";
+
+            Pattern pattern = Pattern.compile(patternString);
+            Matcher matcher = pattern.matcher(searchText);
+
+            if (matcher.find()) {
+                String searchedBook = matcher.group(1);
+                for (String book : booksList) {
+                    if (book.startsWith(searchedBook)) {
+                        inputtedData.setBook(book);
+                        break;
+                    }
+                }
+
+                int searchedChapter = Integer.parseInt(matcher.group(2));
+                inputtedData.setChapter(searchedChapter);
+
+                int searchedVerse = Integer.parseInt(matcher.group(3));
+                inputtedData.setVerse(searchedVerse);
+
+                int searchedTill = Integer.parseInt(matcher.group(4) == null ? "0" : matcher.group(4));
+                inputtedData.setTill(searchedTill == 0 ? searchedVerse : searchedTill);
+            }
+
+            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
+        } else {
+            linkData.search = searchText;
+            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1, false);
+        }
 
         for (int i = 0; i < linkData.verses.size(); i++) {
             Text newVerseBox = new Text();
