@@ -313,6 +313,7 @@ public class HomeController extends ProjectorController {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
         mainAnchorPane.setPrefHeight(592);
         linkData.verses.clear();
+        search.clear();
         chapter.getEditor().clear();
         verse.getEditor().clear();
         till.getEditor().clear();
@@ -395,6 +396,8 @@ public class HomeController extends ProjectorController {
     @FXML
     private void onSearchAction() {
         mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+        linkData.verses.clear();
+        linkData.versePath.clear();
         scheduledVerse = 0;
         mainAnchorPane.setPrefHeight(592);
         inputtedData.setVersion(versionDefinition());
@@ -408,7 +411,7 @@ public class HomeController extends ProjectorController {
             if (matcher.find()) {
                 String searchedBook = matcher.group(1);
                 for (String book : booksList) {
-                    if (book.startsWith(searchedBook)) {
+                    if (book.toLowerCase().startsWith(searchedBook)) {
                         inputtedData.setBook(book);
                         break;
                     }
