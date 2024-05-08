@@ -428,63 +428,90 @@ public class HomeController extends ProjectorController {
             }
 
             linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
+
+            System.out.println(linkData.verses);
+            for (int i = 0; i < linkData.verses.size(); i++) {
+                Text newVerseBox = new Text();
+                newVerseBox.getStyleClass().add("newVerseBox");
+                StackPane stackPane = new StackPane();
+                Rectangle rec = new Rectangle(1100, 100, Color.web("#374151"));
+                rec.setArcWidth(20);
+                rec.setArcHeight(20);
+                stackPane.getChildren().addAll(rec, newVerseBox);
+                stackPane.setLayoutX(400);
+                stackPane.setLayoutY(previousLayoutYPath + 117);
+                mainAnchorPane.getChildren().add(stackPane);
+                previousLayoutYPath = (int) stackPane.getLayoutY();
+                newVerseBox.setText(linkData.verses.get(i) + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(i).get(0) + ":" + linkData.versePath.get(i).get(1));
+
+                newVerseBox.setTextAlignment(TextAlignment.CENTER);
+                newVerseBox.setWrappingWidth(rec.getWidth());
+                if (linkData.verses.size() > 4) {
+                    int prefHeight = (int) mainAnchorPane.getPrefHeight();
+                    mainAnchorPane.setPrefHeight(prefHeight + rec.getHeight() + 9);
+                }
+
+            }
+
+            previousLayoutYPath = -73;
+            linkData.search = null;
         } else {
             linkData.search = searchText;
             linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), 1, 1, false);
-        }
 
-        for (int i = 0; i < linkData.verses.size(); i++) {
-            Text newVerseBox = new Text();
-            newVerseBox.getStyleClass().add("newVerseBox");
-            StackPane stackPane = new StackPane();
-            Rectangle rec = new Rectangle(1100, 100, Color.web("#374151"));
-            rec.setArcWidth(20);
-            rec.setArcHeight(20);
-            Button separateButton = new Button();
-            separateButton.setId(Integer.toString(i));
-            VBox vBox = new VBox();
-            vBox.setAlignment(Pos.CENTER);
-            vBox.setSpacing(10);
-            vBox.getChildren().addAll(newVerseBox, separateButton);
-            stackPane.getChildren().addAll(rec, vBox);
-            stackPane.setLayoutX(400);
-            stackPane.setLayoutY(previousLayoutYPath + 117);
-            mainAnchorPane.getChildren().add(stackPane);
-            previousLayoutYPath = (int) stackPane.getLayoutY();
-            newVerseBox.setText(linkData.verses.get(i) + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(i).get(0) + ":" + linkData.versePath.get(i).get(1));
-            separateButton.getStyleClass().add("separate-button");
-            separateButton.setLayoutY(100);
-            separateButton.setText("Separate");
-            separateButton.setOnAction(event -> {
-                mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
-                StackPane stackPane2 = new StackPane();
-                stackPane2.setLayoutX(400);
-                stackPane2.setLayoutY(73);
-                stackPane2.getChildren().addAll(rec, newVerseBox);
-                mainAnchorPane.getChildren().add(stackPane2);
-                mainAnchorPane.setPrefHeight(592);
-                String chosenVerse = linkData.verses.get(Integer.parseInt(separateButton.getId()));
-                linkData.verses.clear();
-                inputtedData.setChapter(Integer.parseInt(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(0)));
-                inputtedData.setVerse(Integer.parseInt(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(1)));
-                linkData.verses.add(chosenVerse + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(0) +
-                        ":" + linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(1));
-                List<String> list = new ArrayList<>();
-                list.add(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(0));
-                list.add(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(1));
-                linkData.versePath.add(list);
-            });
+            for (int i = 0; i < linkData.verses.size(); i++) {
+                Text newVerseBox = new Text();
+                newVerseBox.getStyleClass().add("newVerseBox");
+                StackPane stackPane = new StackPane();
+                Rectangle rec = new Rectangle(1100, 100, Color.web("#374151"));
+                rec.setArcWidth(20);
+                rec.setArcHeight(20);
+                Button separateButton = new Button();
+                separateButton.setId(Integer.toString(i));
+                VBox vBox = new VBox();
+                vBox.setAlignment(Pos.CENTER);
+                vBox.setSpacing(10);
+                vBox.getChildren().addAll(newVerseBox, separateButton);
+                stackPane.getChildren().addAll(rec, vBox);
+                stackPane.setLayoutX(400);
+                stackPane.setLayoutY(previousLayoutYPath + 117);
+                mainAnchorPane.getChildren().add(stackPane);
+                previousLayoutYPath = (int) stackPane.getLayoutY();
+                newVerseBox.setText(linkData.verses.get(i) + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(i).get(0) + ":" + linkData.versePath.get(i).get(1));
+                separateButton.getStyleClass().add("separate-button");
+                separateButton.setLayoutY(100);
+                separateButton.setText("Separate");
+                separateButton.setOnAction(event -> {
+                    mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+                    StackPane stackPane2 = new StackPane();
+                    stackPane2.setLayoutX(400);
+                    stackPane2.setLayoutY(73);
+                    stackPane2.getChildren().addAll(rec, newVerseBox);
+                    mainAnchorPane.getChildren().add(stackPane2);
+                    mainAnchorPane.setPrefHeight(592);
+                    String chosenVerse = linkData.verses.get(Integer.parseInt(separateButton.getId()));
+                    linkData.verses.clear();
+                    inputtedData.setChapter(Integer.parseInt(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(0)));
+                    inputtedData.setVerse(Integer.parseInt(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(1)));
+                    linkData.verses.add(chosenVerse + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(0) +
+                            ":" + linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(1));
+                    List<String> list = new ArrayList<>();
+                    list.add(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(0));
+                    list.add(linkData.versePath.get(Integer.parseInt(separateButton.getId())).get(1));
+                    linkData.versePath.add(list);
+                });
 
-            newVerseBox.setTextAlignment(TextAlignment.CENTER);
-            newVerseBox.setWrappingWidth(rec.getWidth());
-            if (linkData.verses.size() > 4) {
-                int prefHeight = (int) mainAnchorPane.getPrefHeight();
-                mainAnchorPane.setPrefHeight(prefHeight + rec.getHeight() + 9);
+                newVerseBox.setTextAlignment(TextAlignment.CENTER);
+                newVerseBox.setWrappingWidth(rec.getWidth());
+                if (linkData.verses.size() > 4) {
+                    int prefHeight = (int) mainAnchorPane.getPrefHeight();
+                    mainAnchorPane.setPrefHeight(prefHeight + rec.getHeight() + 9);
+                }
+
             }
-
+            previousLayoutYPath = -73;
+            linkData.search = null;
         }
-        previousLayoutYPath = -73;
-        linkData.search = null;
     }
 
 
@@ -504,13 +531,9 @@ public class HomeController extends ProjectorController {
     @FXML
     private void onEsoMouseClicked() {
         try {
-            String url = "https://bibleversesgeo.netlify.app/";
+            String url = "https://www.facebook.com/esaia.gafrindashvili/";
             URI uri = new URI(url);
             Desktop desktop = Desktop.getDesktop();
-            desktop.browse(uri);
-            url = "https://www.facebook.com/esaia.gafrindashvili/";
-            uri = new URI(url);
-            desktop = Desktop.getDesktop();
             desktop.browse(uri);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1172,7 +1195,6 @@ public class HomeController extends ProjectorController {
         linkData.verses.clear();
         StringBuilder allLangVersesInOne = new StringBuilder();
         List<Callable<String>> tasks = new ArrayList<>();
-        System.out.println(inputtedData.getBook());
         ExecutorService executor = Executors.newFixedThreadPool(3);
         tasks.add(() -> {
             String allVersesInOne = "";
