@@ -104,6 +104,7 @@ public class LinkData {
                 }
 
             }
+            till = 0;
         } catch (Exception e) {
             e.printStackTrace();
         }

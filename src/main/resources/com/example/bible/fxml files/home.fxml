@@ -36,7 +36,7 @@
     <ComboBox fx:id="versions" layoutX="145.0" layoutY="14.0" onAction="#onVersionsAction" onMouseClicked="#onVersionsMouseClicked" prefHeight="25.0" prefWidth="287.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
     <ComboBox fx:id="books" layoutX="447.0" layoutY="14.0" onAction="#onBooksAction" prefHeight="25.0" prefWidth="253.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
     <ComboBox fx:id="chapter" editable="true" layoutX="711.0" layoutY="14.0" onAction="#onChapterAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
-    <ComboBox fx:id="verse" editable="true" layoutX="877.0" layoutY="14.0" onAction="#onVerseAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
+    <ComboBox fx:id="verse" editable="true" layoutX="877.0" layoutY="14.0" onAction="#onVerseAction" onMouseClicked="#onVerseMouseClicked" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
     <ComboBox fx:id="till" editable="true" layoutX="1044.0" layoutY="14.0" onAction="#onTillAction" prefWidth="150.0" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
     <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" onAction="#onSearchAction" onMouseClicked="#onSearchMouseClicked" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
     <ScrollPane fx:id="scrollPane" layoutY="56.0" prefHeight="491.0" prefWidth="1920.0" AnchorPane.bottomAnchor="371.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">

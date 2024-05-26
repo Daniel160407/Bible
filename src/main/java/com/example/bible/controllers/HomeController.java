@@ -285,6 +285,12 @@ public class HomeController extends ProjectorController {
     }
 
     @FXML
+    private void onVerseMouseClicked(){
+        till.getEditor().clear();
+        inputtedData.setTill(0);
+    }
+
+    @FXML
     private void onChapterXAction() {
         chapter.getEditor().clear();
         verse.getEditor().clear();
@@ -424,12 +430,11 @@ public class HomeController extends ProjectorController {
                 inputtedData.setVerse(searchedVerse);
 
                 int searchedTill = Integer.parseInt(matcher.group(4) == null ? "0" : matcher.group(4));
-                inputtedData.setTill(searchedTill == 0 ? searchedVerse : searchedTill);
+                inputtedData.setTill(searchedTill == 0 ? 0 : searchedTill);
             }
 
             linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
 
-            System.out.println(linkData.verses);
             for (int i = 0; i < linkData.verses.size(); i++) {
                 Text newVerseBox = new Text();
                 newVerseBox.getStyleClass().add("newVerseBox");
