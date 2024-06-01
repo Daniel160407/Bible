@@ -34,6 +34,12 @@ public class DocumentationController {
     private Text seventhText;
     @FXML
     private ComboBox<String> language;
+    @FXML
+    public void initialize() throws IOException {
+        title.setText("დოკუმენტაცია");
+        FileReader fileReader = new FileReader("src/main/resources/com/example/bible/txt files/geoDocumentation.txt");
+        getInfoFromTxtFile(fileReader);
+    }
 
     @FXML
     private void onLanguageAction() throws IOException {

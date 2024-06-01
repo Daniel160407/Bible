@@ -217,6 +217,7 @@ public class HomeController extends ProjectorController {
             mainAnchorPane.setPrefHeight(scrollPane.getHeight());
             inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
             inputtedData.setVersion(versionDefinition());
+            inputtedData.setTill(0);
             linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse(), false);
             StringBuilder str = new StringBuilder();
             for (int i = 0; i < linkData.verses.size(); i++) {
@@ -409,7 +410,7 @@ public class HomeController extends ProjectorController {
         inputtedData.setVersion(versionDefinition());
         String searchText = search.getText();
         if (searchText.matches(".*\\d.*")) {
-            String patternString = "(\\D+?) (\\d+):(\\d+)(?:-(\\d+))?";
+            String patternString = "(\\d?\\D+?) (\\d+):(\\d+)(?:-(\\d+))?";
 
             Pattern pattern = Pattern.compile(patternString);
             Matcher matcher = pattern.matcher(searchText);
@@ -430,7 +431,7 @@ public class HomeController extends ProjectorController {
                 inputtedData.setVerse(searchedVerse);
 
                 int searchedTill = Integer.parseInt(matcher.group(4) == null ? "0" : matcher.group(4));
-                inputtedData.setTill(searchedTill == 0 ? 0 : searchedTill);
+                inputtedData.setTill(searchedTill);
             }
 
             linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getTill(), false);
