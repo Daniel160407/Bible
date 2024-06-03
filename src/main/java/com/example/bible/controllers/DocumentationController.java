@@ -1,6 +1,7 @@
 package com.example.bible.controllers;
 
 
+import com.example.bible.runtimeData.DocumentationData;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -34,28 +35,48 @@ public class DocumentationController {
     private Text seventhText;
     @FXML
     private ComboBox<String> language;
+
     @FXML
-    public void initialize() throws IOException {
+    public void initialize() {
         title.setText("დოკუმენტაცია");
-        FileReader fileReader = new FileReader("src/main/resources/com/example/bible/txt files/geoDocumentation.txt");
-        getInfoFromTxtFile(fileReader);
+        firstText.setText(DocumentationData.geo.get(0));
+        secondText.setText(DocumentationData.geo.get(1));
+        thirdText.setText(DocumentationData.geo.get(2));
+        fourthText.setText(DocumentationData.geo.get(3));
+        fivethText.setText(DocumentationData.geo.get(4));
+        sixthText.setText(DocumentationData.geo.get(5));
+        seventhText.setText(DocumentationData.geo.get(6));
     }
 
     @FXML
-    private void onLanguageAction() throws IOException {
-
+    private void onLanguageAction() {
         if (language.getValue().equals("GEO")) {
             title.setText("დოკუმენტაცია");
-            FileReader fileReader = new FileReader("src/main/resources/com/example/bible/txt files/geoDocumentation.txt");
-            getInfoFromTxtFile(fileReader);
+            firstText.setText(DocumentationData.geo.get(0));
+            secondText.setText(DocumentationData.geo.get(1));
+            thirdText.setText(DocumentationData.geo.get(2));
+            fourthText.setText(DocumentationData.geo.get(3));
+            fivethText.setText(DocumentationData.geo.get(4));
+            sixthText.setText(DocumentationData.geo.get(5));
+            seventhText.setText(DocumentationData.geo.get(6));
         } else if (language.getValue().equals("ENG")) {
             title.setText("Documentation");
-            FileReader fileReader = new FileReader("src/main/resources/com/example/bible/txt files/engDocumentation.txt");
-            getInfoFromTxtFile(fileReader);
+            firstText.setText(DocumentationData.eng.get(0));
+            secondText.setText(DocumentationData.eng.get(1));
+            thirdText.setText(DocumentationData.eng.get(2));
+            fourthText.setText(DocumentationData.eng.get(3));
+            fivethText.setText(DocumentationData.eng.get(4));
+            sixthText.setText(DocumentationData.eng.get(5));
+            seventhText.setText(DocumentationData.eng.get(6));
         } else if (language.getValue().equals("RUS")) {
             title.setText("Документацыя");
-            FileReader fileReader = new FileReader("src/main/resources/com/example/bible/txt files/rusDocumentation.txt");
-            getInfoFromTxtFile(fileReader);
+            firstText.setText(DocumentationData.rus.get(0));
+            secondText.setText(DocumentationData.rus.get(1));
+            thirdText.setText(DocumentationData.rus.get(2));
+            fourthText.setText(DocumentationData.rus.get(3));
+            fivethText.setText(DocumentationData.rus.get(4));
+            sixthText.setText(DocumentationData.rus.get(5));
+            seventhText.setText(DocumentationData.rus.get(6));
         }
     }
 
@@ -70,34 +91,4 @@ public class DocumentationController {
             e.printStackTrace();
         }
     }
-
-    private void getInfoFromTxtFile(FileReader fileReader) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String str;
-        if ((str = bufferedReader.readLine()) != null) {
-            firstText.setText(str);
-        }
-        if ((str = bufferedReader.readLine()) != null) {
-            secondText.setText(str);
-        }
-        if ((str = bufferedReader.readLine()) != null) {
-            thirdText.setText(str);
-        }
-        if ((str = bufferedReader.readLine()) != null) {
-            fourthText.setText(str);
-        }
-        if ((str = bufferedReader.readLine()) != null) {
-            secondTitle.setText(str);
-        }
-        if ((str = bufferedReader.readLine()) != null) {
-            fivethText.setText(str);
-        }
-        if ((str = bufferedReader.readLine()) != null) {
-            sixthText.setText(str);
-        }
-        if ((str = bufferedReader.readLine()) != null) {
-            seventhText.setText(str);
-        }
-    }
-
 }

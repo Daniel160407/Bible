@@ -79,7 +79,7 @@
                     <Font size="15.0" />
                 </font>
             </Text>
-            <Text fx:id="sixthText" fill="WHITE" layoutX="513.0" layoutY="1351.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1000.0">
+            <Text fx:id="sixthText" fill="WHITE" layoutX="513.0" layoutY="1331.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1000.0">
                 <font>
                     <Font size="15.0" />
                 </font>
