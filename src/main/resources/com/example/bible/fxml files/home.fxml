@@ -41,6 +41,16 @@
     <TextField fx:id="search" layoutX="1211.0" layoutY="14.0" onAction="#onSearchAction" onMouseClicked="#onSearchMouseClicked" style="-fx-background-color: f4f4f4; -fx-border-color: gray;" AnchorPane.topAnchor="14.0" />
     <ScrollPane fx:id="scrollPane" layoutY="56.0" prefHeight="491.0" prefWidth="1920.0" AnchorPane.bottomAnchor="371.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
         <AnchorPane fx:id="mainAnchorPane" prefHeight="609.0" prefWidth="1905.0">
+            <ImageView fitHeight="21.0" fitWidth="50.0" layoutX="1776.0" layoutY="19.0" onMouseClicked="#onLeftVerseArrowMouseClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="1776.0" AnchorPane.rightAnchor="108.0" AnchorPane.topAnchor="19.0">
+                <image>
+                    <Image url="@../images/leftArrow.png" />
+                </image>
+            </ImageView>
+            <ImageView fitHeight="21.0" fitWidth="50.0" layoutX="1803.0" layoutY="19.0" onMouseClicked="#onRightVerseArrowMouseClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="1803.0" AnchorPane.rightAnchor="81.0" AnchorPane.topAnchor="19.0">
+                <image>
+                    <Image url="@../images/rightArrow.png" />
+                </image>
+            </ImageView>
             <Button layoutX="1838.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClearVersesAction" prefHeight="31.0" prefWidth="54.0" style="-fx-background-color: #DC2626; -fx-border-radius: 10;" text="Clear" textFill="WHITE" AnchorPane.leftAnchor="1838.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="14.0">
                 <font>
                     <Font size="15.0" />

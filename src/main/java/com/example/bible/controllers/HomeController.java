@@ -286,7 +286,7 @@ public class HomeController extends ProjectorController {
     }
 
     @FXML
-    private void onVerseMouseClicked(){
+    private void onVerseMouseClicked() {
         till.getEditor().clear();
         inputtedData.setTill(0);
     }
@@ -332,6 +332,80 @@ public class HomeController extends ProjectorController {
     @FXML
     private void onClearButtonAction() {
         projectorController.projectorAnchorPane.getChildren().clear();
+    }
+
+    @FXML
+    private void onRightVerseArrowMouseClicked() {
+        if (!verse.getEditor().getText().isEmpty() && Integer.parseInt(verse.getEditor().getText()) + 1 < verse.getItems().get(verse.getItems().size() - 1)) {
+            mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+            scheduledVerse = 0;
+            linkData.verses.clear();
+            mainAnchorPane.setPrefHeight(scrollPane.getHeight());
+            verse.getEditor().setText(String.valueOf(Integer.parseInt(verse.getEditor().getText()) + 1));
+            inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
+            inputtedData.setVersion(versionDefinition());
+            inputtedData.setTill(0);
+            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse(), false);
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < linkData.verses.size(); i++) {
+                str.append(linkData.verses.get(i)).append(" ");
+            }
+
+            Text newVerseBox = new Text();
+            newVerseBox.prefHeight(70);
+            newVerseBox.getStyleClass().add("newVerseBox");
+            StackPane stackPane = new StackPane();
+            Rectangle rec = new Rectangle(1067, 83, Color.web("#374151"));
+            rec.setArcWidth(20);
+            rec.setArcHeight(20);
+            stackPane.getChildren().add(rec);
+            stackPane.getChildren().add(newVerseBox);
+            stackPane.setLayoutX(400);
+            stackPane.setLayoutY(73);
+            mainAnchorPane.getChildren().add(stackPane);
+            newVerseBox.setText(str + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(0).get(0) + ":" + linkData.versePath.get(0).get(1));
+            linkData.versePath.clear();
+            newVerseBox.setTextAlignment(TextAlignment.CENTER);
+            newVerseBox.setWrappingWidth(rec.getWidth());
+            till.getEditor().clear();
+        }
+    }
+
+    @FXML
+    private void onLeftVerseArrowMouseClicked() {
+        if (!verse.getEditor().getText().isEmpty() && Integer.parseInt(verse.getEditor().getText()) - 1 > 0) {
+            mainAnchorPane.getChildren().removeIf(node -> node instanceof StackPane);
+            scheduledVerse = 0;
+            linkData.verses.clear();
+            mainAnchorPane.setPrefHeight(scrollPane.getHeight());
+            verse.getEditor().setText(String.valueOf(Integer.parseInt(verse.getEditor().getText()) - 1));
+            inputtedData.setVerse(Integer.parseInt(verse.getEditor().getText()));
+            inputtedData.setVersion(versionDefinition());
+            inputtedData.setTill(0);
+            linkData.setLinkInfo(inputtedData.getLanguage(), inputtedData.getVersion(), books.getItems().indexOf(inputtedData.getBook()) + 1, inputtedData.getChapter(), inputtedData.getVerse(), inputtedData.getVerse(), false);
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < linkData.verses.size(); i++) {
+                str.append(linkData.verses.get(i)).append(" ");
+            }
+
+            Text newVerseBox = new Text();
+            newVerseBox.prefHeight(70);
+            newVerseBox.getStyleClass().add("newVerseBox");
+            StackPane stackPane = new StackPane();
+            Rectangle rec = new Rectangle(1067, 83, Color.web("#374151"));
+            rec.setArcWidth(20);
+            rec.setArcHeight(20);
+            stackPane.getChildren().add(rec);
+            stackPane.getChildren().add(newVerseBox);
+            stackPane.setLayoutX(400);
+            stackPane.setLayoutY(73);
+            mainAnchorPane.getChildren().add(stackPane);
+            newVerseBox.setText(str + "\n" + inputtedData.getBook() + " " + linkData.versePath.get(0).get(0) + ":" + linkData.versePath.get(0).get(1));
+            linkData.versePath.clear();
+            newVerseBox.setTextAlignment(TextAlignment.CENTER);
+            newVerseBox.setWrappingWidth(rec.getWidth());
+            till.getEditor().clear();
+        }
     }
 
     @FXML
