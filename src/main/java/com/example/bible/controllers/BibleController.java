@@ -1,21 +1,14 @@
 package com.example.bible.controllers;
 
-import com.example.bible.Bible;
 import com.example.bible.requests.LinkData;
 import com.example.bible.runtimeData.BibleVersions;
 import com.example.bible.runtimeData.InputtedData;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;

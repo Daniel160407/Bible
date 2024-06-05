@@ -67,7 +67,6 @@ public class DocumentationController {
             fourthText.setText(DocumentationData.eng.get(3));
             fivethText.setText(DocumentationData.eng.get(4));
             sixthText.setText(DocumentationData.eng.get(5));
-            seventhText.setText(DocumentationData.eng.get(6));
         } else if (language.getValue().equals("RUS")) {
             title.setText("Документацыя");
             firstText.setText(DocumentationData.rus.get(0));
