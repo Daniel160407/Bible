@@ -90,4 +90,16 @@ public class DocumentationController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void onYoutubeMouseClicked(){
+        try {
+            String url = "https://youtu.be/D4BGCJaUspk";
+            URI uri = new URI(url);
+            Desktop desktop = Desktop.getDesktop();
+            desktop.browse(uri);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

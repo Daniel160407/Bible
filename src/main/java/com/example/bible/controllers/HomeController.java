@@ -42,6 +42,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class HomeController extends ProjectorController {
     @FXML
@@ -448,7 +449,24 @@ public class HomeController extends ProjectorController {
         projectorController.projectorTextBox.getStyleClass().add("projectorTextBox");
         projectorController.projectorAnchorPane.getChildren().add(projectorController.projectorTextBox);
 
-        projectorController.projectorTextBox.setText(allVersesInOne + "\n" + inputtedData.getBook() + " "
+        List<String> geoBooks = Arrays.stream(bibleVersions.georgianBooks.split(",")).collect(Collectors.toList());
+        List<String> engBooks = Arrays.stream(bibleVersions.englishBooks.split(",")).collect(Collectors.toList());
+        List<String> rusBooks = Arrays.stream(bibleVersions.russianBooks.split(",")).collect(Collectors.toList());
+
+        inputtedData.setBookIndex(books.getItems().indexOf(inputtedData.getBook()));
+
+        StringBuilder bookInSelectedLanguages = new StringBuilder();
+        if (geoCheckBox.isSelected()) {
+            bookInSelectedLanguages.append(geoBooks.get(inputtedData.getBookIndex())).append(" ");
+        }
+        if (engCheckBox.isSelected()) {
+            bookInSelectedLanguages.append(engBooks.get(inputtedData.getBookIndex())).append(" ");
+        }
+        if (rusCheckBox.isSelected()) {
+            bookInSelectedLanguages.append(rusBooks.get(inputtedData.getBookIndex())).append(" ");
+        }
+
+        projectorController.projectorTextBox.setText(allVersesInOne + "\n" + bookInSelectedLanguages + " "
                 + linkData.versePath.get(scheduledVerse).get(0) + ":"
                 + linkData.versePath.get(scheduledVerse).get(1) + (inputtedData.getTill() != 0 ? "-"
                 + linkData.versePath.get(linkData.versePath.size() - 1).get(1) : ""));
